@@ -5,15 +5,18 @@
   
 
   
-  <title>Yet Captain&#39;s Homepage</title>
+  <title>AST(抽象语法树)-代码补丁 | Yet Captain&#39;s Homepage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="description blabla">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Yet Captain&#39;s Homepage">
-<meta property="og:url" content="http://github.com/jinlongli2016/index.html">
+  <meta name="description" content="ast在某些场合中可以是开发的得力工具，就比如在代码移植及代码质量评估中。就比如在python2.x 到 python3.x的代码转换中，亦或是Pandas 0.25.x 到 Pandas 1.x的代码转化。Pandas1.x 弃用了 Pandas 0.25.x 中的某些函数，因此在代码转换过程中需要修改这部分的函数调用方式。ast使得我们可以忽视代码中的注释、空格等信息，而直接关注于代码本身。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AST(抽象语法树)-代码补丁">
+<meta property="og:url" content="http://github.com/jinlongli2016/2021/06/22/AST-%E6%8A%BD%E7%BA%BF%E8%AF%AD%E6%B3%95%E6%A0%91-%E4%BB%A3%E7%A0%81%E8%AF%84%E4%BC%B0-%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0/index.html">
 <meta property="og:site_name" content="Yet Captain&#39;s Homepage">
-<meta property="og:description" content="description blabla">
+<meta property="og:description" content="ast在某些场合中可以是开发的得力工具，就比如在代码移植及代码质量评估中。就比如在python2.x 到 python3.x的代码转换中，亦或是Pandas 0.25.x 到 Pandas 1.x的代码转化。Pandas1.x 弃用了 Pandas 0.25.x 中的某些函数，因此在代码转换过程中需要修改这部分的函数调用方式。ast使得我们可以忽视代码中的注释、空格等信息，而直接关注于代码本身。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-22T14:11:29.000Z">
+<meta property="article:modified_time" content="2021-06-22T15:46:39.952Z">
+<meta property="article:tag" content="ast">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="https://shang.qq.com/wpa/qunwpa?idkey=b1f60f79b3ca3529de11e4d2eb36924a35f57ad3419b3a7563bbaad8043ba008" title="Yet Captain&#39;s Homepage" type="application/atom+xml">
@@ -71,9 +74,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-AST-抽线语法树-代码评估-质量评估" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-AST-抽线语法树-代码评估-质量评估" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/06/22/AST-%E6%8A%BD%E7%BA%BF%E8%AF%AD%E6%B3%95%E6%A0%91-%E4%BB%A3%E7%A0%81%E8%AF%84%E4%BC%B0-%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0/" class="article-date">
   <time datetime="2021-06-22T14:11:29.000Z" itemprop="datePublished">2021-06-22</time>
@@ -90,8 +91,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/22/AST-%E6%8A%BD%E7%BA%BF%E8%AF%AD%E6%B3%95%E6%A0%91-%E4%BB%A3%E7%A0%81%E8%AF%84%E4%BC%B0-%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0/">AST(抽象语法树)-代码补丁</a>
+    <h1 class="article-title" itemprop="name">
+      AST(抽象语法树)-代码补丁
     </h1>
   
 
@@ -101,6 +102,11 @@
       
       
 <!-- Table of Contents -->
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AST基础"><span class="toc-number">1.</span> <span class="toc-text">AST基础</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一个案例"><span class="toc-number">2.</span> <span class="toc-text">一个案例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#转换代码"><span class="toc-number">2.1.</span> <span class="toc-text">转换代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果"><span class="toc-number">2.2.</span> <span class="toc-text">结果</span></a></li></ol></li></ol>
+  </div>
 
 
 
@@ -153,220 +159,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-Python-Profiling-Python性能评估" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/06/20/Python-Profiling-Python%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0/" class="article-date">
-  <time datetime="2021-06-20T08:53:58.000Z" itemprop="datePublished">2021-06-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/20/Python-Profiling-Python%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0/">Python Profiling/Python性能评估</a>
-    </h1>
+    <a href="/2021/06/20/Python-Profiling-Python%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python Profiling/Python性能评估</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-<!-- Table of Contents -->
-
-
-
-        <p>性能主要包括两方面：时间和空间</p>
-<p>Python性能调优相关的库</p>
-<ol>
-<li><code>memory_profiler</code>：可评估 .py 文件</li>
-<li><code>filprofiler</code>：可评估文件和jupyter notebook中的代码</li>
-</ol>
-<h1 id="memory-profiler"><a href="#memory-profiler" class="headerlink" title="memory_profiler"></a><code>memory_profiler</code></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sample.py</span></span><br><span class="line"><span class="keyword">from</span> memory_profiler <span class="keyword">import</span> profile</span><br><span class="line"></span><br><span class="line"><span class="meta">@profile</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># <span class="doctag">TODO:</span> Replace with code to benchmark</span></span><br><span class="line">    print(<span class="string">'do work!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">JinlongLi (master *) folder $ python sample.py</span><br><span class="line"><span class="keyword">do</span> work!</span><br><span class="line">Filename: sample.py</span><br><span class="line"></span><br><span class="line">Line <span class="comment">#    Mem usage    Increment  Occurences   Line Contents</span></span><br><span class="line">============================================================</span><br><span class="line">    10     39.9 MiB     39.9 MiB           1   @profile</span><br><span class="line">    11                                         def run():</span><br><span class="line">    12                                             <span class="comment"># <span class="doctag">TODO:</span> </span></span><br><span class="line">    13     39.9 MiB      0.0 MiB           1       <span class="built_in">print</span>(<span class="string">'do work!'</span>)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/06/20/Python-Profiling-Python%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0/" data-id="ckq87zp1z0000zos3689dasyr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/profiling/" rel="tag">profiling</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-数据分析用SQL替换Pandas" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/06/19/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%94%A8SQL%E6%9B%BF%E6%8D%A2Pandas/" class="article-date">
-  <time datetime="2021-06-19T08:59:37.000Z" itemprop="datePublished">2021-06-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/sql/">sql</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/19/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%94%A8SQL%E6%9B%BF%E6%8D%A2Pandas/">数据分析 - 用SQL替换Pandas</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Pandas可谓是目前数据分析最便捷的工具，但是当数据规模变大时，其“将数据加载到内存中”的特性成为了其弱点。虽然有<a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/scale.html" target="_blank" rel="noopener">一些方式</a>可以一定程度上使得其能够处理大规模的数据，但是这些操作都是治标不治本。SQL自上世纪七十年代以来不断被优化，支持大规模增删改查数据。因此SQL是<strong>大规模数据分析</strong>的一把利剑。</p>
-        
-          <p class="article-more-link">
-            <a href="/2021/06/19/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%94%A8SQL%E6%9B%BF%E6%8D%A2Pandas/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/06/19/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%94%A8SQL%E6%9B%BF%E6%8D%A2Pandas/" data-id="ckq6urhyx00014ss36cga30jk" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/profiling/" rel="tag">profiling</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-jinaguoyun_knowledgebase" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/05/29/jinaguoyun_knowledgebase/" class="article-date">
-  <time datetime="2021-05-29T15:20:59.000Z" itemprop="datePublished">2021-05-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/29/jinaguoyun_knowledgebase/">如何建立个人知识库-坚果云</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天，我们获取信息的渠道越来越丰富、速度也越来越快，知识面拓宽许多，但知识力却并未得到显著提升。大量无序且碎片的内容堆积，得不到有效的处理，陷入「越收藏越焦虑」的陷阱之中。</p>
-<p>每个人都急需高效管理信息并将其内化为系统性知识的能力，才能迅速提升个人成长速度。</p>
-<p>而这种能力最直接的落地方式就是构建个人知识管理库！</p>
-        
-          <p class="article-more-link">
-            <a href="/2021/05/29/jinaguoyun_knowledgebase/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/05/29/jinaguoyun_knowledgebase/" data-id="ckq4v5da300004ss3gpce5lsx" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-blooms_taxonomy_200904" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/05/29/blooms_taxonomy_200904/" class="article-date">
-  <time datetime="2021-05-29T15:20:58.000Z" itemprop="datePublished">2021-05-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/29/blooms_taxonomy_200904/">布卢姆分类学Blooms Taxonomy</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>布鲁姆教育目标分类法是一种教育的分类方法。教育目标可分为三大领域：</p>
-<p><a href="http://oregonstate.edu/instruct/coursedev/models/id/taxonomy/" target="_blank" rel="noopener">The Knowledge Dimension</a></p>
-<p>知识的分类：事实性、概念、过程、元认知</p>
-        
-          <p class="article-more-link">
-            <a href="/2021/05/29/blooms_taxonomy_200904/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/05/29/blooms_taxonomy_200904/" data-id="ckq4ur46f0000egs33js0ehqr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页 &amp;raquo;</a>
-  </nav>
 
 </section>
         
