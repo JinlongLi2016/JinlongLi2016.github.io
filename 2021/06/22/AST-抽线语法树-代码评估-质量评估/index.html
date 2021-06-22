@@ -15,7 +15,7 @@
 <meta property="og:description" content="ast在某些场合中可以是开发的得力工具，就比如在代码移植及代码质量评估中。就比如在python2.x 到 python3.x的代码转换中，亦或是Pandas 0.25.x 到 Pandas 1.x的代码转化。Pandas1.x 弃用了 Pandas 0.25.x 中的某些函数，因此在代码转换过程中需要修改这部分的函数调用方式。ast使得我们可以忽视代码中的注释、空格等信息，而直接关注于代码本身。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-22T14:11:29.000Z">
-<meta property="article:modified_time" content="2021-06-22T15:46:39.952Z">
+<meta property="article:modified_time" content="2021-06-22T15:49:07.399Z">
 <meta property="article:tag" content="ast">
 <meta name="twitter:card" content="summary">
   
@@ -111,6 +111,8 @@
 
 
         <p><code>ast</code>在某些场合中可以是开发的得力工具，就比如在代码移植及代码质量评估中。就比如在python2.x 到 python3.x的代码转换中，亦或是<code>Pandas 0.25.x</code> 到 <code>Pandas 1.x</code>的代码转化。<code>Pandas1.x</code> 弃用了 <code>Pandas 0.25.x</code> 中的某些函数，因此在代码转换过程中需要修改这部分的函数调用方式。<code>ast</code>使得我们可以忽视代码中的注释、空格等信息，而直接关注于代码本身。</p>
+<a id="more"></a>
+
 <h1 id="AST基础"><a href="#AST基础" class="headerlink" title="AST基础"></a>AST基础</h1><p>Python 有库<code>ast</code>支持生成代码的AST：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ast</span><br><span class="line"></span><br><span class="line">code = <span class="string">"""</span></span><br><span class="line"><span class="string">a = 1</span></span><br><span class="line"><span class="string">print(a)</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">head = ast.parse(code)</span><br><span class="line">print(head)</span><br><span class="line"><span class="comment"># &lt;_ast.Module object at 0x00xxxx&gt;</span></span><br></pre></td></tr></table></figure>
 
