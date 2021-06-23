@@ -14,6 +14,7 @@
 <meta property="og:site_name" content="Yet Captain&#39;s Homepage">
 <meta property="og:description" content="description blabla">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="金龙">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="https://shang.qq.com/wpa/qunwpa?idkey=b1f60f79b3ca3529de11e4d2eb36924a35f57ad3419b3a7563bbaad8043ba008" title="Yet Captain&#39;s Homepage" type="application/atom+xml">
@@ -72,6 +73,146 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-DebugControllMethods" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/06/DebugControllMethods/" class="article-date">
+  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/06/DebugControllMethods/">调试</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <p>如何在让调试可控</p>
+<ul>
+<li><strong>Syntax errors</strong>: These are spelling errors in your code that actually cause the program not to run, like the Rust error shown above. These are usually easy to fix as long as you are familiar with the language’s syntax and know what the error messages mean.</li>
+<li><strong>Logic errors</strong>: These are errors where the syntax is actually correct, but the code is not what you intended it to be, meaning that the program runs incorrectly. These are often harder to fix than syntax errors, as there isn’t an error message to direct you to the source of the error.</li>
+</ul>
+<ul>
+<li><p>王工的debug标准流程</p>
+<ul>
+<li>overview</li>
+<li>确定做的事情可以work. </li>
+<li>没有看div的style，其将div高度射为固定的；div设置的高度设为固定的</li>
+<li>王工开始计算高度（自适应），发现做了之后不work。通过鼠标调整某个div的padding/margin之后，发现问题并没有得到解决。这说明调整这个问题不能解决</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>通过不断地删除代码，找到最小可运行代码。<ul>
+<li>CSS position设置错误，导致 图标显示不出来。通过不断地删除代码进行排查。（症状为  内容在页面上面看不到）</li>
+<li>另一种解决方式是在页面上通过<strong>调试</strong>判断DOM元素是否存在，如果存在那么程序就正确渲染了这部分。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>debug echarts不重新刷新的bug.</p>
+<p>描述：出现两个质量模型，点击了第一个质量模型并弹出分析结果页；此时点击第二个分析结果页，内容不更新并且最下部分的图像不重新刷！</p>
+</li>
+</ul>
+<p>​    经过debug，发现用到的time_range（处于state）中并没有改变。 =&gt; time_range在哪里修改的？ =&gt; 在那个地方发生了什么？【最终发现是因为调用接口失败，并没有成功设置 state中time_range变量】</p>
+<ul>
+<li><ul>
+<li>未设置echarts容纳块的高度，导致图像显示不出来。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>…{filtericon: <FilterFilled />}<ul>
+<li>没报错，但是这一段代码就是有问题</li>
+<li><FilterFilled />  未import,导致变量找不到。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Chrome调试技巧</li>
+<li>Intellij调试技巧</li>
+<li></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2020/09/06/DebugControllMethods/" data-id="ckq4obj1p00018ss310iy1z33" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-MDNonLearning" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/06/MDNonLearning/" class="article-date">
+  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/06/MDNonLearning/">高效学习(Effective Learning)-MDN</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>It is great that you are putting some time into learning a new set of skills, but there are good practices to employ that will make your learning more effective. There also are times when you’ll get stuck and feel frustrated — even professional web developers feel like this regularly — and it pays to know about the most effective ways to try and get help so you can progress in your work. This article provides some hints and tips in both of these areas that will help you get more out of learning web development, as well as further reading so you can find out more information about each sub-topic should you wish..</p>
+        
+          <p class="article-more-link">
+            <a href="/2020/09/06/MDNonLearning/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2020/09/06/MDNonLearning/" data-id="ckq4obj1w00038ss315f9hrn8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/disc/" rel="tag">disc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-PyramidPrinciple" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -232,102 +373,6 @@
 
 
   
-    <article id="post-ToolsOfThinking" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/ToolsOfThinking/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/ToolsOfThinking/">思考的工具</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-<!-- Table of Contents -->
-
-
-
-        <h1 id="思考的工具"><a href="#思考的工具" class="headerlink" title="思考的工具"></a>思考的工具</h1><p>tools of thinking</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/ToolsOfThinking/" data-id="ckq4obj23000e8ss3h1f76ned" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-learningtolearn_note1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/learningtolearn_note1/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/learningtolearn_note1/">学会学习</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Introduction</strong></p>
-<p>这是 <em>UCSD</em> 开设在 <em>Coursera</em> 上的课程 <a href="https://link.zhihu.com/?target=https%3A//www.coursera.org/learn/learning-how-to-learn">Learning How to Learn</a> 的课程笔记。这门课程主要基于<strong>神经科学</strong>和<strong>认知心理学</strong>的一些研究成果讲述高效学习的理论和技巧，涉及了<strong>大脑的记忆机制、拖延的成因和应对方式</strong>，以及许多关于<strong>学习抽象复杂知识的小技巧</strong>。</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/09/06/learningtolearn_note1/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/learningtolearn_note1/" data-id="ckq4obj2b00158ss3grxf76bl" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -346,6 +391,10 @@
       <ul>
         
           <li>
+            <a href="/2021/06/23/AB%E6%B5%8B%E8%AF%95/">AB测试</a>
+          </li>
+        
+          <li>
             <a href="/2021/06/22/AST-%E6%8A%BD%E7%BA%BF%E8%AF%AD%E6%B3%95%E6%A0%91-%E4%BB%A3%E7%A0%81%E8%AF%84%E4%BC%B0-%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0/">AST(抽象语法树)-代码补丁</a>
           </li>
         
@@ -354,15 +403,11 @@
           </li>
         
           <li>
+            <a href="/2021/06/20/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
             <a href="/2021/06/19/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%94%A8SQL%E6%9B%BF%E6%8D%A2Pandas/">数据分析 - 用SQL替换Pandas</a>
-          </li>
-        
-          <li>
-            <a href="/2021/05/29/jinaguoyun_knowledgebase/">如何建立个人知识库-坚果云</a>
-          </li>
-        
-          <li>
-            <a href="/2021/05/29/blooms_taxonomy_200904/">布卢姆分类学Blooms Taxonomy</a>
           </li>
         
       </ul>
@@ -374,7 +419,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -384,7 +429,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/philosophy/">philosophy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">5</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/philosophy/">philosophy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -394,7 +439,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomThoughts/" rel="tag">RandomThoughts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ast/" rel="tag">ast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disc/" rel="tag">disc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/" rel="tag">pandas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/profiling/" rel="tag">profiling</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" rel="tag">开发方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomThoughts/" rel="tag">RandomThoughts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab%E6%B5%8B%E8%AF%95/" rel="tag">ab测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ast/" rel="tag">ast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disc/" rel="tag">disc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/" rel="tag">pandas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/profiling/" rel="tag">profiling</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" rel="tag">开发方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -404,7 +449,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Python/" style="font-size: 12.5px;">Python</a> <a href="/tags/RandomThoughts/" style="font-size: 10px;">RandomThoughts</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/ast/" style="font-size: 10px;">ast</a> <a href="/tags/disc/" style="font-size: 12.5px;">disc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hardlab/" style="font-size: 17.5px;">hardlab</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/profiling/" style="font-size: 12.5px;">profiling</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/sql/" style="font-size: 12.5px;">sql</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" style="font-size: 10px;">个人知识库</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" style="font-size: 10px;">布卢姆分类学</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" style="font-size: 10px;">开发方法</a> <a href="/tags/%E6%80%9D%E7%BB%B4/" style="font-size: 10px;">思维</a> <a href="/tags/%E6%80%A7%E8%83%BD/" style="font-size: 10px;">性能</a> <a href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" style="font-size: 10px;">性能调优</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">数据分析</a> <a href="/tags/%E6%96%B9%E6%B3%95/" style="font-size: 20px;">方法</a> <a href="/tags/%E6%B2%9F%E9%80%9A/" style="font-size: 10px;">沟通</a> <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" style="font-size: 10px;">科学上网</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">编程</a> <a href="/tags/%E8%B0%83%E8%AF%95/" style="font-size: 10px;">调试</a> <a href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" style="font-size: 10px;">金字塔原理</a>
+      <a href="/tags/Python/" style="font-size: 12.5px;">Python</a> <a href="/tags/RandomThoughts/" style="font-size: 10px;">RandomThoughts</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/ab%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">ab测试</a> <a href="/tags/ast/" style="font-size: 10px;">ast</a> <a href="/tags/disc/" style="font-size: 12.5px;">disc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hardlab/" style="font-size: 17.5px;">hardlab</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/profiling/" style="font-size: 12.5px;">profiling</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/sql/" style="font-size: 12.5px;">sql</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" style="font-size: 10px;">个人知识库</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" style="font-size: 10px;">布卢姆分类学</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" style="font-size: 10px;">开发方法</a> <a href="/tags/%E6%80%9D%E7%BB%B4/" style="font-size: 10px;">思维</a> <a href="/tags/%E6%80%A7%E8%83%BD/" style="font-size: 10px;">性能</a> <a href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" style="font-size: 10px;">性能调优</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 12.5px;">数据分析</a> <a href="/tags/%E6%96%B9%E6%B3%95/" style="font-size: 20px;">方法</a> <a href="/tags/%E6%B2%9F%E9%80%9A/" style="font-size: 10px;">沟通</a> <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" style="font-size: 10px;">科学上网</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">编程</a> <a href="/tags/%E8%B0%83%E8%AF%95/" style="font-size: 10px;">调试</a> <a href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" style="font-size: 10px;">金字塔原理</a>
     </div>
   </div>
 
@@ -416,7 +461,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2021 Yet Captain&#39;s Homepage<br>
+      &copy; 2021 金龙<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

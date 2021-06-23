@@ -5,23 +5,21 @@
   
 
   
-  <title>Sql-WITH公用表表达式(common Table Expression) | Yet Captain&#39;s Homepage</title>
+  <title>AB测试 | Yet Captain&#39;s Homepage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="with as用于创建存在于内存中的临时表；将复杂的查询拆分为多个查询。">
+  <meta name="description" content="参考 4000字干货：A&#x2F;B测试超全总结！ 手把手教你从0到1搭建AB测试系统（一） 如何选择正确的数据指标？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sql-WITH公用表表达式(common Table Expression)">
-<meta property="og:url" content="http://github.com/jinlongli2016/2021/05/21/sql-WITH%E5%85%AC%E7%94%A8%E8%A1%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F-common-table-expression/index.html">
+<meta property="og:title" content="AB测试">
+<meta property="og:url" content="http://github.com/jinlongli2016/2021/06/23/AB%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="Yet Captain&#39;s Homepage">
-<meta property="og:description" content="with as用于创建存在于内存中的临时表；将复杂的查询拆分为多个查询。">
+<meta property="og:description" content="参考 4000字干货：A&#x2F;B测试超全总结！ 手把手教你从0到1搭建AB测试系统（一） 如何选择正确的数据指标？">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.essentialsql.com/wp-content/uploads/2016/07/Parts-of-A-Recursive-Common-Table-Expression-1024x357.png">
-<meta property="article:published_time" content="2021-05-21T04:17:02.000Z">
-<meta property="article:modified_time" content="2021-06-22T02:26:50.976Z">
+<meta property="article:published_time" content="2021-06-23T02:41:20.000Z">
+<meta property="article:modified_time" content="2021-06-23T02:54:07.587Z">
 <meta property="article:author" content="金龙">
-<meta property="article:tag" content="编程">
-<meta property="article:tag" content="sql">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="ab测试">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.essentialsql.com/wp-content/uploads/2016/07/Parts-of-A-Recursive-Common-Table-Expression-1024x357.png">
   
     <link rel="alternate" href="https://shang.qq.com/wpa/qunwpa?idkey=b1f60f79b3ca3529de11e4d2eb36924a35f57ad3419b3a7563bbaad8043ba008" title="Yet Captain&#39;s Homepage" type="application/atom+xml">
   
@@ -78,14 +76,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-sql-WITH公用表表达式-common-table-expression" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-AB测试" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2021/05/21/sql-WITH%E5%85%AC%E7%94%A8%E8%A1%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F-common-table-expression/" class="article-date">
-  <time datetime="2021-05-21T04:17:02.000Z" itemprop="datePublished">2021-05-21</time>
+    <a href="/2021/06/23/AB%E6%B5%8B%E8%AF%95/" class="article-date">
+  <time datetime="2021-06-23T02:41:20.000Z" itemprop="datePublished">2021-06-23</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
   </div>
 
   </div>
@@ -96,7 +94,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Sql-WITH公用表表达式(common Table Expression)
+      AB测试
     </h1>
   
 
@@ -109,47 +107,24 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">1.</span> <span class="toc-text">参考</span></a></li></ol>
   </div>
 
 
 
-        <p><code>with as</code>用于创建存在于内存中的临时表；将复杂的查询拆分为多个查询。</p>
-<a id="more"></a>
-
-<p>分为递归和非递归的with as 查询；递归是把自己的输出作为输入进行处理。</p>
-<ul>
-<li>非递归with</li>
-</ul>
-<ul>
-<li>递归with</li>
-</ul>
-<p>递归with分为三个部分：1）a <em>non-recursive term</em> 2） <code>UNION</code> (or <code>UNION ALL</code>) 3） a <em>recursive term</em>。只有3）能够包含对查询输出的引用。</p>
-<p>这里递归似乎不太合适，迭代更合适？</p>
-<p><code>1）</code>是循环的初始行 ；<code>3)</code>是循环体；<code>2)</code> 用于union每一行，结合为最终的输出。</p>
-<p>下面是一个case：</p>
-<p><img src="https://www.essentialsql.com/wp-content/uploads/2016/07/Parts-of-A-Recursive-Common-Table-Expression-1024x357.png" alt="img"></p>
-<p>上面这个语句的运行逻辑</p>
-<ol>
-<li>首先递归(/此处用迭代更合适？)生成每一行数据；</li>
-<li>每一行数据又作为生成下一行数据的输入</li>
-<li>将每一行数据<code>UNION</code>为一个大表作为最终结果返回给<code>cte_count</code>。</li>
+        <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://cloud.tencent.com/developer/article/1535832" target="_blank" rel="noopener">4000字干货：A/B测试超全总结！</a></li>
+<li><a href="http://www.woshipm.com/pd/1692294.html" target="_blank" rel="noopener">手把手教你从0到1搭建AB测试系统（一）</a></li>
+<li><a href="https://36kr.com/p/1721379258369" target="_blank" rel="noopener">如何选择正确的数据指标？</a></li>
 </ol>
-<p>pg支持<code>with as</code> ，后面mysql也支持</p>
-<p><a href="https://www.postgresql.org/docs/current/queries-with.html" target="_blank" rel="noopener">ref1: pg wbste</a>,</p>
-<p> <a href="https://www.cnblogs.com/Neo-ds/p/4804900.html" target="_blank" rel="noopener">ref2: cnblogs</a></p>
-<p><a href="https://www.essentialsql.com/recursive-ctes-explained/" target="_blank" rel="noopener">https://www.essentialsql.com/recursive-ctes-explained/</a></p>
-<p>ref2 中查看每个栏目的层数</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WITH</span> COL_CTE(<span class="keyword">Id</span>,<span class="keyword">Name</span>,ParentId,tLevel )</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line">(</span><br><span class="line">    <span class="comment">--基本语句</span></span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">Id</span>,<span class="keyword">Name</span>,ParentId,<span class="number">0</span> <span class="keyword">AS</span> tLevel <span class="keyword">FROM</span> <span class="keyword">Col</span></span><br><span class="line">    <span class="keyword">WHERE</span> ParentId = <span class="number">0</span></span><br><span class="line">    <span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line">    <span class="comment">--递归语句</span></span><br><span class="line">    <span class="keyword">SELECT</span> c.Id,c.Name,c.ParentId,ce.tLevel+<span class="number">1</span> <span class="keyword">AS</span> tLevel <span class="keyword">FROM</span> <span class="keyword">COL</span> <span class="keyword">as</span> c</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> COL_CTE <span class="keyword">AS</span> ce 　　<span class="comment">--递归调用</span></span><br><span class="line">    <span class="keyword">ON</span> c.ParentId = ce.Id</span><br><span class="line">)</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> COL_CTE</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/05/21/sql-WITH%E5%85%AC%E7%94%A8%E8%A1%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F-common-table-expression/" data-id="ckq6urhyj00004ss37raq3r4d" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2021/06/23/AB%E6%B5%8B%E8%AF%95/" data-id="ckq8vuogm00003cs326ty4953" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ab%E6%B5%8B%E8%AF%95/" rel="tag">ab测试</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a></li></ul>
 
     </footer>
   </div>
@@ -157,19 +132,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/05/29/blooms_taxonomy_200904/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          布卢姆分类学Blooms Taxonomy
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/09/06/DISC%E9%AB%98%E6%95%88%E6%B2%9F%E9%80%9A/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/06/22/AST-%E6%8A%BD%E7%BA%BF%E8%AF%AD%E6%B3%95%E6%A0%91-%E4%BB%A3%E7%A0%81%E8%AF%84%E4%BC%B0-%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">DISC-高效沟通</div>
+      <div class="article-nav-title">AST(抽象语法树)-代码补丁</div>
     </a>
   
 </nav>
