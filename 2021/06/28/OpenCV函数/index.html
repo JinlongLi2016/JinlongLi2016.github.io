@@ -7,15 +7,15 @@
   
   <title>OpenCV函数 | 野生芦苇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="cv2.imread(filename, flag)flag控制读入图片的格式CV_LOAD_IMAGE_ANYDEPTH - If set, return 16-bit&#x2F;32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.CV_LOAD_IMAGE_COLOR - If">
+  <meta name="description" content="cv2.imread(filename, flag)s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenCV函数">
 <meta property="og:url" content="http://github.com/jinlongli2016/2021/06/28/OpenCV%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="野生芦苇">
-<meta property="og:description" content="cv2.imread(filename, flag)flag控制读入图片的格式CV_LOAD_IMAGE_ANYDEPTH - If set, return 16-bit&#x2F;32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.CV_LOAD_IMAGE_COLOR - If">
+<meta property="og:description" content="cv2.imread(filename, flag)s">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-28T08:56:28.000Z">
-<meta property="article:modified_time" content="2021-06-28T12:30:52.039Z">
+<meta property="article:modified_time" content="2021-06-28T12:34:28.095Z">
 <meta property="article:author" content="李金龙">
 <meta property="article:tag" content="opencv">
 <meta property="article:tag" content="图像处理">
@@ -118,7 +118,10 @@
 
 
 
-        <a id="more"></a>
+        <ul>
+<li><code>cv2.imread(filename, flag)</code>s</li>
+</ul>
+<a id="more"></a>
 
 <ul>
 <li>cv2.imread(filename, flag)<br>flag控制读入图片的格式<br>CV_LOAD_IMAGE_ANYDEPTH - If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.<br>CV_LOAD_IMAGE_COLOR - If set, always convert image to the color one<br>CV_LOAD_IMAGE_GRAYSCALE - If set, always convert image to the grayscale one<br> 0 Return a 3-channel color image.<br> In the current implementation the alpha channel, if any, is stripped from the output image. Use negative value if you need the alpha channel.<br> =0 Return a grayscale image.<br> &lt;0 Return the loaded image as is (with alpha channel)</li>
