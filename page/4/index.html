@@ -56,7 +56,7 @@
         
           <a class="main-nav-link" href="/categories/%E7%BC%96%E7%A8%8B">编程</a>
         
-          <a class="main-nav-link" href="/categories/%E7%AE%97%E6%B3%95">算法设计</a>
+          <a class="main-nav-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计</a>
         
           <a class="main-nav-link" href="/archives">历史文章</a>
         
@@ -78,14 +78,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Cooperation" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ML_NaiveBayes" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/06/Cooperation/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
+    <a href="/2021/05/23/ML_NaiveBayes/" class="article-date">
+  <time datetime="2021-05-23T02:41:20.000Z" itemprop="datePublished">2021-05-23</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a>
+    <a class="article-category-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
   </div>
 
   </div>
@@ -96,65 +96,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/Cooperation/">如何倾听不赞同的观点</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>nonverbal attending</p>
-<p><strong>giving someone your full attention without speaking</strong></p>
-<ul>
-<li>Keep your body open to the other person</li>
-<li><strong>Maintain moderate levels of eye contact.</strong></li>
-<li><strong>Use simple gestures to communicate to the other person that you’re listening and encouraging them to continue.</strong> Head nods are one way – just don’t do it continuously. Occasionally say “Mm-hmm” to communicate encouragement.</li>
-<li><strong>staying silent.</strong></li>
-</ul>
-<p>理解对方/朝着Goal努力</p>
-</li>
-</ul>
-        
-          <p class="article-more-link">
-            <a href="/2020/09/06/Cooperation/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/Cooperation/" data-id="ckq4obj1b00008ss31xqihfx3" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-DebugControllMethods" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/DebugControllMethods/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/DebugControllMethods/">调试</a>
+      <a class="article-title" href="/2021/05/23/ML_NaiveBayes/">朴素贝叶斯</a>
     </h1>
   
 
@@ -167,160 +109,45 @@
 
 
 
-        <p>如何在让调试可控</p>
+        <h2 id="贝叶斯后验概率"><a href="#贝叶斯后验概率" class="headerlink" title="贝叶斯后验概率"></a>贝叶斯后验概率</h2><p>$P(y \mid x_1, \dots, x_n) = \frac{P(y) P(x_1, \dots, x_n \mid y)}<br>                                 {P(x_1, \dots, x_n)}$</p>
+<h2 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h2><p>基于<strong>条件独立</strong>的假设可以简化为</p>
+<p>$P(y \mid x_1, \dots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i \mid y)}<br>                                 {P(x_1, \dots, x_n)}$</p>
+<p>分母为常数，则</p>
+<p>$\begin{align}\begin{aligned}P(y \mid x_1, \dots, x_n) \propto P(y) \prod_{i=1}^{n} P(x_i \mid y)\\Downarrow\\hat{y} = \arg\max_y P(y) \prod_{i=1}^{n} P(x_i \mid y),\end{aligned}\end{align}$</p>
+<p>不同的贝叶斯算法的<strong>区别主要是在$P(x_i|y)$的计算</strong>上</p>
+<h2 id="常见贝叶斯算法"><a href="#常见贝叶斯算法" class="headerlink" title="常见贝叶斯算法"></a>常见贝叶斯算法</h2><ul>
+<li>高斯朴素贝叶斯</li>
+</ul>
+<p>$P(x_i \mid y) = \frac{1}{\sqrt{2\pi\sigma^2_y}} \exp\left(-\frac{(x_i - \mu_y)^2}{2\sigma^2_y}\right)$</p>
 <ul>
-<li><strong>Syntax errors</strong>: These are spelling errors in your code that actually cause the program not to run, like the Rust error shown above. These are usually easy to fix as long as you are familiar with the language’s syntax and know what the error messages mean.</li>
-<li><strong>Logic errors</strong>: These are errors where the syntax is actually correct, but the code is not what you intended it to be, meaning that the program runs incorrectly. These are often harder to fix than syntax errors, as there isn’t an error message to direct you to the source of the error.</li>
+<li>多项式multinomial【文本处理使用较多】</li>
 </ul>
-<ul>
-<li><p>王工的debug标准流程</p>
-<ul>
-<li>overview</li>
-<li>确定做的事情可以work. </li>
-<li>没有看div的style，其将div高度射为固定的；div设置的高度设为固定的</li>
-<li>王工开始计算高度（自适应），发现做了之后不work。通过鼠标调整某个div的padding/margin之后，发现问题并没有得到解决。这说明调整这个问题不能解决</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>通过不断地删除代码，找到最小可运行代码。<ul>
-<li>CSS position设置错误，导致 图标显示不出来。通过不断地删除代码进行排查。（症状为  内容在页面上面看不到）</li>
-<li>另一种解决方式是在页面上通过<strong>调试</strong>判断DOM元素是否存在，如果存在那么程序就正确渲染了这部分。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>debug echarts不重新刷新的bug.</p>
-<p>描述：出现两个质量模型，点击了第一个质量模型并弹出分析结果页；此时点击第二个分析结果页，内容不更新并且最下部分的图像不重新刷！</p>
-</li>
-</ul>
-<p>​    经过debug，发现用到的time_range（处于state）中并没有改变。 =&gt; time_range在哪里修改的？ =&gt; 在那个地方发生了什么？【最终发现是因为调用接口失败，并没有成功设置 state中time_range变量】</p>
-<ul>
-<li><ul>
-<li>未设置echarts容纳块的高度，导致图像显示不出来。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>…{filtericon: <FilterFilled />}<ul>
-<li>没报错，但是这一段代码就是有问题</li>
-<li><FilterFilled />  未import,导致变量找不到。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>Chrome调试技巧</li>
-<li>Intellij调试技巧</li>
-<li></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/DebugControllMethods/" data-id="ckq4obj1p00018ss310iy1z33" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-MDNonLearning" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/MDNonLearning/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/MDNonLearning/">高效学习(Effective Learning)-MDN</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>It is great that you are putting some time into learning a new set of skills, but there are good practices to employ that will make your learning more effective. There also are times when you’ll get stuck and feel frustrated — even professional web developers feel like this regularly — and it pays to know about the most effective ways to try and get help so you can progress in your work. This article provides some hints and tips in both of these areas that will help you get more out of learning web development, as well as further reading so you can find out more information about each sub-topic should you wish..</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/09/06/MDNonLearning/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/MDNonLearning/" data-id="ckq4obj1w00038ss315f9hrn8" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/disc/" rel="tag">disc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-PyramidPrinciple" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/PyramidPrinciple/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/PyramidPrinciple/">金子塔原理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本书中心是在工作行文中要讲究<strong>逻辑</strong>：</p>
+<p>每个类别的每个特征概率由右侧向量刻画：$\theta_y = (\theta_{y1},\ldots,\theta_{yn})$</p>
+<p>$\hat{\theta}<em>{yi} = \frac{ N</em>{yi} + \alpha}{N_y + \alpha n}$,</p>
+<p>其中</p>
+<p>$N_{yi} = \sum_{x \in T} x_i$ ：为$x_i$出现在yi（类别y的第i个特征位置）的样本中的数量</p>
+<p>$ N_{y} = \sum_{i=1}^{n} N_{yi}$ ：y类所有特征的总量</p>
+<p>$\alpha$为平滑系数</p>
+<hr>
+<p>两个基本假设</p>
 <ol>
-<li><strong>表达</strong>的逻辑</li>
-<li><strong>思考</strong>的逻辑</li>
-<li><strong>解决问题</strong>的逻辑</li>
-<li><strong>展示</strong>的逻辑</li>
+<li>特征条件独立</li>
+<li>特征等价</li>
 </ol>
-        
-          <p class="article-more-link">
-            <a href="/2020/09/06/PyramidPrinciple/#more">阅读更多</a>
-          </p>
-        
+<hr>
+<p>Reference</p>
+<ol>
+<li><a href="https://www.kdnuggets.com/2020/06/naive-bayes-algorithm-everything.html" target="_blank" rel="noopener">ref</a></li>
+<li><a href="https://docs.qq.com/slide/DRWNBRkRRQ3JIS0ZU" target="_blank" rel="noopener">docs-ppt</a></li>
+</ol>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/PyramidPrinciple/" data-id="ckq4obj1y00058ss3f9uu4esr" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2021/05/23/ML_NaiveBayes/" data-id="ckqhvj84r000gvgs35mem039g" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
 
     </footer>
   </div>
@@ -329,14 +156,14 @@
 
 
   
-    <article id="post-git-master" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ML_SVM" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/06/git-master/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
+    <a href="/2021/05/23/ML_SVM/" class="article-date">
+  <time datetime="2021-05-23T02:41:20.000Z" itemprop="datePublished">2021-05-23</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    <a class="article-category-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
   </div>
 
   </div>
@@ -347,7 +174,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/git-master/">Git - Peace&amp;Love</a>
+      <a class="article-title" href="/2021/05/23/ML_SVM/">支持向量机 SVM</a>
     </h1>
   
 
@@ -355,31 +182,298 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Git 使用便捷上手册</p>
+      
+<!-- Table of Contents -->
+
+
+
+        <p>超平面、核技巧、对偶、KKT条件</p>
+<hr>
 <ul>
-<li>Git Rebase /  StageState/Stash</li>
-<li>Git Reset</li>
-<li><a href="https://github.com/k88hudson/git-flight-rules/blob/master/README_zh-CN.md">https://github.com/k88hudson/git-flight-rules/blob/master/README_zh-CN.md</a></li>
-<li><a href="https://dangitgit.com/" target="_blank" rel="noopener">https://dangitgit.com/</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Learn/Tools_and_testing/GitHub" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Learn/Tools_and_testing/GitHub</a></li>
+<li><p>超平面</p>
+<p>$W^TX + b = 0$</p>
+</li>
 </ul>
-<p>git push origin newbranch</p>
-<ul>
-<li>推送本地newbranch 到origin 上</li>
-</ul>
-<p>git 有三个区域：工作区、暂存区、版本库(working/staging/repository)。</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/09/06/git-master/#more">阅读更多</a>
-          </p>
-        
+<p>每个样本点x到超平面的距离</p>
+<p>$d = Wx + b$</p>
+<p>希望的情况是d &gt; 0，当y &gt; 0</p>
+<p>在平面尽量居中，距离尽量远的设想下，问题转换为</p>
+<p>$min ||W||^2$</p>
+<p>s.t. $y_i(W^Tx + b) &gt;= 1$</p>
+<p>由对偶，可将原问题转化为</p>
+<p>$\max_\alpha \sum_{i=1}^m\alpha_i -\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_jx_i\cdot x_j \ subject\space to\space 0 \le \alpha_i \le C, i=1…m, \sum_{i=1}^m{a_iy_i}=0$</p>
+<p>对于待预测样本，预测方式</p>
+<p>$\sum_{i\in SV} y_i \alpha_i K(x_i, x) + b,$</p>
+<hr>
+<p>Reference</p>
+<ol>
+<li><a href="https://shuzhanfan.github.io/2018/05/understanding-mathematics-behind-support-vector-machines/" target="_blank" rel="noopener">Understanding the mathematics behind Support Vector Machines</a></li>
+<li><a href="https://www.analyticsvidhya.com/blog/2020/10/the-mathematics-behind-svm/" target="_blank" rel="noopener">The Mathematics Behind Support Vector Machine Algorithm (SVM)</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/svm.html#svc" target="_blank" rel="noopener">sklearn-svm-svc(classification)</a></li>
+</ol>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/git-master/" data-id="ckq4obj2000088ss3e656fxe3" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2021/05/23/ML_SVM/" data-id="ckqhvj84s000hvgs3hpsudyjm" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ML_决策树" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/05/23/ML_%E5%86%B3%E7%AD%96%E6%A0%91/" class="article-date">
+  <time datetime="2021-05-23T02:41:20.000Z" itemprop="datePublished">2021-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/23/ML_%E5%86%B3%E7%AD%96%E6%A0%91/">ML_决策树</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <p><em>参考<a href="https://www.zybuluo.com/jocker---/note/783359#%E5%9F%BA%E5%B0%BC%E6%8C%87%E6%95%B0gini-index" target="_blank" rel="noopener">blog</a> 和onenote 2016-summer总结</em> 及一个<a href="https://docs.qq.com/slide/DRUt5YUl6VmtSZHRC" target="_blank" rel="noopener">ppt</a></p>
+<h3 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h3><ul>
+<li>如何构建决策树<ul>
+<li>如何分裂<ul>
+<li>分裂属性</li>
+<li>离散/连续变量处理</li>
+</ul>
+</li>
+<li>如何停止<ul>
+<li>节点为纯</li>
+<li>节点样本数量小于阈值</li>
+<li>没有属性进行分割</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如何判定<ul>
+<li>对应的样本数在叶子节点中最多</li>
+</ul>
+</li>
+</ul>
+<h3 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h3><ul>
+<li><strong>构建树：</strong>构建k个决策树，每棵树按照如下方式生长 <ul>
+<li>选择构建树数据<ul>
+<li>sample N cases at random ­ but <em>with replacement</em>, from the original data</li>
+</ul>
+</li>
+<li>如何分裂<ul>
+<li>在每个节点，随机选择m个特征，选择<strong>分裂属性</strong>最好的特征进行分裂。</li>
+<li>每棵树无剪枝生长</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如何<strong>判定</strong><ul>
+<li>综合k棵树的结果</li>
+</ul>
+</li>
+</ul>
+<h3 id="分裂属性"><a href="#分裂属性" class="headerlink" title="分裂属性"></a>分裂属性</h3><ul>
+<li>信息增益（information gain、KL divergence）</li>
+<li>增益比率Gain Ratio</li>
+</ul>
+<blockquote>
+<p>基于信息增益进行属性选择有一个很大的缺陷，它会倾向于选择属性值多的属性。一个较为极端的例子是某种属性将预测属性完全分割，也就是在该属性分割后预测属性在每个分割集中，只有一种可能，分割后的预测属性的不确定性很小。但这样的分割方式往往没有任何意义，缺乏泛化能力。</p>
+</blockquote>
+<p>信息增益比率对上面的情况进行了改进，它引入了一个分裂信息</p>
+<p>$SplitInfo_R(D) = -\sum_{j=1}^{k} \frac{|D_j|}{|D|} * lg(\frac{|D_j|}{|D|})$</p>
+<ul>
+<li>Gini指标</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>信息增益</td>
+<td>用父节点信息熵-子节点的条件信息熵，选择下降最多的一个。</td>
+<td>信息，即熵，用于衡量系统带有的信息多少（混乱程度）。越是混乱，其值越高$H(p)=-\sum_i {p_i}*lg({p_i})$</td>
+</tr>
+<tr>
+<td>增益比率</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Gini指标</td>
+<td>Gini纯度，用于衡量节点内样本是否单一性。$Gini(D) = 1 - \sum_i{P_i}^2$</td>
+<td>在CART(分类回归树)算法中, 基尼不纯度表示一个随机选中的样本在子集中被分错的可能性。<strong>总体内包含的类别越杂乱，GINI指数就越大（跟熵的概念很相似）</strong></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2021/05/23/ML_%E5%86%B3%E7%AD%96%E6%A0%91/" data-id="ckqhvj84t000jvgs3bsovgwx4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ML_不平衡类别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/05/23/ML_%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%B1%BB%E5%88%AB/" class="article-date">
+  <time datetime="2021-05-23T02:41:20.000Z" itemprop="datePublished">2021-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/23/ML_%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%B1%BB%E5%88%AB/">不平衡类别</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <p>unbalanced class?</p>
+<ul>
+<li><p>采样<a href="https://kknews.cc/zh-tw/tech/mrajm89.html" target="_blank" rel="noopener">Sampling</a></p>
+<ul>
+<li>随机采样算法：包括随机过采样(Oversampling)和随机降采样(Undersampling)等</li>
+<li>合成采样方法：借用少数类样本，合成新的少数类</li>
+</ul>
+</li>
+<li><p>代价训练</p>
+</li>
+<li><p>集成模型</p>
+<ul>
+<li>将前面所述的</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2021/05/23/ML_%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%B1%BB%E5%88%AB/" data-id="ckqhvj84u000lvgs33pl5ah7s" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ML_梯度提升算法GradientBoostingAlg" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/05/23/ML_%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E7%AE%97%E6%B3%95GradientBoostingAlg/" class="article-date">
+  <time datetime="2021-05-23T02:41:20.000Z" itemprop="datePublished">2021-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/23/ML_%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E7%AE%97%E6%B3%95GradientBoostingAlg/">梯度提升算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><p>模型参数和目标函数（训练损失和正则项）</p>
+<p>$$<br>\text{obj} = \sum_{i=1}^n l(y_i, \hat{y}<em>i^{(t)}) + \sum</em>{i=1}^t\Omega(f_i)<br>$$</p>
+<p>增量训练： </p>
+<p>$$<br>\begin{split}\hat{y}<em>i^{(0)} &amp;= 0\<br>\hat{y}_i^{(1)} &amp;= f_1(x_i) = \hat{y}_i^{(0)} + f_1(x_i)\<br>\hat{y}_i^{(2)} &amp;= f_1(x_i) + f_2(x_i)= \hat{y}_i^{(1)} + f_2(x_i)\<br>&amp;\dots\<br>\hat{y}_i^{(t)} &amp;= \sum</em>{k=1}^t f_k(x_i)= \hat{y}_i^{(t-1)} + f_t(x_i)\end{split}<br>$$</p>
+<p>泰勒展开</p>
+<p>$$<br>\text{obj}^{(t)} = \sum_{i=1}^n [l(y_i, \hat{y}_i^{(t-1)}) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t) + \mathrm{constant}<br>$$</p>
+<p>其中：</p>
+<p>$$<br>\begin{split}g_i &amp;= \partial_{\hat{y}<em>i^{(t-1)}} l(y_i, \hat{y}_i^{(t-1)})\<br>h_i &amp;= \partial</em>{\hat{y}_i^{(t-1)}}^2 l(y_i, \hat{y}_i^{(t-1)})\end{split}<br>$$</p>
+<p>移除常量之后，step t的目标函数变为</p>
+<p>$$<br>\sum_{i=1}^n [g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t)<br>$$</p>
+<p>这就是第t颗树的目标函数，我们可以看出只依赖于一阶和二阶梯度，因此就可以支持自定义损失函数。</p>
+<p>此外还需要加上正则项。</p>
+<p>进一步推导（加上正则项），可以由第t棵树的目标函数。<br>$$<br>\begin{split}\text{obj}^{(t)} &amp;\approx \sum_{i=1}^n [g_i w_{q(x_i)} + \frac{1}{2} h_i w_{q(x_i)}^2] + \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2\<br>&amp;= \sum^T_{j=1} [(\sum_{i\in I_j} g_i) w_j + \frac{1}{2} (\sum_{i\in I_j} h_i + \lambda) w_j^2 ] + \gamma T\end{split}<br>$$<br>其中$I_j = {i|q(x_i)=j}$ 是被分到   $j^{th}$  叶子节点的样本索引集合。可以进一步重写 [$T$ 代表着第$t^{th}$颗树的叶子节点数量]<br>$$<br>\text{obj}^{(t)} = \sum^T_{j=1} [G_jw_j + \frac{1}{2} (H_j+\lambda) w_j^2] +\gamma T<br>$$<br>可以有答案<br>$$<br>\begin{split}w_j^\ast &amp;= -\frac{G_j}{H_j+\lambda}\<br>\text{obj}^\ast &amp;= -\frac{1}{2} \sum_{j=1}^T \frac{G_j^2}{H_j+\lambda} + \gamma T\end{split}<br>$$</p>
+<hr>
+<p>Reference</p>
+<ol>
+<li><a href="https://xgboost.readthedocs.io/en/latest/tutorials/model.html" target="_blank" rel="noopener">xgboost website-intro</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2021/05/23/ML_%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E7%AE%97%E6%B3%95GradientBoostingAlg/" data-id="ckqhvj84x000svgs32v7r4c65" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
 
     </footer>
   </div>
@@ -392,7 +486,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">下一页 &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/">下一页 &amp;raquo;</a>
   </nav>
 
 </section>
@@ -401,50 +495,19 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
+    <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2021/06/28/%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/">网络(深度学习)基础</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/28/%E5%9B%BE%E5%83%8F%E5%8D%95%E5%BA%94%E6%80%A7%E5%8F%98%E6%8D%A2/">图像单应性变换</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/28/OpenCV%E5%87%BD%E6%95%B0/">OpenCV函数</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/27/%E5%90%84%E5%A4%A7%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%8D%9A%E5%AE%A2/">各大技术团队博客</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/26/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A1%88%E4%BE%8B-%E4%B8%96%E7%95%8C%E5%B9%B8%E7%A6%8F%E6%8C%87%E6%95%B0%E6%8A%A5%E5%91%8A/">数据可视化案例:世界幸福指数报告</a>
-          </li>
-        
-      </ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/philosophy/">philosophy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
+
 
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/12/">十二月 1900</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/philosophy/">philosophy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/resources/">resources</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E5%83%8F/">图像</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -454,19 +517,10 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomThoughts/" rel="tag">RandomThoughts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab%E6%B5%8B%E8%AF%95/" rel="tag">ab测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ast/" rel="tag">ast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disc/" rel="tag">disc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eda/" rel="tag">eda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opencv/" rel="tag">opencv</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/" rel="tag">pandas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/profiling/" rel="tag">profiling</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rules/" rel="tag">rules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">图像处理</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" rel="tag">开发方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="tag">激活函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomThoughts/" rel="tag">RandomThoughts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab%E6%B5%8B%E8%AF%95/" rel="tag">ab测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ast/" rel="tag">ast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disc/" rel="tag">disc</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eda/" rel="tag">eda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opencv/" rel="tag">opencv</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/" rel="tag">pandas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/profiling/" rel="tag">profiling</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rules/" rel="tag">rules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sift/" rel="tag">sift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%B0%E9%9A%BE%E6%A0%B7%E6%9C%AC/" rel="tag">困难样本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">图像处理</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0/" rel="tag">多任务学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" rel="tag">开发方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="tag">激活函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/RandomThoughts/" style="font-size: 10px;">RandomThoughts</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/ab%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">ab测试</a> <a href="/tags/ast/" style="font-size: 10px;">ast</a> <a href="/tags/disc/" style="font-size: 11.67px;">disc</a> <a href="/tags/eda/" style="font-size: 11.67px;">eda</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hardlab/" style="font-size: 16.67px;">hardlab</a> <a href="/tags/opencv/" style="font-size: 11.67px;">opencv</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/profiling/" style="font-size: 11.67px;">profiling</a> <a href="/tags/python/" style="font-size: 11.67px;">python</a> <a href="/tags/rules/" style="font-size: 10px;">rules</a> <a href="/tags/sql/" style="font-size: 11.67px;">sql</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" style="font-size: 10px;">个人知识库</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 11.67px;">图像处理</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" style="font-size: 10px;">布卢姆分类学</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" style="font-size: 10px;">开发方法</a> <a href="/tags/%E6%80%9D%E7%BB%B4/" style="font-size: 10px;">思维</a> <a href="/tags/%E6%80%A7%E8%83%BD/" style="font-size: 10px;">性能</a> <a href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" style="font-size: 10px;">性能调优</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 15px;">数据分析</a> <a href="/tags/%E6%96%B9%E6%B3%95/" style="font-size: 20px;">方法</a> <a href="/tags/%E6%B2%9F%E9%80%9A/" style="font-size: 10px;">沟通</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">深度学习</a> <a href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" style="font-size: 10px;">激活函数</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" style="font-size: 10px;">科学上网</a> <a href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" style="font-size: 18.33px;">算法设计技巧与分析</a> <a href="/tags/%E7%BB%98%E5%9B%BE/" style="font-size: 10px;">绘图</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">编程</a> <a href="/tags/%E8%B0%83%E8%AF%95/" style="font-size: 10px;">调试</a> <a href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" style="font-size: 10px;">金字塔原理</a>
-    </div>
-  </div>
 
   
 </aside>
@@ -490,7 +544,7 @@
   
     <a href="/categories/%E7%BC%96%E7%A8%8B" class="mobile-nav-link">编程</a>
   
-    <a href="/categories/%E7%AE%97%E6%B3%95" class="mobile-nav-link">算法设计</a>
+    <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" class="mobile-nav-link">算法设计</a>
   
     <a href="/archives" class="mobile-nav-link">历史文章</a>
   
