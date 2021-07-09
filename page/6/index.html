@@ -78,6 +78,152 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-MTL_overview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/05/23/MTL_overview/" class="article-date">
+  <time datetime="2021-05-23T02:41:20.000Z" itemprop="datePublished">2021-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/23/MTL_overview/">An Overview of Multi-Task Learning in Deep Neural Networks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <h1 id="3-深度MTL的两种方式"><a href="#3-深度MTL的两种方式" class="headerlink" title="3 深度MTL的两种方式"></a>3 深度MTL的两种方式</h1><p>hard parameter sharing vs. hard parameter sharing</p>
+<h2 id="3-2-Soft-parameter-sharing"><a href="#3-2-Soft-parameter-sharing" class="headerlink" title="3.2 Soft parameter sharing"></a>3.2 Soft parameter sharing</h2><p>每个任务有独立的模型，但是这些模型的参数受到一些限制条件的约束，以鼓励模型参数相似。这些约束来自于其他模型。</p>
+<h1 id="4-MTL为什么会有效？"><a href="#4-MTL为什么会有效？" class="headerlink" title="4 MTL为什么会有效？"></a>4 MTL为什么会有效？</h1><ol>
+<li>隐式的数据扩增</li>
+<li>注意力机制</li>
+<li>窃听机制</li>
+<li>表征偏差(representation bias)</li>
+<li>正则化</li>
+</ol>
+<h1 id="5-非神经网络模型的MTL"><a href="#5-非神经网络模型的MTL" class="headerlink" title="5 非神经网络模型的MTL"></a>5 非神经网络模型的MTL</h1><p>回顾 线性模型、核方法、贝叶斯方法中的多任务学习方法。具体的说，我们将讨论多任务学习中两个普遍存在的重要思想：1）通过norm正则化强制在task间稀疏性 <del>对任务间的不同强制加稀疏性约束的正则化项</del>（enforcing sparsity across tasks through norm regularization）；（2）对任务间的关系进行建模。值得注意的是，文献中的多任务方法大多是处理同质的场景，即他们认为所有任务都与单一的输出相关。例如，MNIST数据集上的多分类问题转换为10个二分类问题来求解。近年来的工作更多的是处理异质场景：每个任务都对应不同的输出。</p>
+<h2 id="5-1-对块进行稀疏正则化"><a href="#5-1-对块进行稀疏正则化" class="headerlink" title="5.1 对块进行稀疏正则化"></a>5.1 对块进行稀疏正则化</h2><p>现有的许多方法都对模型参数的稀疏性做了一些假设。</p>
+<p>文献8认为所有的模型共享特征的一个小的子集，落实到参数上面就是A的大部分行为0。To enforce this idea, 推广了L1范正则化方式：首先计算A的每一行的$l_q$范（对应着每一个特征维度），得到一个向量$b=[ |a_1|_q, …, |a_2|_q]$, 然后再计算此向量的$l_1$范。藉此来使得某些行为0。这种混合使用1范数和q范数的方法被称为$l_1/l_q$ norm。它们也被称为 <strong>block-sparse regularization</strong>, as they lead to entire rows of A being set to 0.</p>
+<p>有的人使用$l_1/l_{inf}$，有的人使用$l_1/l2$ (known as group lasso)。</p>
+<p>Group Lasso的优化不是凸的，但是通过惩罚tr(A) 可以将问题转换为凸的。tr(A)使得A的A的秩较低，因此使得A 的列向量存在一个低维空间中。</p>
+<p>尽管这个block-sparse regularization 直觉上是可行的，但是这与任务间在多大程度上共享特征是相关的。08年一篇论文证明了如果特征没有重叠过多，这样的正则化方式会使得它的效果较正常情况更差。在此基础上， [Jalali et al., 2010] improve upon block-sparse models by proposing a method that combines block-sparse and element-wise sparse regularization。它们分解参数矩阵A=B+S B is then e<strong>nforced to be block-sparse</strong> using <code>1/</code><strong>∞</strong> regularization, while S is made element-wise sparse using lasso. </p>
+<h2 id="5-2-学习任务间的关系"><a href="#5-2-学习任务间的关系" class="headerlink" title="5.2 学习任务间的关系"></a>5.2 学习任务间的关系</h2><p> group稀疏性约束可以强制模型仅关注一些特征，使得这些特征被所有任务共享。已有的所有方法假设多任务学习中所有任务之间是彼此紧密相关的。然而，事实并非如此，不是每个任务都与其他任务紧密关联。在这些场景中，与不相关的任务共享信息有可能会对性能造成伤害。这种现象称为负迁移（Negative Transfer）。除了稀疏性之外，我们更想要的是使用<u>某种先验知识来表明与一些任务是相关的</u>，而与另一些任务是无关的，在这种情况下，对<strong>任务的聚类约束显得更为合适</strong>。文献[15]提出了一种聚类约束来同时惩罚<strong>列向量及其方差</strong>的正则化：</p>
+<p>$\Omega=||mean(a)||^2  + \lambda/ T\sum_{t=1}^{T}||a·,t - mean(a)||^2 $</p>
+<p>$Mean(a) = (\sum_{t=1}^{T}a·,t) / T $ , 这个正则化强制使得T个模型的参数向它们的均值靠近，这个强度由lambda控制。论文中他们把这个方法用于核方法，但是这个方法也适用于线性模型。</p>
+<p>[Jacob et al., 2009] 对把潜在的聚类正则化更加显示，通过formalizing 聚类的constraint on A，并假设聚类的类别C提前已知的。他把这个惩罚分解为三个部分 norms。</p>
+<ul>
+<li>A global penalty which measures how large our column parameter vectors are on average </li>
+<li>A measure of between-cluster variance that measures how close to each other the clusters are.</li>
+<li>A measure of within-cluster variance that gauges how compact each cluster is.</li>
+</ul>
+<p>Final constraint is the <u>weighted sum of the thress norms</u>.</p>
+<p>As this constraint assumes clusters are known in advance, they introduce a convex relaxation of the<br>above penalty that allows to learn the clusters at the same time.</p>
+<p>在另外一个场景中，tasks可能不是以簇的形式出现，而是树的结构。[kim and Xing, 2010]扩展了group lasso以处理树结构的tasks。[Chen et al.,2010]将group lasso应用于图结构的tasks。</p>
+<p>除了前面的对模型关系进行建模的方法都采用norm regularization,也有其他的方法不采用正则化方式[Thrun and O’Sullivan, 1996]是第一批利用KNN进行tasks聚类的人，while [Ando and Tong, 2005]<br>learn <strong>a common structure</strong> from multiple related tasks <strong>with an application to semi-supervised learning半监督学习。</strong></p>
+<p>更多的其它学习多任务学习的tasks的关系使用的是贝叶斯方法：[Heskes, 2000]提出了对MTL的<strong>贝叶斯神经网络</strong>，通过对模型参数放置一个先验来鼓励tasks间的类似参数。</p>
+<p>[Lawrence and Platt, 2004] extend Gaussian processes (GP) to MTL by <strong>inferring parameters for a shared covariance matrix</strong>.相同的协方差矩阵。As this is <strong>computationally very expensive, they adopt a sparse approximation</strong> scheme that greedily selects the most informative examples. [Yu et al., 2005] also use GP for MTL by assuming that all models are sampled from a common prior. </p>
+<p>[Bakker and Heskes, 2003]在每一个task的layer上面放置一个高斯分布的先验。为了鼓励不同tasks间的相似，他们提出让参数的均值与task相关，并且用混合分布来对tasks进行聚类。需要注意的是，这个方法要求task的特性（定义聚类和mixtures的数量）提前指定。</p>
+<p>基于这个方法， [Xue et al., 2007] 从狄利克雷过程采样来获得这个分布，并让模型具有学习tasks间的相似性以及聚类数量的能力。They then share the same model among all tasks in the same cluster.[Daumé III, 2009] 提出了一个层次贝叶斯模型来学习潜在的tasks层次结构，while [Zhang and Yeung, 2010]使用GP-based正则化for MTL并且扩展了之前GP-based方法以在大setting下计算可行。</p>
+<p>其他的方法聚焦在在线多任务学习的设置：[Cavallanti et al., 2010]修改了存在的MTL方法以解决在线学习，他们也提出了一个正则化的感知机 的 MTL扩展，它以矩阵的形式编码了tasks的相关性。他们使用不同形式的正则化方式来bia this task relatedness matrix, e.g.也就是task的特性向量的临近度或者the spanned subspace’s dimension.需要注意的是，和前面的某些方法一样，它需要提前提供 构成这个矩阵的任务特性。 [Saha et al., 2011] then extend the previous approach by learning the task relationship<br>matrix.</p>
+<p>[Kang et al., 2011] assume that tasks form disjoint groups and that the tasks within each group lie<br>in a low-dimensional subspace. 每个组内的tasks共享同样的特征表征，他的参数和group assignment matrix一起学习，using an alternating minimization schema.然而，组间的完全不相关的假设并不是理想的方式，因为tasks也许总会共享一些对预测有利的特征。</p>
+<p>允许来自两个groups的两个tasks重叠，假设存在着一些 潜在的基任务。然后他们对每一个任务t的参数向量a_t建模 $a_t = Ls_t$ where$L R^{k*d}$ 是k个基任务的参数向量$s_t \in R^{k}$是线性组合的系数。此外，他们限制了线性组合为稀疏的，两个任务间的稀疏模式重叠度控制两个任务共享量。</p>
+<p>最后，[Crammer and Mansour, 2012] 学习了一个共享假设集的池子，然后映射每一个task到一个hypothesis. learn a small pool of shared hypotheses and then map each task to a single hypothesis.</p>
+<h1 id="6-深度学习领域的MTL"><a href="#6-深度学习领域的MTL" class="headerlink" title="6 深度学习领域的MTL"></a>6 深度学习领域的MTL</h1><p>它们都采用的是 hard and soft parameter sharing.</p>
+<h2 id="6-1-Deep-Relationship-Networks"><a href="#6-1-Deep-Relationship-Networks" class="headerlink" title="6.1 Deep Relationship Networks"></a>6.1 Deep Relationship Networks</h2><p>shared cnn + task specifc  fc layers, they also impose  matrix priors on the fully connected layers, 让模型能够学习任务间的关系。</p>
+<h2 id="6-2-完全适应-特征共享"><a href="#6-2-完全适应-特征共享" class="headerlink" title="6.2 完全适应 特征共享"></a>6.2 完全适应 特征共享</h2><h2 id="6-3-十字形网络"><a href="#6-3-十字形网络" class="headerlink" title="6.3 十字形网络"></a>6.3 十字形网络</h2><h2 id="6-4-低层次监督"><a href="#6-4-低层次监督" class="headerlink" title="6.4 低层次监督"></a>6.4 低层次监督</h2><p>NLP中低层次的监督，比如speech中的部分标注，具名实体识别，都可以作为低层级的监督标签，以额外任务的方式加入main task.</p>
+<h2 id="6-5-联合的多任务模型"><a href="#6-5-联合的多任务模型" class="headerlink" title="6.5 联合的多任务模型"></a>6.5 联合的多任务模型</h2><p>基于6.4的发现，[Hashimoto et al., 2016]预定义了一个包含多个NLP任务的层次模型。可以被视为一个多任务的联合模型。</p>
+<h2 id="6-6-不确定性-损失加权-Weighting-losses-with-uncertainty"><a href="#6-6-不确定性-损失加权-Weighting-losses-with-uncertainty" class="headerlink" title="6.6 不确定性 损失加权 Weighting losses with uncertainty"></a>6.6 不确定性 损失加权 Weighting losses with uncertainty</h2><p>(*) must read.</p>
+<p>Instead of learning the structure of sharing, [Kendall et al., 2017] take an orthogonal approach by <strong>considering the uncertainty of each tas</strong>k. They then adjust each task’s relative weight in the cost function by deriving a multi-task loss function based on <strong>maximizing the Gaussian likelihood</strong> with task-dependent uncertainty. </p>
+<h2 id="6-7-MTL的张量分解"><a href="#6-7-MTL的张量分解" class="headerlink" title="6.7 MTL的张量分解"></a>6.7 MTL的张量分解</h2><p>[类似于矩阵分解，把张量进行分解为共享参数与与具体任务相关的参数]</p>
+<h2 id="6-8-Sluice-Networks-水闸网络"><a href="#6-8-Sluice-Networks-水闸网络" class="headerlink" title="6.8 Sluice Networks 水闸网络"></a>6.8 Sluice Networks 水闸网络</h2><p>Finally, we propose Sluice Networks [Ruder et al., 2017], a model that generalizes Deep Learning-based MTL approaches such as <u>hard parameter sharing and cross-stitch networks, block-sparse</u> regularization approaches, as well as recent NLP approaches that create a task hierarchy. The model,<br>which can be seen in Figure 8, allows to learn what layers and subspaces should be shared, as well as  what layers the network has learned the best representations of the input sequences.</p>
+<h2 id="6-9-模型应该共享些什么？What-should-I-share-in-my-model"><a href="#6-9-模型应该共享些什么？What-should-I-share-in-my-model" class="headerlink" title="6.9 模型应该共享些什么？What should I share in my model?"></a>6.9 模型应该共享些什么？What should I share in my model?</h2><p>MTL历史上的模型都关注在不同tasks都来自相同的分布。尽管这一点有助于共享，但却不是总是成立。为了为MTL开发更为稳健的模型，我们需要应对来自不相关或者弱相关的任务的情况。</p>
+<p>尽管早期的MTL研究都预先定义好不同任务在网络的哪一层来共享，但这种方式并不能扩展并且很大程度上依赖于MTL架构。硬参数共享到现在仍然是MTL的范式，但是如果任务不是紧密相关的，它的效果会迅速下降。因此，近年的方法着重关注在 <strong>学习共享什么</strong>并且一般都比硬参数共享带来的效果提升大。此外，让模型具有学习tasks的层次关系非常有用，特别是需要不同的粒度的时候。</p>
+<p>MTL中让模型能够学习tasks彼此交互的方式对最终的效果有益。</p>
+<h1 id="7-额外tasks-Auxiliary-Tasks"><a href="#7-额外tasks-Auxiliary-Tasks" class="headerlink" title="7 额外tasks  Auxiliary Tasks"></a>7 额外tasks  Auxiliary Tasks</h1><p>related task Adversarial Hints Focusing attention Quantization smoothing Predicting inputs Using the feature to predict the present Representation Learning What auxiliary tasks are helpful?</p>
+<h2 id="7-1-Related-task"><a href="#7-1-Related-task" class="headerlink" title="7.1 Related task"></a>7.1 Related task</h2><p>for examples, predict class and coordinates</p>
+<h2 id="7-2-Adversarial-对抗"><a href="#7-2-Adversarial-对抗" class="headerlink" title="7.2 Adversarial 对抗"></a>7.2 Adversarial 对抗</h2><h2 id="7-3-Hints-提示"><a href="#7-3-Hints-提示" class="headerlink" title="7.3 Hints 提示"></a>7.3 Hints 提示</h2><p>对于目标任务来说，我们可以通过学习一些对最终效果有帮助的辅助任务。比如预测句子的sentiment，可以把句子是否含有positive  negative sentiment单词作为辅助任务。</p>
+<h2 id="7-4-Focusing-attention"><a href="#7-4-Focusing-attention" class="headerlink" title="7.4 Focusing attention"></a>7.4 Focusing attention</h2><p>额外的任务可以用于让模型关注在图片中某个部分，否则在main task上面可能会忽视这一部分。</p>
+<h2 id="7-5-Quantization-smoothing"><a href="#7-5-Quantization-smoothing" class="headerlink" title="7.5 Quantization smoothing"></a>7.5 Quantization smoothing</h2><p>Using less quantized auxiliary tasks might help in these cases, as they might be learned more easily due to their objective being smoother.</p>
+<h2 id="7-6-Predicting-inputs"><a href="#7-6-Predicting-inputs" class="headerlink" title="7.6 Predicting inputs"></a>7.6 Predicting inputs</h2><h2 id="7-7-Using-the-future-to-predict-the-present"><a href="#7-7-Using-the-future-to-predict-the-present" class="headerlink" title="7.7 Using the future to predict the present"></a>7.7 Using the future to predict the present</h2><h2 id="7-8-Representation-learning"><a href="#7-8-Representation-learning" class="headerlink" title="7.8 Representation learning"></a>7.8 Representation learning</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2021/05/23/MTL_overview/" data-id="ckqhzoafw0000x0s35l6xfksv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0/" rel="tag">多任务学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sql-WITH公用表表达式-common-table-expression" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/05/21/sql-WITH%E5%85%AC%E7%94%A8%E8%A1%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F-common-table-expression/" class="article-date">
+  <time datetime="2021-05-21T04:17:02.000Z" itemprop="datePublished">2021-05-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/21/sql-WITH%E5%85%AC%E7%94%A8%E8%A1%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F-common-table-expression/">Sql-WITH公用表表达式(common Table Expression)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>with as</code>用于创建存在于内存中的临时表；将复杂的查询拆分为多个查询。</p>
+        
+          <p class="article-more-link">
+            <a href="/2021/05/21/sql-WITH%E5%85%AC%E7%94%A8%E8%A1%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F-common-table-expression/#more">阅读更多</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2021/05/21/sql-WITH%E5%85%AC%E7%94%A8%E8%A1%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F-common-table-expression/" data-id="ckq6urhyj00004ss37raq3r4d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-python爬虫" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/23/python%E7%88%AC%E8%99%AB/" class="article-date">
@@ -230,146 +376,6 @@
 
 
   
-    <article id="post-DebugControllMethods" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/DebugControllMethods/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/DebugControllMethods/">调试</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-<!-- Table of Contents -->
-
-
-
-        <p>如何在让调试可控</p>
-<ul>
-<li><strong>Syntax errors</strong>: These are spelling errors in your code that actually cause the program not to run, like the Rust error shown above. These are usually easy to fix as long as you are familiar with the language’s syntax and know what the error messages mean.</li>
-<li><strong>Logic errors</strong>: These are errors where the syntax is actually correct, but the code is not what you intended it to be, meaning that the program runs incorrectly. These are often harder to fix than syntax errors, as there isn’t an error message to direct you to the source of the error.</li>
-</ul>
-<ul>
-<li><p>王工的debug标准流程</p>
-<ul>
-<li>overview</li>
-<li>确定做的事情可以work. </li>
-<li>没有看div的style，其将div高度射为固定的；div设置的高度设为固定的</li>
-<li>王工开始计算高度（自适应），发现做了之后不work。通过鼠标调整某个div的padding/margin之后，发现问题并没有得到解决。这说明调整这个问题不能解决</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>通过不断地删除代码，找到最小可运行代码。<ul>
-<li>CSS position设置错误，导致 图标显示不出来。通过不断地删除代码进行排查。（症状为  内容在页面上面看不到）</li>
-<li>另一种解决方式是在页面上通过<strong>调试</strong>判断DOM元素是否存在，如果存在那么程序就正确渲染了这部分。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>debug echarts不重新刷新的bug.</p>
-<p>描述：出现两个质量模型，点击了第一个质量模型并弹出分析结果页；此时点击第二个分析结果页，内容不更新并且最下部分的图像不重新刷！</p>
-</li>
-</ul>
-<p>​    经过debug，发现用到的time_range（处于state）中并没有改变。 =&gt; time_range在哪里修改的？ =&gt; 在那个地方发生了什么？【最终发现是因为调用接口失败，并没有成功设置 state中time_range变量】</p>
-<ul>
-<li><ul>
-<li>未设置echarts容纳块的高度，导致图像显示不出来。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>…{filtericon: <FilterFilled />}<ul>
-<li>没报错，但是这一段代码就是有问题</li>
-<li><FilterFilled />  未import,导致变量找不到。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>Chrome调试技巧</li>
-<li>Intellij调试技巧</li>
-<li></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/DebugControllMethods/" data-id="ckq4obj1p00018ss310iy1z33" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-MDNonLearning" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/MDNonLearning/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/MDNonLearning/">高效学习(Effective Learning)-MDN</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>It is great that you are putting some time into learning a new set of skills, but there are good practices to employ that will make your learning more effective. There also are times when you’ll get stuck and feel frustrated — even professional web developers feel like this regularly — and it pays to know about the most effective ways to try and get help so you can progress in your work. This article provides some hints and tips in both of these areas that will help you get more out of learning web development, as well as further reading so you can find out more information about each sub-topic should you wish..</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/09/06/MDNonLearning/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/MDNonLearning/" data-id="ckq4obj1w00038ss315f9hrn8" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -385,7 +391,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -395,7 +401,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">26</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -405,7 +411,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomThoughts/" rel="tag">RandomThoughts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab%E6%B5%8B%E8%AF%95/" rel="tag">ab测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ast/" rel="tag">ast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disc/" rel="tag">disc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eda/" rel="tag">eda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opencv/" rel="tag">opencv</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/" rel="tag">pandas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/profiling/" rel="tag">profiling</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rules/" rel="tag">rules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sift/" rel="tag">sift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/" rel="tag">团队合作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%B0%E9%9A%BE%E6%A0%B7%E6%9C%AC/" rel="tag">困难样本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">图像处理</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0/" rel="tag">多任务学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" rel="tag">开发方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="tag">激活函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomThoughts/" rel="tag">RandomThoughts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab%E6%B5%8B%E8%AF%95/" rel="tag">ab测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ast/" rel="tag">ast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disc/" rel="tag">disc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eda/" rel="tag">eda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opencv/" rel="tag">opencv</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/" rel="tag">pandas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/profiling/" rel="tag">profiling</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rules/" rel="tag">rules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sift/" rel="tag">sift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/" rel="tag">团队合作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%B0%E9%9A%BE%E6%A0%B7%E6%9C%AC/" rel="tag">困难样本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">图像处理</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0/" rel="tag">多任务学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" rel="tag">开发方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="tag">激活函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
