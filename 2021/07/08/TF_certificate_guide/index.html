@@ -15,7 +15,7 @@
 <meta property="og:description" content="tf证书主要考察四个方面的内容">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-08T02:14:01.000Z">
-<meta property="article:modified_time" content="2021-07-09T15:53:21.123Z">
+<meta property="article:modified_time" content="2021-07-09T17:02:20.776Z">
 <meta property="article:author" content="李金龙">
 <meta property="article:tag" content="tensorflow">
 <meta name="twitter:card" content="summary">
@@ -117,7 +117,7 @@
 
 <h1 id="1-Build-and-train-neural-network-models-using-TensorFlow-2-x"><a href="#1-Build-and-train-neural-network-models-using-TensorFlow-2-x" class="headerlink" title="(1) Build and train neural network models using TensorFlow 2.x"></a>(1) Build and train neural network models using TensorFlow 2.x</h1><p>You need to understand the foundational principles of machine learning (ML) and deep learning (DL) using TensorFlow 2.x. You need to know how to:<br>Use TensorFlow 2.x. </p>
 <ul>
-<li><input disabled="" type="checkbox"> Build, compile and train machine learning (ML)  models using TensorFlow. </li>
+<li>Build, compile and train machine learning (ML)  models using TensorFlow. </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for demonstration</span></span><br><span class="line">modl = tf.keras.models.Sequential([</span><br><span class="line">    tf.keras.layers.Conv2D(filters=<span class="number">128</span>, kernel_size=(<span class="number">3</span>,<span class="number">3</span>),strides=(<span class="number">1</span>,<span class="number">1</span>),</span><br><span class="line">                          padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>)</span><br><span class="line">    tf.keras.layers.GlobalAveragePooling(),</span><br><span class="line">    </span><br><span class="line">    tf.keras.layers.Dense(nb_classes, activation=<span class="string">'sigmod(if binary)/softmax(multiclass)'</span>)</span><br><span class="line">])</span><br><span class="line">model.compile(loss=<span class="string">'binary_corssentropy/categorical_crossentropy'</span>,</span><br><span class="line">             optimizer=<span class="string">'rmpsprop'</span>,</span><br><span class="line">             metrics=[<span class="string">'acc'</span>])</span><br><span class="line">model.fit(data)</span><br><span class="line">model.fit(xs, ys)</span><br></pre></td></tr></table></figure>
 
@@ -125,17 +125,17 @@
 <li>除序列模型以外，有其他较典型的模型吗？</li>
 </ol>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Preprocess data to get it ready for use in a model. </p>
+<li><p>Preprocess data to get it ready for use in a model. </p>
 <ol>
 <li>数据的维度</li>
 <li>归一化</li>
 <li>训练数据和测试数据的一致性</li>
 </ol>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use models to predict results. </p>
+<li><p>Use models to predict results. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model.predict(ds)</span><br><span class="line">model.predict(xs)</span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Build sequential models with multiple layers. </p>
+<li><p>Build sequential models with multiple layers. </p>
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1: add all layers at a time</span></span><br><span class="line">modl = tf.keras.models.Sequential([</span><br><span class="line">    tf.keras.layers.Conv2D(filters=<span class="number">128</span>, kernel_size=(<span class="number">3</span>,<span class="number">3</span>),strides=(<span class="number">1</span>,<span class="number">1</span>),</span><br><span class="line">                          padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>)</span><br><span class="line">    tf.keras.layers.GlobalAveragePooling(),</span><br><span class="line">    </span><br><span class="line">    tf.keras.layers.Dense(nb_classes, activation=<span class="string">'sigmod(if binary)/softmax(multiclass)'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2: 逐个增加序列模型的每一层</span></span><br><span class="line">model = tf.keras.models.Sequential()</span><br><span class="line">model.add(tf.keras.layers.GlobalAveragePooling())</span><br></pre></td></tr></table></figure>
@@ -143,11 +143,11 @@
 
 
 <ul>
-<li><input disabled="" type="checkbox"> <p>Build and train models for binary classification. </p>
+<li><p>Build and train models for binary classification. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Build and train models for multi-class categorization. </p>
+<li><p>Build and train models for multi-class categorization. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Plot loss and accuracy of a trained model. </p>
+<li><p>Plot loss and accuracy of a trained model. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hist = history.history <span class="comment"># dict</span></span><br><span class="line">loss, acc = hist[<span class="string">'loss'</span>], hist[<span class="string">'accuracy'</span>]</span><br><span class="line"></span><br><span class="line">epochs = list(range(len(loss)))</span><br><span class="line"></span><br><span class="line">plt.plot(epochs, loss, color=<span class="string">'b'</span>)</span><br><span class="line">plt.plot(epochs, acc, color=<span class="string">'r'</span>)</span><br><span class="line">plt.legend([<span class="string">'loss'</span>, <span class="string">'accuracy'</span>])</span><br></pre></td></tr></table></figure>
 
 
@@ -155,7 +155,7 @@
 </li>
 </ul>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Identify strategies to prevent overfitting, including augmentation and dropout. </p>
+<li><p>Identify strategies to prevent overfitting, including augmentation and dropout. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 防止过拟合策略：1. dropout 2. augmentation</span></span><br><span class="line"><span class="comment"># 1. dropout</span></span><br><span class="line">tf.layers.Dropout(rate)</span><br><span class="line"><span class="comment"># 2. augmentation</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.image <span class="keyword">import</span> ImageDataGenerator</span><br><span class="line">train_datagen = ImageGenerator.rescale(</span><br><span class="line">    rescale = <span class="number">1.</span>/<span class="number">255</span>,</span><br><span class="line">    rotation_range=<span class="number">20</span>,</span><br><span class="line">    width_shift_range=<span class="number">0.2</span>,</span><br><span class="line">    height_shift_range=<span class="number">0.2</span>,</span><br><span class="line">    horizontal_flip=<span class="literal">True</span>)</span><br><span class="line">train_datagen.flow_from_directory(</span><br><span class="line">	dir,</span><br><span class="line">	target_size=(<span class="number">150</span>,<span class="number">150</span>),</span><br><span class="line">	batch_size=<span class="number">10</span>,</span><br><span class="line">	class_mode=<span class="string">'binary'</span>)</span><br></pre></td></tr></table></figure>
 
 <ol>
@@ -172,21 +172,21 @@
 <li>只在训练时生效. <code>layer(training=True)</code> </li>
 </ol>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Use pretrained models (transfer learning). </p>
+<li><p>Use pretrained models (transfer learning). </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># load inception_v3</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.applications.inception_v3 <span class="keyword">import</span> InceptionV3</span><br><span class="line"></span><br><span class="line">pre_traine_model = InceptionV3(input_shape=(<span class="number">150</span>, <span class="number">150</span>),</span><br><span class="line">                              include_top= <span class="literal">False</span>, <span class="comment"># include last dense layer?</span></span><br><span class="line">                              weights=<span class="literal">None</span>) <span class="comment"># where weights</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Extract features from pre-trained models. </p>
+<li><p>Extract features from pre-trained models. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#for layer in pre_trained_model.layers:</span></span><br><span class="line"><span class="comment">#    layer.trainable = False</span></span><br><span class="line">extracted_features = model(inputs)</span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Ensure that inputs to a model are in the correct shape. </p>
+<li><p>Ensure that inputs to a model are in the correct shape. </p>
 <ul>
 <li>模型的第一层传入<code>input_shape</code>参数</li>
 </ul>
 </li>
-<li><input disabled="" type="checkbox"> <p>Ensure that you can match test data to the input shape of a neural network. </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- [ ] Ensure you can match output data of a neural network to specified input shape <span class="keyword">for</span> test data. </span><br><span class="line"></span><br><span class="line">- [ ] Understand batch loading of data. </span><br><span class="line"></span><br><span class="line">  ```python</span><br><span class="line">  model.fit(xs, ys, batch_size=<span class="number">32</span>)</span><br><span class="line">  </span><br><span class="line">  modelf.fit(Dataset)</span><br></pre></td></tr></table></figure>
+<li><p>Ensure that you can match test data to the input shape of a neural network. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* Ensure you can match output data of a neural network to specified input shape <span class="keyword">for</span> test data. </span><br><span class="line"></span><br><span class="line">* Understand batch loading of data. </span><br><span class="line"></span><br><span class="line">  ```python</span><br><span class="line">  model.fit(xs, ys, batch_size=<span class="number">32</span>)</span><br><span class="line">  </span><br><span class="line">  modelf.fit(Dataset)</span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use callbacks to trigger the end of training cycles. </p>
+<li><p>Use callbacks to trigger the end of training cycles. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyCallbak</span><span class="params">(tf.keras.callbacks.Callback)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_epoch_end</span><span class="params">(self, epoch, logs=&#123;&#125;)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> logs.get(<span class="string">'acc'</span>) &gt; DESIRED_ACCURACY:</span><br><span class="line">            print(<span class="string">"\n Reached desired accuracy"</span>)</span><br><span class="line">            self.model.stop_training = <span class="literal">True</span></span><br><span class="line">model.fit(callbacks = [MyCallback()])</span><br></pre></td></tr></table></figure>
 
 
@@ -194,13 +194,13 @@
 </li>
 </ul>
 <ul>
-<li><input disabled="" type="checkbox"> Use datasets from different sources. </li>
+<li>Use datasets from different sources. </li>
 </ul>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Use datasets in different formats, including json and csv. </p>
+<li><p>Use datasets in different formats, including json and csv. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv, json, zipfile</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'csv.csv'</span>, mode=<span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    reader = csv.reader(f, delimiter=<span class="string">','</span>)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> reader:</span><br><span class="line">        <span class="comment"># process row</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'json.json'</span>, mode=<span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    datastore = json.load(f)</span><br><span class="line">    </span><br><span class="line">zip_ref = zipfile.ZipFile(<span class="string">'zip.zip'</span>, <span class="string">'r'</span>)</span><br><span class="line">zip_ref.extractall(<span class="string">"tmp/training"</span>)</span><br><span class="line">zip_ref.close()</span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use datasets from tf.data.datasets. </p>
+<li><p>Use datasets from tf.data.datasets. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.fit(dataset)</span><br></pre></td></tr></table></figure>
 
 
@@ -209,26 +209,26 @@
 </ul>
 <h1 id="2-Image-classification"><a href="#2-Image-classification" class="headerlink" title="(2)  Image classification"></a>(2)  Image classification</h1><p>You need to understand how to build image recognition and object detection models  with deep neural networks and convolutional neural networks using TensorFlow 2.x. You need to know how to: </p>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Define Convolutional neural networks with Conv2D and pooling layers. </p>
+<li><p>Define Convolutional neural networks with Conv2D and pooling layers. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">model = tf.keras.models.Sequential([</span><br><span class="line">    tf.keras.layers.Conv2D(<span class="number">16</span>, (<span class="number">3</span>,<span class="number">3</span>), activation=<span class="string">'relu'</span>, input_shape=(<span class="number">150</span>,<span class="number">150</span>,<span class="number">3</span>)),</span><br><span class="line">    tf.keras.layers.MaxPooling2D(<span class="number">2</span>,<span class="number">2</span>),</span><br><span class="line">    tf.keras.layers.Conv2D(<span class="number">32</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>),</span><br><span class="line">    tf.keras.layers.MaxPooling2D(<span class="number">2</span>,<span class="number">2</span>),</span><br><span class="line">    tf.keras.layers.Conv2D(<span class="number">64</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>),</span><br><span class="line">    tf.keras.layers.MaxPooling2D(<span class="number">2</span>,<span class="number">2</span>),</span><br><span class="line">    tf.keras.layers.Flatten(),</span><br><span class="line">    tf.keras.layers.Dense(<span class="number">512</span>, activation=<span class="string">'relu'</span>),</span><br><span class="line">    tf.keras.layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=RMSprop(lr=<span class="number">0.001</span>), loss=<span class="string">'binary_crossentropy'</span>, metrics=[<span class="string">'acc'</span>])</span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Build and train models to process real-world image datasets. </p>
+<li><p>Build and train models to process real-world image datasets. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Understand how to use convolutions to improve your neural network. </p>
+<li><p>Understand how to use convolutions to improve your neural network. </p>
 <ul>
 <li>problem: 过拟合、欠拟合；数据情况；</li>
 <li>查看数据关系情况：时序、图像、音频</li>
 <li></li>
 </ul>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use real-world images in different shapes and sizes.. </p>
+<li><p>Use real-world images in different shapes and sizes.. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use image augmentation to prevent overfitting.  </p>
+<li><p>Use image augmentation to prevent overfitting.  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.image <span class="keyword">import</span> ImageDataGenerator</span><br><span class="line">train_datagen = ImageGenerator(</span><br><span class="line">    rescale = <span class="number">1.</span>/<span class="number">255</span>,</span><br><span class="line">    rotation_range=<span class="number">20</span>,</span><br><span class="line">    width_shift_range=<span class="number">0.2</span>,</span><br><span class="line">    height_shift_range=<span class="number">0.2</span>,</span><br><span class="line">    horizontal_flip=<span class="literal">True</span>) <span class="comment"># 图像生成时所做的变换</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use ImageDataGenerator. </p>
+<li><p>Use ImageDataGenerator. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Understand how ImageDataGenerator labels images based on the directory structure. </p>
+<li><p>Understand how ImageDataGenerator labels images based on the directory structure. </p>
 <ul>
 <li><p><code>ImageDataGenerator .flow_from_directory</code></p>
 <p><code>data/train/dogs/xxx.jpg and data/validation/dogs/xxx.jpg</code></p>
@@ -242,15 +242,15 @@
 </ul>
 <h1 id="3-Natural-language-processing-NLP"><a href="#3-Natural-language-processing-NLP" class="headerlink" title="(3)  Natural language processing (NLP)"></a>(3)  Natural language processing (NLP)</h1><p>You need to understand how to use neural networks to solve natural language processing problems using TensorFlow. You need to know how to: </p>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Build natural language processing systems using TensorFlow. </p>
+<li><p>Build natural language processing systems using TensorFlow. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Prepare text to use in TensorFlow models. </p>
+<li><p>Prepare text to use in TensorFlow models. </p>
 <ul>
 <li>分词、文本变数字编码序列</li>
 <li>数字序列可以用作 词嵌入层 的输入</li>
 </ul>
 </li>
-<li><input disabled="" type="checkbox"> <p>Build models that  identify the category of a piece of text using binary categorization </p>
+<li><p>Build models that  identify the category of a piece of text using binary categorization </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = tf.kears.models.Sequential([</span><br><span class="line">    tf.keras.layers.word_embedding(</span><br><span class="line">    	voc_size, embed_size),</span><br><span class="line">    tf.keras.layers.LSTM(<span class="number">64</span>),</span><br><span class="line">    tf.keras.layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>)</span><br><span class="line">])</span><br><span class="line">model.compile(loss=<span class="string">'binary_crossentropy'</span>,</span><br><span class="line">             optimizer=<span class="string">'rmsprop'</span>,</span><br><span class="line">             metrics=[<span class="string">'acc'</span>])</span><br></pre></td></tr></table></figure>
 
 
@@ -258,7 +258,7 @@
 </li>
 </ul>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Build models that identify the category of a piece of text using multi-class categorization </p>
+<li><p>Build models that identify the category of a piece of text using multi-class categorization </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = tf.kears.models.Sequential([</span><br><span class="line">    tf.keras.layers.word_embedding(</span><br><span class="line">    	voc_size, embed_size),</span><br><span class="line">    tf.keras.layers.LSTM(<span class="number">64</span>),</span><br><span class="line">    tf.keras.layers.Dense(nb_classes, activation=<span class="string">'softmax'</span>)</span><br><span class="line">])</span><br><span class="line">model.compile(loss=<span class="string">'multiclass_crossentropy'</span>,</span><br><span class="line">             optimizer=<span class="string">'rmsprop'</span>,</span><br><span class="line">             metrics=[<span class="string">'acc'</span>])</span><br></pre></td></tr></table></figure>
 
 
@@ -266,16 +266,16 @@
 </li>
 </ul>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Use word embeddings in your TensorFlow model. </p>
+<li><p>Use word embeddings in your TensorFlow model. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use LSTMs in your model to classify text for either binary or multi-class categorization. </p>
+<li><p>Use LSTMs in your model to classify text for either binary or multi-class categorization. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Add RNN and GRU layers to your model. </p>
+<li><p>Add RNN and GRU layers to your model. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model = tf.kears.models.Sequential([</span><br><span class="line">    tf.keras.layers.word_embedding(</span><br><span class="line">    	voc_size, embed_size),</span><br><span class="line">    tf.keras.layers.RNN(<span class="number">64</span>),</span><br><span class="line">    tf.keras.layers.GRU(<span class="number">64</span>),</span><br><span class="line">    tf.keras.layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use RNNS, LSTMs, GRUs and CNNs in models that work with text. </p>
+<li><p>Use RNNS, LSTMs, GRUs and CNNs in models that work with text. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Train LSTMs on existing text to generate text (such as songs and poetry) </p>
+<li><p>Train LSTMs on existing text to generate text (such as songs and poetry) </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># given a sequences of text, generate following 100 word</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将过去的所有文字输入模型预测下一个word</span></span><br><span class="line">seqs = []</span><br><span class="line">tokenizer.texts_to_sequences(texts)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_words</span><span class="params">(text, nb_words)</span>:</span></span><br><span class="line">    seq = tokenizer.texts_to_sequences(text)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(nb_words):</span><br><span class="line">        word_idx = model.predict_class(seq)</span><br><span class="line">        seq += word_idx,</span><br><span class="line">    <span class="comment"># convert seq to word</span></span><br><span class="line">   	words = []</span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> seq:</span><br><span class="line">    	word = <span class="string">''</span></span><br><span class="line">        <span class="keyword">for</span> i,w <span class="keyword">in</span> tokenizer.word_index.items():</span><br><span class="line">            <span class="keyword">if</span> i == s:</span><br><span class="line">                word = w</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">         words += word,</span><br><span class="line">    <span class="keyword">return</span> words</span><br></pre></td></tr></table></figure>
 
 
@@ -284,7 +284,7 @@
 </ul>
 <h1 id="4-Time-series-sequences-and-predictions"><a href="#4-Time-series-sequences-and-predictions" class="headerlink" title="(4) Time series, sequences and predictions"></a>(4) Time series, sequences and predictions</h1><p>You need to understand how to solve time series and forecasting problems in TensorFlow. You need to know how to: </p>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Train, tune and use time series, sequence and prediction models. </p>
+<li><p>Train, tune and use time series, sequence and prediction models. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 时序数据一维度卷积时候padding要注意，使用'casual'的方式在seq的前部进行padding；以免对last part的信号产生干扰。</span></span><br><span class="line">model = tf.keras.models.Sequential([</span><br><span class="line">  tf.keras.layers.Conv1D(filters=<span class="number">64</span>, kernel_size=<span class="number">3</span>, strides=<span class="number">1</span>,  </span><br><span class="line">                         padding=<span class="string">'causal'</span>,</span><br><span class="line">                         activation=<span class="string">'relu'</span>,</span><br><span class="line">                         input_shape=(<span class="literal">None</span>,<span class="number">1</span>)),</span><br><span class="line">  tf.keras.layers.LSTM(<span class="number">64</span>, return_sequences=<span class="literal">True</span>),</span><br><span class="line">  tf.keras.layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>),</span><br><span class="line">  tf.keras.layers.Lambda(<span class="keyword">lambda</span> x: x * <span class="number">100</span>)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
 
 
@@ -292,27 +292,27 @@
 </li>
 </ul>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Prepare data for time series learning. </p>
+<li><p>Prepare data for time series learning. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sequens to training data</span></span><br><span class="line"></span><br><span class="line">series = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="comment"># very long sequences</span></span><br><span class="line">window_size = <span class="number">30</span> <span class="comment"># 从时序数据中根据过去的30个点预测接下来的一个点</span></span><br><span class="line"></span><br><span class="line">ds = tf.data.Dataset.from_tensor_slices(series)</span><br><span class="line">ds = ds.window(size=window_size+<span class="number">1</span>, shift=<span class="number">1</span>, drop_remainder=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">ds = ds.flat_map(<span class="keyword">lambda</span> x: x.batch(window_size+<span class="number">1</span>) )</span><br><span class="line">ds = ds.map(<span class="keyword">lambda</span> x: (x[:<span class="number">-1</span>], x[<span class="number">-1</span>]))</span><br><span class="line"></span><br><span class="line">ds.shuffle(<span class="number">10</span>).map(<span class="keyword">lambda</span> x, y: (</span><br><span class="line">	tf.expand_dims(x, axis=<span class="number">-1</span>), tf.expand_dims(y, axis=<span class="number">-1</span>))</span><br><span class="line">                  ).batch(<span class="number">128</span>).prefetch(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># ds yields dataset of batch size 128 each iteration</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Understand Mean Average Error (MAE) and how it can be used to evaluate accuracy of sequence models. </p>
+<li><p>Understand Mean Average Error (MAE) and how it can be used to evaluate accuracy of sequence models. </p>
 <p><code>err = abs(true - pred)</code></p>
 <p>评估预测的值与真实数据的出入(deviation)</p>
 </li>
 </ul>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Use RNNs and CNNs for time series, sequence and forecasting models. </p>
+<li><p>Use RNNs and CNNs for time series, sequence and forecasting models. </p>
 <p>在温度时序预测中，数据的size为 <code>(B, time_steps, 1)</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CNNs</span></span><br><span class="line">tf.keras.layers.Conv1D(filter, ks, strides, padding)</span><br><span class="line"></span><br><span class="line">tf.keras.layers.RNN(units=<span class="number">64</span>) <span class="comment"># LSTM/GRU  or with Bidirectional</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><input disabled="" type="checkbox"> <p>Identify when to use trailing versus centred windows. </p>
+<li><p>Identify when to use trailing versus centred windows. </p>
 <p><a href="https://ww2.mathworks.cn/matlabcentral/answers/392300-what-is-meant-by-centered-moving-average-is-it-different-from-moving-average" target="_blank" rel="noopener">trailing versus centred windows</a></p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Use TensorFlow for forecasting. </p>
+<li><p>Use TensorFlow for forecasting. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Prepare features and labels. </p>
+<li><p>Prepare features and labels. </p>
 </li>
-<li><input disabled="" type="checkbox"> <p>Identify and compensate for sequence bias. </p>
+<li><p>Identify and compensate for sequence bias. </p>
 <p>subsequent bias? (bidirectional_layer?)</p>
 <p><a href="https://towardsdatascience.com/prediction-and-analysis-of-time-series-data-using-tensorflow-2136ef633018" target="_blank" rel="noopener">Sequence bias</a> is when <strong>the order of things can impact the selection of things</strong>. For example, if I were to ask you your favorite TV show, and listed “Game of Thrones”, “Killing Eve”, “Travelers” and “Doctor Who” in that order, you’re probably more likely to select ‘Game of Thrones’ as you are familiar with it, and it’s the first thing you see. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dataset.shuffle(buffer_size=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
@@ -322,7 +322,7 @@
 </li>
 </ul>
 <ul>
-<li><input disabled="" type="checkbox"> <p>Adjust the learning rate dynamically in time series, sequence and prediction models. </p>
+<li><p>Adjust the learning rate dynamically in time series, sequence and prediction models. </p>
 <p>如何动态调整learning rate? <code>callbacks</code></p>
 <p>callback如何动态修正 learning rate?</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tf.keras.callbacks.LearningRateScheduler(</span><br><span class="line">    schedule, verbose=<span class="number">0</span></span><br><span class="line">) <span class="comment"># schedule: 可接收(epoch, lr)两个参数的函数</span></span><br><span class="line"></span><br><span class="line">lr_schedule = tf.keras.callbacks.LearningRateScheduler(</span><br><span class="line">    <span class="keyword">lambda</span> epoch: <span class="number">1e-8</span> * <span class="number">10</span>**(epoch / <span class="number">20</span>)) <span class="comment"># callbacks</span></span><br></pre></td></tr></table></figure>
