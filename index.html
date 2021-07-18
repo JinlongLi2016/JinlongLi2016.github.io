@@ -246,98 +246,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-      
-<!-- Table of Contents -->
-
-
-
         <ul>
 <li>深度学习基础：<a href="https://docs.qq.com/pdf/DRWtQRHFmdUJjdmNx" target="_blank" rel="noopener">点击查看内容</a></li>
 </ul>
-<h1 id="网络层的归一化方式"><a href="#网络层的归一化方式" class="headerlink" title="网络层的归一化方式"></a>网络层的归一化方式</h1><p>setup： 特征图谱的维度是 (B, C, H, W)</p>
-<ul>
-<li><p>BN（批归一化）</p>
-<p>对整个特征图谱的通道层计算μ和σ:一共得到C个(μ,σ)</p>
-</li>
-<li><p>layer normalization（层归一化）</p>
-<p>对每个样本的特征图谱计算(μ,σ)：一共得到B个(μ,σ)</p>
-<p>适用于RNN</p>
-</li>
-<li><p>instance normalization（实例归一化）</p>
-<p>对每个样本的每一个通道计算(μ,σ)：一共得到(B, C)个(μ,σ)</p>
-<p>适用于“风格迁移”场景</p>
-</li>
-<li><p>group normalization（组归一化）</p>
-<p>介于<strong>层归一化</strong>和<strong>实例归一化</strong>之间：每一个样本单独计算(μ,σ)，但是却是将C个通道分成S个组，每个组单独计算(μ,σ)。一共得到S个(μ,σ)。</p>
-</li>
-</ul>
-<h1 id="如何理解Batch？"><a href="#如何理解Batch？" class="headerlink" title="如何理解Batch？"></a>如何理解Batch？</h1><pre><code>为什么不一个样本一个样本的方式输入，而要一次输入say 64个样本？硬件更加强大，1个样本与64个样本所用时间相差不大；遍历一次数据集的速度也更快；每一次更新的梯度综合多个样本，抑制某些样本带来的波动，收敛速度更快。</code></pre><h1 id="评估指标"><a href="#评估指标" class="headerlink" title="评估指标"></a>评估指标</h1><h2 id="指标基础"><a href="#指标基础" class="headerlink" title="指标基础"></a>指标基础</h2><table>
-<thead>
-<tr>
-<th>预测 \ 实际</th>
-<th>1[实际，阳性样本]</th>
-<th>0[实际，阴性样本]</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1[预测]</td>
-<td>TP</td>
-<td>FP</td>
-</tr>
-<tr>
-<td>0[预测]</td>
-<td>FN</td>
-<td>TN</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>基础：TP、FP、FN、TN</p>
-<p>第二个字母表示预测结果：P，阳性；N，阴性</p>
-<p>第一个T、F表示预测结果是否正确：T，正确；F，错误</p>
-<p>TP：正确预测为阳性之样本</p>
-<p>FP：错误预测为阳性之样本</p>
-</li>
-<li><p>精度(precision) = 预测为正的样本中确实为正的比率</p>
-</li>
-</ul>
-<p>TPR(true positive rate)：所有阳性样本被正确判断为阳性的比例</p>
-<p>FPR(false positive rate)：所有阴性样本中，错误地判断为阳性之比例</p>
-<h2 id="ROC"><a href="#ROC" class="headerlink" title="ROC"></a>ROC</h2><p>以 TPR为纵轴，FPR为横轴，绘制一条曲线即为ROC(receiver operating characteristic)，越靠近左上角越好。</p>
-<p>【1. 如何绘制ROC？2.】</p>
-<h2 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h2><p>由于ROC曲线并不能清晰地表明哪一个分类模型较好，因此采用AUC进行评估。ROC曲线下面积即为AUC值。</p>
-<h2 id="PR曲线-precision-recall"><a href="#PR曲线-precision-recall" class="headerlink" title="PR曲线 (precision-recall)"></a>PR曲线 (precision-recall)</h2><ul>
-<li><p>precision：精度</p>
-</li>
-<li><p>recall：召回率 </p>
-</li>
-</ul>
-<p><u>以精度为纵轴，召回率为横轴，所得到的曲线。曲线靠近右上方。曲线从(0, 1) 一直到(1, 0)</u></p>
-<p><img src="https://res-static.hc-cdn.cn/fms/img/62dc5d1701be39c169c52efb51c831961603764276224.png" alt=""></p>
-<h2 id="高级算法工程师-视觉算法方向"><a href="#高级算法工程师-视觉算法方向" class="headerlink" title="高级算法工程师-视觉算法方向"></a>高级算法工程师-视觉算法方向</h2><ul>
-<li><h4 id="工作地点："><a href="#工作地点：" class="headerlink" title="工作地点："></a>工作地点：</h4><p> 成都</p>
-<h4 id="学历："><a href="#学历：" class="headerlink" title="学历："></a>学历：</h4><p> 硕士研究生</p>
-</li>
-<li><h4 id="工作类型："><a href="#工作类型：" class="headerlink" title="工作类型："></a>工作类型：</h4><p> 全职</p>
-<h4 id="发布时间："><a href="#发布时间：" class="headerlink" title="发布时间："></a>发布时间：</h4><p> 2021-07-06</p>
-</li>
-<li><h4 id="ID："><a href="#ID：" class="headerlink" title="ID："></a>ID：</h4><p> 4216</p>
-</li>
-</ul>
-<h3 id="工作内容-职位描述："><a href="#工作内容-职位描述：" class="headerlink" title="工作内容/职位描述："></a>工作内容/职位描述：</h3><p>1、负责人机交互,三维重建等算法研究及开发；<br>2、负责相应算法在VR等设备上的落地与性能调优。</p>
-<h3 id="任职资格："><a href="#任职资格：" class="headerlink" title="任职资格："></a>任职资格：</h3><p>1、熟悉c++,python等编程语言，编码能力强；<br>2、熟练使用tensorflow/torch/caffe等深度学习框架；<br>3、图像及视频处理深厚背景知识，对视觉问题有很好的逻辑及建模能力；<br>4、有视觉领域相关的论文发表或有相关项目工程落地经验。</p>
-<p>22-40k</p>
-<h3 id="职位描述"><a href="#职位描述" class="headerlink" title="职位描述"></a>职位描述</h3><p>职位描述<br>1、梳理业务逻辑模型，管理和建设数据体系；<br>2、根据用户行为数据进行业务分析，帮助业务快速提升；<br>3、建设业务分析模型，不断评估和优化业务分析模型。<br>职位要求<br>1、数学、统计学、计算机相关专业优先，对数据分析有强烈兴趣者优先；<br>2、有IT大数据分析经验，有大型互联网公司数据分析经验、互联网数据建模分析经验者优先；<br>3、有一线产品或运营业务优化经验者优先；<br>4、精通 SQL，熟练使用 R/Python 进行数据清洗、分析；<br>5、能快速理解业务，发掘业务细节和数据之间的联系；<br>6、掌握 Tableau 等 BI 工具尤佳。</p>
-<p>距离应该满足三个特性</p>
-<ol>
-<li>非负 $dist(x, y) &gt;= 0$</li>
-<li>对称 $dist(x, y) = dist(y, x)$</li>
-<li>三角不等式 $dist(x, y) &lt;= dist(x, z) + dist(z, y)$</li>
-</ol>
-<p>余弦距离满足严格距离的定义吗？</p>
-<ul>
-<li>dist</li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a href="/2021/06/28/%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/#more">阅读更多</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
