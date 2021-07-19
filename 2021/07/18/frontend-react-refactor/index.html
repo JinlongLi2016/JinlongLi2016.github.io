@@ -5,16 +5,19 @@
   
 
   
-  <title>野生芦苇</title>
+  <title>React重构案例 | 野生芦苇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Captains HomePage, contains technique related stuff.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="野生芦苇">
-<meta property="og:url" content="http://github.com/jinlongli2016/page/2/index.html">
+  <meta name="description" content="React组件重构：嵌套+继承 与 高阶组件 2018-07-09 11:336047029 前言在最近做的一个react项目中，遇到了一个比较典型的需要重构的场景：提取两个组件中共同的部分。 最开始通过使用嵌套组件和继承的方式完成了这次重构。 但是后来又用高阶组件重新写了一遍，发现更好一点。 在这里记录下这两种方式以便之后参考和演进。 本次重构的场景因为场景涉及到具体的业务，所以我现在将它简化为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React重构案例">
+<meta property="og:url" content="http://github.com/jinlongli2016/2021/07/18/frontend-react-refactor/index.html">
 <meta property="og:site_name" content="野生芦苇">
-<meta property="og:description" content="Captains HomePage, contains technique related stuff.">
+<meta property="og:description" content="React组件重构：嵌套+继承 与 高阶组件 2018-07-09 11:336047029 前言在最近做的一个react项目中，遇到了一个比较典型的需要重构的场景：提取两个组件中共同的部分。 最开始通过使用嵌套组件和继承的方式完成了这次重构。 但是后来又用高阶组件重新写了一遍，发现更好一点。 在这里记录下这两种方式以便之后参考和演进。 本次重构的场景因为场景涉及到具体的业务，所以我现在将它简化为">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-18T12:47:00.000Z">
+<meta property="article:modified_time" content="2021-07-19T12:51:37.068Z">
 <meta property="article:author" content="李金龙">
+<meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="https://shang.qq.com/wpa/qunwpa?idkey=b1f60f79b3ca3529de11e4d2eb36924a35f57ad3419b3a7563bbaad8043ba008" title="野生芦苇" type="application/atom+xml">
@@ -76,9 +79,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-frontend-react-refactor" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-frontend-react-refactor" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/07/18/frontend-react-refactor/" class="article-date">
   <time datetime="2021-07-18T12:47:00.000Z" itemprop="datePublished">2021-07-18</time>
@@ -95,8 +96,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/18/frontend-react-refactor/">React重构案例</a>
+    <h1 class="article-title" itemprop="name">
+      React重构案例
     </h1>
   
 
@@ -106,6 +107,11 @@
       
       
 <!-- Table of Contents -->
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本次重构的场景"><span class="toc-number">2.</span> <span class="toc-text">本次重构的场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用嵌套组件进行重构"><span class="toc-number">3.</span> <span class="toc-text">使用嵌套组件进行重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用继承组件的方式进行重构"><span class="toc-number">4.</span> <span class="toc-text">使用继承组件的方式进行重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用高阶组件进行重构"><span class="toc-number">5.</span> <span class="toc-text">使用高阶组件进行重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+  </div>
 
 
 
@@ -182,207 +188,28 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-TF_certificate_guide" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/07/08/TF_certificate_guide/" class="article-date">
-  <time datetime="2021-07-08T02:14:01.000Z" itemprop="datePublished">2021-07-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2021/07/19/frontend_js%E5%B0%8F%E7%82%B9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
+          Js小点
+        
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/08/TF_certificate_guide/">Tensorflow基础</a>
-    </h1>
   
+    <a href="/2021/07/08/TF_certificate_guide/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Tensorflow基础</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>tf证书主要考察四个方面的内容</p>
-        
-          <p class="article-more-link">
-            <a href="/2021/07/08/TF_certificate_guide/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/07/08/TF_certificate_guide/" data-id="ckqwiervp0000fks37ji1dxpw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-team生产力框架" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/07/02/team%E7%94%9F%E4%BA%A7%E5%8A%9B%E6%A1%86%E6%9E%B6/" class="article-date">
-  <time datetime="2021-07-02T03:06:49.000Z" itemprop="datePublished">2021-07-02</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/02/team%E7%94%9F%E4%BA%A7%E5%8A%9B%E6%A1%86%E6%9E%B6/">Team生产力框架</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>几乎所有与生产力有关的问题都归因于缺乏时间，精力，注意力或动力。这四个元素（TEAM框架）是完成工作的基础。  </p>
-        
-          <p class="article-more-link">
-            <a href="/2021/07/02/team%E7%94%9F%E4%BA%A7%E5%8A%9B%E6%A1%86%E6%9E%B6/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/07/02/team%E7%94%9F%E4%BA%A7%E5%8A%9B%E6%A1%86%E6%9E%B6/" data-id="ckqlrbkl60000m0s32mj9bqjo" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/" rel="tag">团队合作</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-TF_common_funcs" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/07/01/TF_common_funcs/" class="article-date">
-  <time datetime="2021-07-01T02:14:01.000Z" itemprop="datePublished">2021-07-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/01/TF_common_funcs/">Tensorflow常用函数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-<!-- Table of Contents -->
-
-
-
-        <p><a href="https://docs.qq.com/pdf/DRVR5WWJldGFPY1ps" target="_blank" rel="noopener">点击在线查看文档</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/07/01/TF_common_funcs/" data-id="ckqkaqisp000090s369ci1c9e" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-网络-深度学习基础" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/06/28/%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/" class="article-date">
-  <time datetime="2021-06-28T13:14:25.000Z" itemprop="datePublished">2021-06-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/28/%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/">网络(深度学习)基础</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>深度学习基础：<a href="https://docs.qq.com/pdf/DRWtQRHFmdUJjdmNx" target="_blank" rel="noopener">点击查看内容</a></li>
-</ul>
-        
-          <p class="article-more-link">
-            <a href="/2021/06/28/%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/06/28/%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/" data-id="ckqgna7no0000cws3hqyhhfdh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="tag">激活函数</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/">下一页 &amp;raquo;</a>
-  </nav>
 
 </section>
         
