@@ -7,15 +7,15 @@
   
   <title>CSS 定位 (Position) | 野生芦苇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CSS 定位 (Position)Why Position? 覆盖基本的文档流行为。 定位允许您从正常的文档流布局中取出元素，并使它们具有不同的行为，例如放在另一个元素的上面，或者始终保持在浏览器视窗内的同一位置。 本文解释的是定位(position)的各种不同值，以及如何使用它们。">
+  <meta name="description" content="Why Position? 覆盖基本的文档流行为。 定位允许您从正常的文档流布局中取出元素，并使它们具有不同的行为，例如放在另一个元素的上面，或者始终保持在浏览器视窗内的同一位置。 本文解释的是定位(position)的各种不同值，以及如何使用它们。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSS 定位 (Position)">
 <meta property="og:url" content="http://github.com/jinlongli2016/2021/07/19/frontend_cssPosition/index.html">
 <meta property="og:site_name" content="野生芦苇">
-<meta property="og:description" content="CSS 定位 (Position)Why Position? 覆盖基本的文档流行为。 定位允许您从正常的文档流布局中取出元素，并使它们具有不同的行为，例如放在另一个元素的上面，或者始终保持在浏览器视窗内的同一位置。 本文解释的是定位(position)的各种不同值，以及如何使用它们。">
+<meta property="og:description" content="Why Position? 覆盖基本的文档流行为。 定位允许您从正常的文档流布局中取出元素，并使它们具有不同的行为，例如放在另一个元素的上面，或者始终保持在浏览器视窗内的同一位置。 本文解释的是定位(position)的各种不同值，以及如何使用它们。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-19T10:53:26.000Z">
-<meta property="article:modified_time" content="2021-07-19T10:57:46.827Z">
+<meta property="article:modified_time" content="2021-07-19T10:59:56.430Z">
 <meta property="article:author" content="李金龙">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="CSS">
@@ -111,12 +111,12 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-定位-Position"><span class="toc-number">1.</span> <span class="toc-text">CSS 定位 (Position)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#文档流"><span class="toc-number">1.1.</span> <span class="toc-text">文档流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态定位-static"><span class="toc-number">1.2.</span> <span class="toc-text">静态定位 static</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对定位-relative"><span class="toc-number">1.3.</span> <span class="toc-text">相对定位 relative</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绝对定位"><span class="toc-number">1.4.</span> <span class="toc-text">绝对定位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绝对定位元素的“包含元素”是什么？"><span class="toc-number">1.4.1.</span> <span class="toc-text">绝对定位元素的“包含元素”是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z-index"><span class="toc-number">1.4.2.</span> <span class="toc-text">z-index</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#固定定位-fixed"><span class="toc-number">1.5.</span> <span class="toc-text">固定定位 fixed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#粘连定位-sticky"><span class="toc-number">1.6.</span> <span class="toc-text">粘连定位 sticky</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文档流"><span class="toc-number">1.</span> <span class="toc-text">文档流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态定位-static"><span class="toc-number">2.</span> <span class="toc-text">静态定位 static</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对定位-relative"><span class="toc-number">3.</span> <span class="toc-text">相对定位 relative</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绝对定位"><span class="toc-number">4.</span> <span class="toc-text">绝对定位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绝对定位元素的“包含元素”是什么？"><span class="toc-number">4.1.</span> <span class="toc-text">绝对定位元素的“包含元素”是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z-index"><span class="toc-number">4.2.</span> <span class="toc-text">z-index</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#固定定位-fixed"><span class="toc-number">5.</span> <span class="toc-text">固定定位 fixed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#粘连定位-sticky"><span class="toc-number">6.</span> <span class="toc-text">粘连定位 sticky</span></a></li></ol>
   </div>
 
 
 
-        <h1 id="CSS-定位-Position"><a href="#CSS-定位-Position" class="headerlink" title="CSS 定位 (Position)"></a>CSS 定位 (Position)</h1><p>Why <code>Position</code>? <strong>覆盖</strong>基本的<strong>文档流行</strong>为。</p>
+        <p>Why <code>Position</code>? <strong>覆盖</strong>基本的<strong>文档流行</strong>为。</p>
 <p>定位允许您从正常的文档流布局中取出元素，并使它们具有不同的行为，例如放在另一个元素的上面，或者始终保持在浏览器视窗内的同一位置。 <a href="https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/%E5%AE%9A%E4%BD%8D" target="_blank" rel="noopener">本文</a>解释的是定位(<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/position" target="_blank" rel="noopener"><code>position</code></a>)的各种不同值，以及如何使用它们。</p>
 <a id="more"></a>
 
