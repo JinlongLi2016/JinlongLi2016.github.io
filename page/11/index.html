@@ -78,9 +78,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-ADTA_17_matching" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ADTA_07_DP" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/28/ADTA_17_matching/" class="article-date">
+    <a href="/2019/06/28/ADTA_07_DP/" class="article-date">
   <time datetime="2019-06-28T13:14:25.000Z" itemprop="datePublished">2019-06-28</time>
 </a>
     
@@ -96,7 +96,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/ADTA_17_matching/">匹配</a>
+      <a class="article-title" href="/2019/06/28/ADTA_07_DP/">动态规划</a>
     </h1>
   
 
@@ -109,75 +109,34 @@
 
 
 
-        <p>maximum v.s maximal matching</p>
-<p>maximal matching: 极大匹配？</p>
-<p>maximum match:  (also known as maximum-cardinality matching)最大匹配是要找出一个E的子集M，它具有最大数量的不交叠边，即在M中任何两条边没有一个共同顶点。</p>
-<p>交替路径：一条由匹配边和未匹配边交替组成的简单路径。</p>
-<p>交替路径被称为增广路径，当p中所有的匹配边都在M中并且端点是自由的。</p>
-<h2 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h2><p>寻找二分图的最小顶点覆盖算法：<a href="https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory)" target="_blank" rel="noopener">Kőnig’s theorem</a> </p>
-<p>Let’s say you have <code>G = (V, E)</code> a bipartite graph, separated between <code>X</code> and <code>Y</code>.</p>
-<p>As you said, first you have to find a maximum matching (which can be achieved with <a href="https://en.wikipedia.org/wiki/Dinic%27s_algorithm" target="_blank" rel="noopener">Dinic’s algorithm</a>for instance). Let’s call <code>M</code> this maximum matching.</p>
-<p>Then to construct your minimum vertex cover顶点覆盖:</p>
+        <p>DP广泛用于求解组合最优化问题。动态规划(Dynamic Tabling)不是递归调用自身，但是问题的基础解通常以递归函数的形式予以说明的。递归是自顶向下，动态规划是自底向上。</p>
 <ul>
-<li>Find <code>U</code> the set (possibly empty) of unmatched vertices in <code>X</code>, ie. not connected to any edge in <code>M</code></li>
-<li>Build <code>Z</code> the set or vertices either in <code>U</code>, or connected to <code>U</code> by alternating paths (paths that alternate between edges of <code>M</code> and edges not in <code>M</code>) 通过交替路径与U中顶点相连。</li>
-<li>Then <code>K = (X \ Z) U (Y ∩ Z)</code> is your minimum vertex cover</li>
+<li>用来引出递归和归纳的最常见的例子是 <strong>斐波那契数列</strong>问题</li>
 </ul>
-<p>二分图和一般图的匹配算法研究</p>
-<ul>
-<li><p>交替路径树：每一条从根节点到叶子节点的路径均为交替路径</p>
-</li>
-<li><p>匈牙利树：从自由顶点r开始生长交替路径树，如果树被阻塞，则该被阻塞的树为匈牙利树。</p>
-<p>从自由顶点r开始，加上每一条连接r和y顶点y的未匹配边(r, y)。对于y，如果有匹配边(y, z)存在，则将其加入T。重复此过程直到遇到自由的y顶点或被阻塞。</p>
-</li>
-</ul>
-<h1 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h1><p>二分图：不含奇数长度的回路。</p>
-<ol>
-<li><p>网络流方法</p>
-</li>
-<li><p>匈牙利树方法</p>
-<ol>
-<li>无向图G的一个匹配M是最大的，当且仅当G不包含关于M的增广路径。</li>
-<li>M为一个匹配，p是关于M的一条增广路径，则M+p可以构造一个更大的匹配。</li>
-</ol>
-<p>(匈牙利树的方法利用了匹配的特定性质，这个性质可以帮助我们解决扩大匹配这个问题)</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BiMatch2</span><br><span class="line">Input: 二分图 G &#x3D; (X ∪ Y, E)</span><br><span class="line">Output: G中最大匹配M</span><br><span class="line">初始化M为任意匹配（可能为空）</span><br><span class="line">while存在自由顶点x和自由y顶点</span><br><span class="line">	设r为一个自由x顶点，采用广度优先搜索，生成一棵以r为根的交替路径树T</span><br><span class="line">	if T为匈牙利树： </span><br><span class="line">		let G &lt;- G - T</span><br><span class="line">	else:</span><br><span class="line">		在T中找到一条增广路径p，并设M &#x3D; M + p</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>每一个数都是前两个数的和</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">procedure f(n)</span><br><span class="line">	if(n&#x3D;&#x3D;1) or (n&#x3D;&#x3D;2): return 1</span><br><span class="line">	else: return f(n-1) + f(n-2)</span><br></pre></td></tr></table></figure>
 
+<p>但是如果自底向上明显能够在n的时间和常数空间</p>
 <ul>
-<li>算法的时间复杂度？构造交替树$O(m)$，最多构造$O(n)$棵树 =&gt; $O(nm) = O(n^3)$</li>
-<li>为什么匈牙利树可被移除而不影响搜索匹配过程？<ul>
-<li>匈牙利树中无顶点能在增广路径中出现<ul>
-<li>如果($x, y)$为一条边，使得$x$在$T$中而$y$不在$T$中，那么$x$肯定被标记为内部</li>
+<li>另一个类似的例子是二项式系数<br>$$<br>(<em>k^n) = (</em>{k-1}^{n-1}) + (_k^{n-1})<br>$$<br>如果自顶向下需要的时间复杂度为指数时间复杂度 $O(2^n)$,但是通过构造帕斯卡三角形，能够很快地计算出来。</li>
 </ul>
-</li>
-<li>交替路径不经过$T$<ul>
-<li>如果经过$T$，则必然以内部顶点进入、内部顶点穿出，矛盾。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="一般图"><a href="#一般图" class="headerlink" title="一般图"></a>一般图</h1><ol>
-<li>匈牙利树</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">GMATCH</span><br><span class="line">Input: undirected graph G(V, E)</span><br><span class="line">Output: maximum match M of G</span><br><span class="line"></span><br><span class="line">M &#x3D; &#123;&#125;</span><br><span class="line">maximum &#x3D; false</span><br><span class="line">while not maximum</span><br><span class="line">	确定与M相关的自由顶点集Ｆ</span><br><span class="line">	augment &#x3D; false</span><br><span class="line">	while F ≠ &#123;&#125; and not augment</span><br><span class="line">		清空栈、未标记边，从顶点删除标记</span><br><span class="line">		设x为下一个顶点； F &#x3D; F - &#123;x&#125;; T &#x3D; x</span><br><span class="line">		标记x为外部的 &#123;初始化交替路径树&#125;</span><br><span class="line">		</span><br><span class="line">		hungarian &#x3D; false</span><br><span class="line">		while not augment:</span><br><span class="line">			选择一个外部顶点x和一条未标记的边(x, y)</span><br><span class="line">			if (x, y)存在： 标记(x, y)</span><br><span class="line">			else:</span><br><span class="line">				hungarian &#x3D; true</span><br><span class="line">				break</span><br><span class="line">			if y是内部的: doNothing &#123;找到偶数长的回路&#125;</span><br><span class="line">			elif y是外部的: &#123;找到花&#125;</span><br><span class="line">				将花放到栈顶，收缩花</span><br><span class="line">				用顶点w替换花，标记w是外部的</span><br><span class="line">				如果花包含根，则标记w是自由的</span><br><span class="line">			elif y是自由的：</span><br><span class="line">				augment &#x3D; true</span><br><span class="line">				F &#x3D; F - &#123;y&#125;</span><br><span class="line">			else:</span><br><span class="line">				设(y, z)在M中，将(x, y) 和(y, z)加入T中</span><br><span class="line">				标记y是内部的，z为外部的</span><br><span class="line">			</span><br><span class="line">			if hungarian: 从G中移除T</span><br><span class="line">			elif augment:</span><br><span class="line">				构造增广路径:从栈中弹出花，展开它们，增加偶数长部分</span><br><span class="line">				用p增广G</span><br><span class="line">	if not augment:</span><br><span class="line">		maximum &#x3D; true</span><br></pre></td></tr></table></figure>
+<h2 id="7-2-LCS-最长公共子序列"><a href="#7-2-LCS-最长公共子序列" class="headerlink" title="7.2 LCS 最长公共子序列"></a>7.2 LCS 最长公共子序列</h2><p>在字母表Σ上，分别给出两个长度为m和n的字符串A 和 B，确定在A和B中最长公共子序列的长度。A=”a1a2…Am” B=’b1b2..bn’</p>
+<p>为了使用动态规划技术，我们首先寻找一个最长公共子序列长度的递推公式 </p>
+<p>L[i, j] = L[i-1, j-1] + 1 if ai==bj</p>
+<p>L[i,j] = max{L[i-1, j], L[i, j-1]} if ai!=bj</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">algorithm 7.1 LCS</span><br><span class="line">inputs: A, B (n, m)</span><br><span class="line">outputs: A B的LCS的长度</span><br><span class="line"></span><br><span class="line">for i &#x3D; 0-&gt;n:</span><br><span class="line">	L[i, 0] &#x3D; 0</span><br><span class="line">for j &#x3D; 0-&gt;m:</span><br><span class="line">	L[0, j] &#x3D; 0</span><br><span class="line">for i &#x3D; 1-&gt;n:</span><br><span class="line">	for j &#x3D; 1 -&gt; m:</span><br><span class="line">		if ai &#x3D;&#x3D; bj:</span><br><span class="line">			L[i, j] &#x3D; L[i-1, j-1] + 1</span><br><span class="line">		else:</span><br><span class="line">			L[i, j] &#x3D; max(L[i-1, j], L[i, j-1])</span><br><span class="line">return L[n, m]</span><br></pre></td></tr></table></figure>
 
-<p>外层while循环寻找最大匹配，每一次迭代，增广路径被发现并由这条路径匹配扩展集</p>
-<p>中层while循环对所有的自由顶点循环，直到发现增广路径为止。</p>
-<p>每次迭代中选取一个自由顶点左右交替路径树的根，从这个根出发在内层循环中对图探查，内循环的功能是每次加两条边增长交替路径树。每次迭代中，它取任意一个外部顶点x和相应的边(x,y)，如果这样的边存在，有以下几种情况：</p>
-<ol>
-<li>y是内部的</li>
-<li>y是外部的</li>
-<li>y被标记为自由的</li>
-<li>其他情况下</li>
-</ol>
+<p>如何输出 最长公共子序列？</p>
+<p>最长公共子序列可能是有多种长度相同的子序列！！！，如何找出所有的子序列。一个子序列也可能以不同的下标序列出现！</p>
+<p>如何找出所有的LCSs?        </p>
+<h2 id="Side-Notes"><a href="#Side-Notes" class="headerlink" title="Side Notes"></a>Side Notes</h2><p>在DP问题中，也可以利用递归的形式达到DP的时间复杂度。这种递归使用了一张备忘录以记录已被计算过的情况，以避免重叠case的重复调用，因此被称为<strong>带备忘录的递归</strong>。 —《算法导论》</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2019/06/28/ADTA_17_matching/" data-id="ckqhdruq5000cgos32b55ag27" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2019/06/28/ADTA_07_DP/" data-id="ckqhdrupn0001gos3eacz0fa0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a></li></ul>
@@ -189,9 +148,9 @@
 
 
   
-    <article id="post-ADTA_18_GeometricSweeping" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ADTA_08_greedy_algorithm" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/28/ADTA_18_GeometricSweeping/" class="article-date">
+    <a href="/2019/06/28/ADTA_08_greedy_algorithm/" class="article-date">
   <time datetime="2019-06-28T13:14:25.000Z" itemprop="datePublished">2019-06-28</time>
 </a>
     
@@ -207,7 +166,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/ADTA_18_GeometricSweeping/">几何扫描</a>
+      <a class="article-title" href="/2019/06/28/ADTA_08_greedy_algorithm/">贪心</a>
     </h1>
   
 
@@ -220,101 +179,268 @@
 
 
 
-        <p>几何算法通常考虑的对象是二维或者高维空间的点、线、多边形和其他几何体。</p>
-<p>平面扫描算法由两个基本部分组成：</p>
+        <p>贪心算法也用于求解<strong>最优化</strong>问题，不同的是贪心算法通常包含一个<strong>寻找局部最优解</strong>的迭代过程，在某些实例中 这些局部最优解转变为了全局最优解。而在另外的一些情况下，则无法转变为全局最优解。贪心算法在少量计算的基础上做出正确猜想而不急于考虑以后的情况，这样一步一步来构筑解，每一步均是建立在局部最优解的基础之上，每一步又扩大了部分解的规模。</p>
+<p>设计贪心算法的困难部分就是要<strong>证明该算法确实求解了它所要解决的问</strong>题，而与之相比 <strong>递归算法</strong>拥有十分简单的<strong>归纳</strong>证明。考虑一下证明以下几个问题的难度，1）单源最短路径 2）最小耗费生成树 3）Huffman编码。</p>
+<p>图中 G(V, E) 单源最短路径(迪杰斯特拉)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dijkstra alg</span><br><span class="line">U &#x3D; &#123;v&#125; # U是已经寻找到最短路径的节点 </span><br><span class="line">S &#x3D; V - &#123;v&#125; # 待寻找的节点</span><br><span class="line">D 一个从源点到其他节点的最短距离</span><br><span class="line">while S 不为空:</span><br><span class="line">	从S中选择一个距离最小的节点 u</span><br><span class="line">	U &#x3D; U ∪ &#123;u&#125;</span><br><span class="line">	S &#x3D; S - &#123;u&#125;</span><br><span class="line">	for u所有邻边 (u, w):</span><br><span class="line">		if w∈S and D[u]+length(u, w) &lt; D[w]:</span><br><span class="line">			D[w] &#x3D; D[u] + length(u, w)</span><br><span class="line">return D</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2019/06/28/ADTA_08_greedy_algorithm/" data-id="ckqhdrupx0004gos3d92d9kh0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ADTA_13_backtrack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/28/ADTA_13_backtrack/" class="article-date">
+  <time datetime="2019-06-28T13:14:25.000Z" itemprop="datePublished">2019-06-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/28/ADTA_13_backtrack/">回溯法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <p><em>回溯法</em>是一种<strong>有组织的穷尽搜索</strong>的一般技术，为了求得一组解，它常常可以避免所有的可能性。它一般适用于求解那些又潜在的大量解，但有限个数的解已经检查过的问题。</p>
+<p>回溯法有两个基本特征</p>
 <ol>
-<li>事件点进度表（Event），类似于一条道路的前后路标。在某些情况下需要动态更新。</li>
-<li>扫面线状态（State），是扫描线上几何对象的适当描述。</li>
+<li>节点是用<strong>深度优先搜索</strong>的方法生成</li>
+<li>不需要存储整颗搜索树，只需要存储根到当前活动节点的路径。</li>
+</ol>
+<h2 id="一般的回溯方法"><a href="#一般的回溯方法" class="headerlink" title="一般的回溯方法"></a>一般的回溯方法</h2><p>一般回溯算法可以作为一种系统的搜索方法应用到一类搜索问题中，这类问题的解由满足事先定义好的某个约束向量组成(x1, x2, …, xi)组成, i是[0, n]之间的一个数，n是取决于问题阐述的常量。这里的i既可以是固定的，也可使是不固定的（不固定的情况直接置i为n变为固定的）。 </p>
+<p>在回溯法中，解向量中每个 <code>xi</code> 都属于一个有限的线序集<code>Xi</code>,因此，回溯法按词典序考虑笛卡儿积 <code>X1*X2*...*Xn</code>的元素。算法从最初的空向量开始，然后选择X1中最小的元素…</p>
+<p>一般地，假定算法已经检测到部分解为$v = (x_1, x_2, .,x_j)$，它再去考虑向量$v = (x_1, x_2, .,x_j, x_{j+1})$，有下面的情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1）如果v表示问题的最后解，算法记录它作为一个解，在仅希望获得一个解时就终止否则继续寻找其他解。</span><br><span class="line"></span><br><span class="line">2）（向前步骤）如果v表示一个部分解，算法通过选择集合Xj+2中最小的元素向前。</span><br><span class="line"></span><br><span class="line">3）如果v既不是最终解也非部分解，则有两种情况</span><br><span class="line"></span><br><span class="line">​	a)若果&#96;Xj+1&#96;还有其他元素，则设为下一个 </span><br><span class="line"></span><br><span class="line">​	b)如果没有下一个，则把&#96;Xj&#96;设为下一个</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>用两个过程形式化地描述一般地回溯过程，一个是递归，一个是迭代。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Algorithm 13.4 BacktrackRec</span><br><span class="line">Inputs 集合X1, X2, ..., Xn的清楚或隐含的描述</span><br><span class="line">Outputs 解向量 u &#x3D; (x1, x2, .., xi), 0&lt;&#x3D;i&lt;&#x3D;n</span><br><span class="line">    v &#x3D; ()</span><br><span class="line">    flag &#x3D; False</span><br><span class="line">    advance(1)</span><br><span class="line">    if flag:	output v # v是解向量</span><br><span class="line">    else: output &quot;no solution&quot;</span><br><span class="line"></span><br><span class="line">def advance(k)</span><br><span class="line">    for x ∈ Xk</span><br><span class="line">        xk &#x3D; x; xk加入v</span><br><span class="line">        if v为最终解: flag&#x3D;True and exit</span><br><span class="line">        elif v 是部分的：advance(k+1)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">迭代的形式采用了两个while循环：外层循环回溯，内层循环前进</span><br><span class="line">Alg 13.5 BacktrackIter</span><br><span class="line">    v &#x3D; ()</span><br><span class="line">    flag &#x3D; False</span><br><span class="line">    k &#x3D; 1</span><br><span class="line">    while k&gt;&#x3D;1</span><br><span class="line">        while Xk 还未被完全穷举</span><br><span class="line">            xk &#x3D; next(Xk); xk加入v</span><br><span class="line">            if v为最终解: flag&#x3D;True and exit</span><br><span class="line">            elif v是部分的: k &#x3D; k + 1 # 前进 &#123;Forward&#125;</span><br><span class="line">        重置 Xk，使得下一个元素排在第一位</span><br><span class="line">        k &#x3D; k - 1 # 回溯 &#123;Backward&#125;</span><br><span class="line"></span><br><span class="line">    if flag:	output v # v是解向量</span><br><span class="line">    else: output &quot;no solution&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2019/06/28/ADTA_13_backtrack/" data-id="ckqhdrupy0005gos342vd0hse" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ADTA_14_randomized_algorithms" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/28/ADTA_14_randomized_algorithms/" class="article-date">
+  <time datetime="2019-06-28T13:14:25.000Z" itemprop="datePublished">2019-06-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/28/ADTA_14_randomized_algorithms/">随机算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <p><em>随机算法</em>在接受输入的同时还接收一串随机的比特流，并且在运行的过程中使用该比特流。随机算法有两个优点1）相比于我们已知的解决同一问题最好的确定性算法，随机算法的<strong>运行时间或空间</strong>通常小一些。2）非常<strong>易于理解和实现</strong> 。</p>
+<h2 id="Las-Vegas-vs-Monte-Carlo-算法"><a href="#Las-Vegas-vs-Monte-Carlo-算法" class="headerlink" title="Las Vegas vs Monte Carlo 算法"></a>Las Vegas vs Monte Carlo 算法</h2><p><em>Las Vegas</em> 算法要么给出正确的解，要么就没有解。与之相反，<em>Monte Carlo</em>算法总是给出解，但是可能是错的。这个是非常容易理解的，Monte Carlo也是一种采样方式的名字，在采样时，它很可能给出正确的采样点，但是也不排除是错的。</p>
+<h2 id="随机化快排"><a href="#随机化快排" class="headerlink" title="随机化快排"></a>随机化快排</h2><p>快排的期望运行时间非常好 $$θ(n)$$，基于比较的排序算法的最好时间复杂度。但是快排对它的最坏时间复杂性没有做任何保证，可能到达$$θ(n^2)$$ 。划分主元的选择使得每次都把n的数组分为1 和n -1两个序列。通过随机选择主元可以使得这种情况发生地概率变得很小。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Alg <span class="number">14.1</span> RandomQS</span><br><span class="line">Inputs: A[<span class="number">1.</span>..n]</span><br><span class="line">Outputs: sorted A</span><br><span class="line">	rquicksort(A, <span class="number">1</span>, n)</span><br><span class="line"></span><br><span class="line">process rquicksort(A, low, high)</span><br><span class="line">    <span class="keyword">if</span> low &lt; high:</span><br><span class="line">        v = random(low, high)  <span class="comment">#!!! 随机化快排引入了随机性</span></span><br><span class="line">        swap(low, v)</span><br><span class="line">        w = split(A, low, high) <span class="comment"># W是主元的位置</span></span><br><span class="line">        rquicksort(A, low, w<span class="number">-1</span>)</span><br><span class="line">        rquicksort(A, w+<span class="number">1</span>, high)</span><br></pre></td></tr></table></figure>
+
+<h2 id="随机化选择算法-select"><a href="#随机化选择算法-select" class="headerlink" title="随机化选择算法 select"></a>随机化选择算法 select</h2><p>选择数组中第k大或者中项元素。6.5以及证明了算法的运行时间是$$θ(n)$$ ,但它具有一个很大的常系数，使它对于中小等实例不具有可行性。下面介绍一个<em>Las Vegas</em>算法，它的期望运行时间是一个带有很小常系数的$$θ(n)$$，但在最坏的情况下它的运行时间也会蜕化至$$θ(n^2)$$ ,但是这与输入实例本身无关，而是随机数生成器恰巧选择了一个不切实际的序列，它的概率非常小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">alg RandomizedSelect</span><br><span class="line">inputs: A, k</span><br><span class="line">outputs: 数组A中第k小元素</span><br><span class="line">1.	rselect(A, 1, n, k)</span><br><span class="line"></span><br><span class="line">过程 rselect(A, low, high, k)</span><br><span class="line">    v &#x3D; random(low, high)</span><br><span class="line">    x &#x3D; A[v]</span><br><span class="line">    把数组A分成三个数组 </span><br><span class="line">        A1 &#x3D; &#123;a| a&lt;x&#125;</span><br><span class="line">        A2 &#x3D; &#123;a| a&#x3D;x&#125;</span><br><span class="line">        A3 &#x3D; &#123;a| a&gt;x&#125;</span><br><span class="line">    case</span><br><span class="line">        |A1| &gt;&#x3D;k: return rselect(A, 1, |A1|, k)</span><br><span class="line">        |A1| + |A2| &gt;&#x3D; k: return x</span><br><span class="line">        |A1| + |A2| &lt; k : return rselect(A3, 1, |A3|, k - |A1| - |A2| )</span><br></pre></td></tr></table></figure>
+
+
+
+<p>For input with size n, RandomizedSelect alg’s expected comparison time is smaller than 4n.</p>
+<h2 id="测试串相等"><a href="#测试串相等" class="headerlink" title="测试串相等"></a>测试串相等</h2><h2 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h2><h2 id="随机采样"><a href="#随机采样" class="headerlink" title="随机采样"></a>随机采样</h2><p>从n个元素中随机选择m个元素 (m&lt;n)。假设n个元素为1…n的正整数。存在一个运行时间为$$θ(n)$$的简单<em>Las Vegas</em> 算法。即随机从n个元素中选择一个元素，若没有被选择就加入到选择元素集合中，若如果被选择了就重新随机选择一个元素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">alg 14.5 RandomSampling</span><br><span class="line">inputs m, n (m&lt;n)</span><br><span class="line">outputs &#123;1...n&#125;中选择的m个元素</span><br><span class="line">    for i &#x3D;1:n</span><br><span class="line">        S[i] &#x3D; False # S 为一个表示元素是否被选择的bool数组</span><br><span class="line">    k &#x3D; 0</span><br><span class="line">    while k &lt; m:</span><br><span class="line">        r &#x3D; random(1, n)</span><br><span class="line">        if not S[r]:</span><br><span class="line">            k +&#x3D; 1</span><br><span class="line">            A[k] &#x3D; r</span><br><span class="line">            S[r] &#x3D; True</span><br><span class="line">    return A</span><br></pre></td></tr></table></figure>
+
+<p>可以证明它的期望运行时间为$$θ(n)$$。</p>
+<h2 id="Prim-Number-Test-素数性测试"><a href="#Prim-Number-Test-素数性测试" class="headerlink" title="Prim Number Test 素数性测试"></a>Prim Number Test 素数性测试</h2><p>显而易见的方式使用[1, n^0.5]之间的各个数除n以测试能否被整除，这样导致了关于输入大小的<strong>指数时间复杂性</strong> (如何理解？)。这种解法中通过寻找证据来证明是合数。</p>
+<p><a href="https://baike.baidu.com/item/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">费马小定理</a>：如果n是素数，那么对于满足条件1的a， 必然有条件2满足.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2019/06/28/ADTA_14_randomized_algorithms/" data-id="ckqhdruq00006gos3c8v2685t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ADTA_16_NetworkFlow" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/28/ADTA_16_NetworkFlow/" class="article-date">
+  <time datetime="2019-06-28T13:14:25.000Z" itemprop="datePublished">2019-06-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/28/ADTA_16_NetworkFlow/">网络流问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <p>图中各边都有一个容量，在图G中从源点s开始到汇点t的流的最大值就是最大流问题。</p>
+<h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><p>图G上的流是一个顶点对上的实函数f，具有以下4个条件。</p>
+<ol>
+<li>斜对称。</li>
+<li>容量约束</li>
+<li>流守恒</li>
+<li>f(v, v) = 0</li>
+</ol>
+<p>定义：一个割{S, T}是把顶点集分成两个子集S T的一个划分，使得$s\in S, t\in  T$。割的容量c(S, T) 定义为</p>
+<hr>
+<h2 id="图的存储方式-邻接矩阵-amp-邻接表"><a href="#图的存储方式-邻接矩阵-amp-邻接表" class="headerlink" title="图的存储方式(邻接矩阵 &amp; 邻接表)"></a>图的存储方式(邻接矩阵 &amp; 邻接表)</h2><ol>
+<li><p>邻接矩阵</p>
+<p>顶点间的关系存储在一个$n*n$矩阵M中。若u, v 两个顶点有边，对于无向图有权图，则M[u, v] = M[v, u] = weight[u, v]，对于有向图则有 M[u, v] = weight[u, v]</p>
+</li>
+<li><p>邻接表</p>
+<p>图的顶点存储在一个线性表中，每个顶点的邻接边都以链表的形式依附在线性表该顶点上。对于有向图，需要θ(n+m)的空间，对于无向图，需要θ(n+2m)的空间。</p>
+</li>
 </ol>
 <hr>
-<p>基本概念：</p>
 <ul>
-<li>简单、非简单多边形</li>
-<li>凸多边形、</li>
-<li>点集S的凸包CH(S)、包顶点（S）的极点</li>
-<li>u(x1, y1), v(x2, y2), w(x3, y3)三点形成的三角形的带符号面积</li>
-<li>左旋、右旋</li>
+<li>Dijkstra</li>
 </ul>
-<h2 id="18-3-计算线段的交点"><a href="#18-3-计算线段的交点" class="headerlink" title="18.3 计算线段的交点"></a>18.3 计算线段的交点</h2><ol>
-<li>事件点进度表E　由线段的端点和交点构成，在扫描的过程中会动态地改变</li>
-<li>扫描线的状态：是线段的序关系 </li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Dijkstra Algorithm: 单源最短路径</span><br><span class="line">Input	含权有向图G&#x3D;(V, E), V&#x3D;&#123;1, 2,..., n&#125;</span><br><span class="line">Output	G中顶点1到其他顶点的距离</span><br><span class="line">1    X &#x3D; &#123;1&#125;, Y &#x3D; V - &#123;1&#125;； λ[1] &#x3D; 1</span><br><span class="line">2    for y &#x3D; 2-&gt;n:</span><br><span class="line">3        if y 与 1 相邻: λ[y] &#x3D; length[1, y]</span><br><span class="line">4        else: λ[y] &#x3D; +inf</span><br><span class="line">5    for j &#x3D; 1 -&gt; n-1:</span><br><span class="line">6    	y &#x3D; argmin(λ[y])  (y∈Y)</span><br><span class="line">7    	X &#x3D; X ∪ &#123;y&#125;</span><br><span class="line">8    	Y &#x3D; Y - &#123;y&#125;</span><br><span class="line">9    	for y邻近的每条边 (y, w):</span><br><span class="line">10    		if w ∈ Y and λ[y] + length[y, w] &lt; λ[w]:</span><br><span class="line">11    			λ[w] &#x3D; λ[y] + length[y, w]</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，在第6步，选择Y集合中离X集合最近的点需要O(n)的时间，总共需要循环n-1次。对于<strong>邻接表存储形式</strong>，第9步在整个算法执行过程中需要θ(m)次。算法总<strong>时间复杂度为</strong>$O(n^2 + m)$.</p>
+<p>==对于具有非负权的有向图G和一个源点s，算法Dijkstra在<strong>$O(n^2)$</strong>的时间内找到s到图中所有顶点的最短距离。==</p>
+<hr>
+<p><strong>贪心算法</strong>一章通过把Y集合构建为最小堆进而把时间复杂度减少到O(mlgn)，对于稠图，时间复杂度为O(m)。</p>
+<h2 id="图的遍历-DFS-BFS"><a href="#图的遍历-DFS-BFS" class="headerlink" title="图的遍历(DFS/BFS)"></a>图的遍历(DFS/BFS)</h2><p>对于邻接表存储的形式</p>
+<ol>
+<li>DFS 时间复杂度为O(m)</li>
+<li>BFS 时间复杂度为O(m)</li>
 </ol>
-<h2 id="18-4-凸包问题"><a href="#18-4-凸包问题" class="headerlink" title="18.4 凸包问题"></a>18.4 凸包问题</h2><p>给定平面上n个点的集合S，寻找它们的凸包CH(S)。教材上所讲的Graham的几何扫描算法，以某一个点为中心以放射线的形式逆时针扫描所有点（计算极角，再排序）。</p>
-<p>它的事件点进度表E 是各个点按照极角的排序，扫描线的状态是一个栈St</p>
-<h2 id="18-5-计算点集的直径"><a href="#18-5-计算点集的直径" class="headerlink" title="18.5 计算点集的直径"></a>18.5 计算点集的直径</h2><p><strong>点集的直径：S中任意两点距离的最大值。</strong></p>
-<p>计算点集直径的朴素(naive)做法是以n方的时间遍历所有的点对。课本介绍的方法，是通过在凸包上遍历把时间复杂度降到nlgn。</p>
-<p>定义：设p是一个多边形，P的一条支撑线是指通过P顶点的一条直线l，它使得P的内部整个地在l的一边.</p>
-<p>定义：接纳两条平行支撑线的任意两点称为跖zhi对.</p>
-<p>推论：在凸多边中实现直径的任何顶点对是一个跖对.</p>
+<h1 id="Ford-Fulkerson-福特弗克森方法"><a href="#Ford-Fulkerson-福特弗克森方法" class="headerlink" title="Ford-Fulkerson  福特弗克森方法"></a>Ford-Fulkerson  福特弗克森方法</h1><p>福特福克森方法每次选择一条增广路径，并用该增广路径的瓶颈容量来扩大网络流。add some introduction to residence graph(R)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Alg 161 Ford-Fulkerson</span><br><span class="line">Input 	网络(G, s, t, c)</span><br><span class="line">Output: G 中的一个流</span><br><span class="line">    初始化剩余图 R &#x3D; G</span><br><span class="line">    for (u, v) 属于 E</span><br><span class="line">        f(u, v) &#x3D; 0</span><br><span class="line">    end for</span><br><span class="line">    while 在R中有一条增广路径 p &#x3D; s,.., t:</span><br><span class="line">        设Δ为p的瓶颈容量</span><br><span class="line">        for p 中的每条边(u, v):</span><br><span class="line">            f(u, v) &#x3D; f(u, v) + Δ</span><br><span class="line">        end for</span><br><span class="line">        更新剩余图R</span><br><span class="line">    end while</span><br></pre></td></tr></table></figure>
+
+<h1 id="最大容量增值-MCA"><a href="#最大容量增值-MCA" class="headerlink" title="最大容量增值 (MCA)"></a>最大容量增值 (MCA)</h1><p>最大容量增值 在福特福克森方法的基础上，每次扩大网络流时选择容量最大的一条增广路径进行增值。</p>
+<h1 id="最短路径长度增值-MPLA"><a href="#最短路径长度增值-MPLA" class="headerlink" title="最短路径长度增值 (MPLA)"></a>最短路径长度增值 (MPLA)</h1><p><strong>层次图</strong>：给定有向图 G(V, E)，它的层次图L (V, E’), E’={(u, v) | level(v) = level(u) + 1}。level(v)是顶点v的层次，即从s到v的路径中边的最小数。</p>
+<p>算法从零网络流开始，初始化剩余图R为原图。然后逐阶段增大网络流，每个阶段分成两个步骤</p>
+<ol>
+<li>根据剩余图R计算层次图，如果ｔ不在层次图中则终止，否则继续</li>
+<li>只要在层次图L中有从ｓ到ｔ的路径ｐ，就用ｐ的瓶颈容量对路径ｐ进行增值。修改层次图L和剩余图R（删除饱和边以及增加某些边）。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1  Alg 最小路径长度增值 MPLA</span><br><span class="line">2  Input	(G, s, t, c)</span><br><span class="line">3  Output	G的最大流</span><br><span class="line">4      for (u, v) in E:</span><br><span class="line">5          f(u, v) &#x3D; 0</span><br><span class="line">6      end for</span><br><span class="line">7      初始化剩余图，R&#x3D;G</span><br><span class="line">8      查找R的层次图L</span><br><span class="line">9      while t in L:</span><br><span class="line">10         while 在L中t可以从s到达:</span><br><span class="line">11             let p&#x3D;L中s-&gt;t的一条路径</span><br><span class="line">12             设Δ为p的瓶颈容量</span><br><span class="line">13             用Δ增值当前流</span><br><span class="line">14             沿着路径p更新L和R</span><br><span class="line">15         end while</span><br><span class="line">16         用剩余图R计算新的层次图L</span><br><span class="line">17     end while</span><br></pre></td></tr></table></figure>
+
+<p>更新L：移除饱和边，非饱和边的容量减少？<br>更新剩余图R：移除饱和边，非饱和边的容量减少，可能还要增加逆向边？</p>
+<p>时间复杂度分析：每个阶段计算的层次图路径长度都比前个阶段层次图中路径长度长，因此最多有n个阶段。每个阶段构造层次图需要m的时间(line16)，同时在每个阶段可能最多需要进行m次增值，而每次增值寻找最短增广路径需要m的时间(line10-15)。因此，时间复杂度为$O(nm + nm^2)$</p>
+<p><strong>最小路径长度增值(MLPA) 算法能够在$O(nm^2)$内找到有向图的最大流</strong> </p>
+<h1 id="Dinic阻塞流算法"><a href="#Dinic阻塞流算法" class="headerlink" title="Dinic阻塞流算法"></a>Dinic阻塞流算法</h1><p>Dinic算法把时间复杂度进一步减小为$O(n^2m)$，在MPLA中，计算层次图后增广路径逐条找出，而Dinic更加高效地找出所有的增广路径，这也是改进运行时间的原因所在。</p>
+<hr>
+<p><strong>阻塞流</strong>：设G为一个网络，H是包含s和t的G的子图。H中的流f成为关于H的阻塞流，如果在H中每一条从s到t的路径中都至少有一条边饱和。</p>
+<hr>
+<p>Dinic算法和前一个算法一样，算法整个流程被分为最多n个阶段，每个阶段由寻找层次图和关于此层次图阻塞流以及用阻塞流来增大网络流组成。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Alg Dinic 阻塞流算法</span><br><span class="line">Input	(G, s, t, c)</span><br><span class="line">Output	G的最大流</span><br><span class="line">for (u, v) ∈ E:</span><br><span class="line">	f(u, v) &#x3D; 0</span><br><span class="line">初始化剩余图 R &#x3D; G</span><br><span class="line">搜索层次图 L</span><br><span class="line">while t 为 L中的顶点:</span><br><span class="line">	 u &#x3D; s</span><br><span class="line">	 p &#x3D; u</span><br><span class="line">	 while outdegree(s) &gt; 0 and u !&#x3D; t:</span><br><span class="line">	 	while u !&#x3D; t and outdegree(s) &gt; 0：# 前进搜索出一条增广路径</span><br><span class="line">	 		if outdegree(u) &gt; 0:</span><br><span class="line">	 			suppose (u,v)为L中一条边</span><br><span class="line">	 			p &#x3D; p, v</span><br><span class="line">	 			u &#x3D; v</span><br><span class="line">	 		else:</span><br><span class="line">	 			删除L中 u 的邻接边</span><br><span class="line">	 			删除p最末尾顶点u，且令p的倒数第二个节点为u</span><br><span class="line">	 	if u &#x3D;&#x3D; t:  </span><br><span class="line">	 		假设p的瓶颈容量为Δ，沿着p推送一个Δ的流。</span><br><span class="line">	 		修改层次图和剩余图</span><br><span class="line">	 		把u置为修改层次图后s在路径p上能达到的最后一个顶点，注意u可能是s</span><br><span class="line">	 计算新的层次图（根据剩余图）</span><br></pre></td></tr></table></figure>
+
+<p>最外层的循环对应于n-2个层次图（阶段），每个阶段内通过深度优先的方式来寻找增广路径。每寻找到一条增广路径 （语句<code>if u == t</code>）就用路径p的瓶颈容量进行增值。</p>
+<p>它的时间复杂性分析如下，n-2个外层循环，每个外层循环内要深度优先遍历整张图并附带删除顶点和边 (m + n)。对于每一条增广路径增值的时间为 n (即沿着路径p推流，修改层次图和剩余图)，最多有m跳增广路径，时间为(nm)。故总的时间复杂性为$O(n^2m)$</p>
+<p><strong>阻塞流(Dinic) 算法能够在$O(n^2m)$内找到有向图的最大流</strong></p>
+<h1 id="MPM算法"><a href="#MPM算法" class="headerlink" title="MPM算法"></a>MPM算法</h1><p>MPM算法相比于Dinic算法寻找到了一个更快的寻找阻塞流的算法$O(n^2)$</p>
+<p>顶点v的<strong>通过量</strong>（throughput），为引入边的总容量和引出边的总容量两者中的小值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Algorithm MPM</span><br><span class="line">Input	(G, s, t, c)</span><br><span class="line">Output	G的最大流</span><br><span class="line">    for (u, v) ∈ E:</span><br><span class="line">        f(u, v) &#x3D; 0</span><br><span class="line">    初始化剩余图 R &#x3D; G </span><br><span class="line">    查找剩余图R的层次图L</span><br><span class="line">    while t 为 L中的层次图顶点:</span><br><span class="line">        while t 在L中从s能到达:</span><br><span class="line">            查找最小通过量的顶点v(设其对应值为g)</span><br><span class="line">            从v到t推下g个单元流</span><br><span class="line">            从s到v拉入g个单元流</span><br><span class="line">            更新 f, L, R</span><br><span class="line">        使用剩余图R计算新的层次图L</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Maxflow-Applications"><a href="#Maxflow-Applications" class="headerlink" title="Maxflow Applications"></a>Maxflow Applications</h1><p>Please refer to this lecture note: <a href="https://courses.engr.illinois.edu/cs473/sp2010/notes/17-maxflowapps.pdf" target="_blank" rel="noopener">https://courses.engr.illinois.edu/cs473/sp2010/notes/17-maxflowapps.pdf</a></p>
+<h1 id="Python-Implementation"><a href="#Python-Implementation" class="headerlink" title="Python Implementation"></a>Python Implementation</h1><p><strong>NetworkX</strong>库实现了有关的算法。 </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2019/06/28/ADTA_18_GeometricSweeping/" data-id="ckqhdruq9000hgos3e3hcfh61" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2019/06/28/ADTA_16_NetworkFlow/" data-id="ckqhdruq4000agos37e9icuc9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/1900/12/24/hello-world/" class="article-date">
-  <time datetime="1900-12-24T13:02:51.000Z" itemprop="datePublished">1900-12-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/1900/12/24/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-<!-- Table of Contents -->
-
-
-
-        <h1 id="引入外部代码"><a href="#引入外部代码" class="headerlink" title="引入外部代码"></a>引入外部代码</h1><ol>
-<li>put codes file in downloads/code/</li>
-<li>insert into md file: <code></code><br> for example: <code></code></li>
-</ol>
-<p><a href="https://github.com/hexojs/hexo/issues/3211">reference</a></p>
-<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/1900/12/24/hello-world/" data-id="ck510nf0v0002v4s370s776zv" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a></li></ul>
 
     </footer>
   </div>
@@ -327,7 +453,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/10/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span>
+    <a class="extend prev" rel="prev" href="/page/10/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/12/">下一页 &amp;raquo;</a>
   </nav>
 
 </section>
@@ -338,7 +464,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -348,7 +474,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">27</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -358,7 +484,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomThoughts/" rel="tag">RandomThoughts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab%E6%B5%8B%E8%AF%95/" rel="tag">ab测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ast/" rel="tag">ast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disc/" rel="tag">disc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eda/" rel="tag">eda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opencv/" rel="tag">opencv</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/" rel="tag">pandas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/profiling/" rel="tag">profiling</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rules/" rel="tag">rules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sift/" rel="tag">sift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/" rel="tag">团队合作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%B0%E9%9A%BE%E6%A0%B7%E6%9C%AC/" rel="tag">困难样本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">图像处理</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0/" rel="tag">多任务学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" rel="tag">开发方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="tag">激活函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RandomThoughts/" rel="tag">RandomThoughts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab%E6%B5%8B%E8%AF%95/" rel="tag">ab测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ast/" rel="tag">ast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disc/" rel="tag">disc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eda/" rel="tag">eda</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hardlab/" rel="tag">hardlab</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opencv/" rel="tag">opencv</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/" rel="tag">pandas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/profiling/" rel="tag">profiling</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rules/" rel="tag">rules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sift/" rel="tag">sift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">个人知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF-CSS/" rel="tag">前端, CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/" rel="tag">团队合作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%B0%E9%9A%BE%E6%A0%B7%E6%9C%AC/" rel="tag">困难样本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">图像处理</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0/" rel="tag">多任务学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%83%E5%8D%A2%E5%A7%86%E5%88%86%E7%B1%BB%E5%AD%A6/" rel="tag">布卢姆分类学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" rel="tag">开发方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E7%BB%B4/" rel="tag">思维</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">性能调优</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="tag">激活函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag">编程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B0%83%E8%AF%95/" rel="tag">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
