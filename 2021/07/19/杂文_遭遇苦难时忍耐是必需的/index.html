@@ -5,19 +5,19 @@
   
 
   
-  <title>匹配 | 野生芦苇</title>
+  <title>遭遇苦难时忍耐是必需的 | 野生芦苇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="maximum v.s maximal matching maximal matching: 极大匹配？ maximum match:  (also known as maximum-cardinality matching)最大匹配是要找出一个E的子集M，它具有最大数量的不交叠边，即在M中任何两条边没有一个共同顶点。 交替路径：一条由匹配边和未匹配边交替组成的简单路径。 交替路径被称为增广路径，">
+  <meta name="description" content="在我看来，人生及工作的结果，是由这样的方程式决定的。 人生·工作的结果＝思维方式×热情×能力">
 <meta property="og:type" content="article">
-<meta property="og:title" content="匹配">
-<meta property="og:url" content="http://github.com/jinlongli2016/2019/06/28/ADTA_17_matching/index.html">
+<meta property="og:title" content="遭遇苦难时忍耐是必需的">
+<meta property="og:url" content="http://github.com/jinlongli2016/2021/07/19/%E6%9D%82%E6%96%87_%E9%81%AD%E9%81%87%E8%8B%A6%E9%9A%BE%E6%97%B6%E5%BF%8D%E8%80%90%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84/index.html">
 <meta property="og:site_name" content="野生芦苇">
-<meta property="og:description" content="maximum v.s maximal matching maximal matching: 极大匹配？ maximum match:  (also known as maximum-cardinality matching)最大匹配是要找出一个E的子集M，它具有最大数量的不交叠边，即在M中任何两条边没有一个共同顶点。 交替路径：一条由匹配边和未匹配边交替组成的简单路径。 交替路径被称为增广路径，">
+<meta property="og:description" content="在我看来，人生及工作的结果，是由这样的方程式决定的。 人生·工作的结果＝思维方式×热情×能力">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-06-28T13:14:25.000Z">
-<meta property="article:modified_time" content="2021-07-01T02:34:42.309Z">
+<meta property="article:published_time" content="2021-07-19T15:40:46.000Z">
+<meta property="article:modified_time" content="2021-07-19T16:13:17.447Z">
 <meta property="article:author" content="李金龙">
-<meta property="article:tag" content="算法设计技巧与分析">
+<meta property="article:tag" content="杂文">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="https://shang.qq.com/wpa/qunwpa?idkey=b1f60f79b3ca3529de11e4d2eb36924a35f57ad3419b3a7563bbaad8043ba008" title="野生芦苇" type="application/atom+xml">
@@ -79,14 +79,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-ADTA_17_matching" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-杂文_遭遇苦难时忍耐是必需的" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/28/ADTA_17_matching/" class="article-date">
-  <time datetime="2019-06-28T13:14:25.000Z" itemprop="datePublished">2019-06-28</time>
+    <a href="/2021/07/19/%E6%9D%82%E6%96%87_%E9%81%AD%E9%81%87%E8%8B%A6%E9%9A%BE%E6%97%B6%E5%BF%8D%E8%80%90%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84/" class="article-date">
+  <time datetime="2021-07-19T15:40:46.000Z" itemprop="datePublished">2021-07-19</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a>
+    <a class="article-category-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a>
   </div>
 
   </div>
@@ -97,7 +97,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      匹配
+      遭遇苦难时忍耐是必需的
     </h1>
   
 
@@ -110,83 +110,54 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题定义"><span class="toc-number">1.</span> <span class="toc-text">问题定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二分图"><span class="toc-number"></span> <span class="toc-text">二分图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一般图"><span class="toc-number"></span> <span class="toc-text">一般图</span></a>
+    
   </div>
 
 
 
-        <p>maximum v.s maximal matching</p>
-<p>maximal matching: 极大匹配？</p>
-<p>maximum match:  (also known as maximum-cardinality matching)最大匹配是要找出一个E的子集M，它具有最大数量的不交叠边，即在M中任何两条边没有一个共同顶点。</p>
-<p>交替路径：一条由匹配边和未匹配边交替组成的简单路径。</p>
-<p>交替路径被称为增广路径，当p中所有的匹配边都在M中并且端点是自由的。</p>
-<h2 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h2><p>寻找二分图的最小顶点覆盖算法：<a href="https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory)" target="_blank" rel="noopener">Kőnig’s theorem</a> </p>
-<p>Let’s say you have <code>G = (V, E)</code> a bipartite graph, separated between <code>X</code> and <code>Y</code>.</p>
-<p>As you said, first you have to find a maximum matching (which can be achieved with <a href="https://en.wikipedia.org/wiki/Dinic%27s_algorithm" target="_blank" rel="noopener">Dinic’s algorithm</a>for instance). Let’s call <code>M</code> this maximum matching.</p>
-<p>Then to construct your minimum vertex cover顶点覆盖:</p>
-<ul>
-<li>Find <code>U</code> the set (possibly empty) of unmatched vertices in <code>X</code>, ie. not connected to any edge in <code>M</code></li>
-<li>Build <code>Z</code> the set or vertices either in <code>U</code>, or connected to <code>U</code> by alternating paths (paths that alternate between edges of <code>M</code> and edges not in <code>M</code>) 通过交替路径与U中顶点相连。</li>
-<li>Then <code>K = (X \ Z) U (Y ∩ Z)</code> is your minimum vertex cover</li>
-</ul>
-<p>二分图和一般图的匹配算法研究</p>
-<ul>
-<li><p>交替路径树：每一条从根节点到叶子节点的路径均为交替路径</p>
-</li>
-<li><p>匈牙利树：从自由顶点r开始生长交替路径树，如果树被阻塞，则该被阻塞的树为匈牙利树。</p>
-<p>从自由顶点r开始，加上每一条连接r和y顶点y的未匹配边(r, y)。对于y，如果有匹配边(y, z)存在，则将其加入T。重复此过程直到遇到自由的y顶点或被阻塞。</p>
-</li>
-</ul>
-<h1 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h1><p>二分图：不含奇数长度的回路。</p>
-<ol>
-<li><p>网络流方法</p>
-</li>
-<li><p>匈牙利树方法</p>
-<ol>
-<li>无向图G的一个匹配M是最大的，当且仅当G不包含关于M的增广路径。</li>
-<li>M为一个匹配，p是关于M的一条增广路径，则M+p可以构造一个更大的匹配。</li>
-</ol>
-<p>(匈牙利树的方法利用了匹配的特定性质，这个性质可以帮助我们解决扩大匹配这个问题)</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BiMatch2</span><br><span class="line">Input: 二分图 G &#x3D; (X ∪ Y, E)</span><br><span class="line">Output: G中最大匹配M</span><br><span class="line">初始化M为任意匹配（可能为空）</span><br><span class="line">while存在自由顶点x和自由y顶点</span><br><span class="line">	设r为一个自由x顶点，采用广度优先搜索，生成一棵以r为根的交替路径树T</span><br><span class="line">	if T为匈牙利树： </span><br><span class="line">		let G &lt;- G - T</span><br><span class="line">	else:</span><br><span class="line">		在T中找到一条增广路径p，并设M &#x3D; M + p</span><br></pre></td></tr></table></figure>
+        <p>在我看来，人生及工作的结果，是由这样的方程式决定的。</p>
+<p>人生·工作的结果＝思维方式×热情×能力</p>
+<a id="more"></a>
 
-<ul>
-<li>算法的时间复杂度？构造交替树$O(m)$，最多构造$O(n)$棵树 =&gt; $O(nm) = O(n^3)$</li>
-<li>为什么匈牙利树可被移除而不影响搜索匹配过程？<ul>
-<li>匈牙利树中无顶点能在增广路径中出现<ul>
-<li>如果($x, y)$为一条边，使得$x$在$T$中而$y$不在$T$中，那么$x$肯定被标记为内部</li>
-</ul>
-</li>
-<li>交替路径不经过$T$<ul>
-<li>如果经过$T$，则必然以内部顶点进入、内部顶点穿出，矛盾。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="一般图"><a href="#一般图" class="headerlink" title="一般图"></a>一般图</h1><ol>
-<li>匈牙利树</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">GMATCH</span><br><span class="line">Input: undirected graph G(V, E)</span><br><span class="line">Output: maximum match M of G</span><br><span class="line"></span><br><span class="line">M &#x3D; &#123;&#125;</span><br><span class="line">maximum &#x3D; false</span><br><span class="line">while not maximum</span><br><span class="line">	确定与M相关的自由顶点集Ｆ</span><br><span class="line">	augment &#x3D; false</span><br><span class="line">	while F ≠ &#123;&#125; and not augment</span><br><span class="line">		清空栈、未标记边，从顶点删除标记</span><br><span class="line">		设x为下一个顶点； F &#x3D; F - &#123;x&#125;; T &#x3D; x</span><br><span class="line">		标记x为外部的 &#123;初始化交替路径树&#125;</span><br><span class="line">		</span><br><span class="line">		hungarian &#x3D; false</span><br><span class="line">		while not augment:</span><br><span class="line">			选择一个外部顶点x和一条未标记的边(x, y)</span><br><span class="line">			if (x, y)存在： 标记(x, y)</span><br><span class="line">			else:</span><br><span class="line">				hungarian &#x3D; true</span><br><span class="line">				break</span><br><span class="line">			if y是内部的: doNothing &#123;找到偶数长的回路&#125;</span><br><span class="line">			elif y是外部的: &#123;找到花&#125;</span><br><span class="line">				将花放到栈顶，收缩花</span><br><span class="line">				用顶点w替换花，标记w是外部的</span><br><span class="line">				如果花包含根，则标记w是自由的</span><br><span class="line">			elif y是自由的：</span><br><span class="line">				augment &#x3D; true</span><br><span class="line">				F &#x3D; F - &#123;y&#125;</span><br><span class="line">			else:</span><br><span class="line">				设(y, z)在M中，将(x, y) 和(y, z)加入T中</span><br><span class="line">				标记y是内部的，z为外部的</span><br><span class="line">			</span><br><span class="line">			if hungarian: 从G中移除T</span><br><span class="line">			elif augment:</span><br><span class="line">				构造增广路径:从栈中弹出花，展开它们，增加偶数长部分</span><br><span class="line">				用p增广G</span><br><span class="line">	if not augment:</span><br><span class="line">		maximum &#x3D; true</span><br></pre></td></tr></table></figure>
 
-<p>外层while循环寻找最大匹配，每一次迭代，增广路径被发现并由这条路径匹配扩展集</p>
-<p>中层while循环对所有的自由顶点循环，直到发现增广路径为止。</p>
-<p>每次迭代中选取一个自由顶点左右交替路径树的根，从这个根出发在内层循环中对图探查，内循环的功能是每次加两条边增长交替路径树。每次迭代中，它取任意一个外部顶点x和相应的边(x,y)，如果这样的边存在，有以下几种情况：</p>
-<ol>
-<li>y是内部的</li>
-<li>y是外部的</li>
-<li>y被标记为自由的</li>
-<li>其他情况下</li>
-</ol>
+
+<p>我曾思考“能力平庸之人是否能够度过精彩人生”，结合自己的经验，于是得出了这个方程式。</p>
+<p>这个方程式中，第一要素是“能力”。</p>
+<p>我毕业于小城市的大学，虽然在校园里属于较为用功的优等生，但还是无法与一流大学的高材生相比，因此我并非出类拔萃的人才。但我相信，能力高低并非决定人生的唯一因素。</p>
+<p>第二要素是“热情”。</p>
+<p>面对人生的热情是非常关键的要素。正因为如此，我决心“付出不亚于任何人的努力”。虽然我的能力并不高，但在热情上，绝对不能输给别人。“付出不亚于任何人的努力”是我一直强调的理念。人们往往以为自己已经很努力了，但实际上却远远不够。“是否真正付出了不亚于任何人的努力”是一把非常重要的“标尺”，它能测量热情的程度。</p>
+<p>——只要拥有热情，即便能力平平，也能以勤补拙。您是这个意思吗？没错。热情的数值范围和能力一样，都是0到100。以我为例，能力一般，姑且算作60分。但由于我有超出常人的热情，因此热情算作90分。60×90=5400。</p>
+<p>反之，假设有一名毕业于一流大学的优等生，能力卓著，算作90分。但由于他自命不凡、好逸恶劳，因此热情算作40分。90×40=3600。可见，二者的结果截然不同。即便能力平平，也能依靠意志取得改变。我认为，只要倾注比别人多一倍的热情就可以改变。</p>
+<p>比“能力”和“热情”更重要的是“思维方式”。它是指一个人的人生观、价值观及哲学思想，也是一个人思考问题的角度、模式。</p>
+<p>有的人瞻前顾后、悲观处世，有的人则充满希望、乐观处世。每个人的想法都不同。有的人担忧环境的恶劣及世间的矛盾，于是妄自菲薄，怀疑正派及认真的处世态度；有的人则不畏贫苦，为了家人而积极奋斗。</p>
+<p>换言之，与能力和热情不同，思维方式有从负面到正面的属性。愤世嫉俗、犬儒主义、悲观消极、欺骗他人、游戏人生……一旦抱有这种不良的思维方式，能力和热情越高，其人生和事业就越阴暗。优秀的思维方式能够让人心想事成。即便拥有较高的能力和热情，也会由于负面的思维方式而导致不幸。所以说，一个想法，常常会改变人的一生。</p>
+<p>良性的思维方式是积极的、富有建设性的，它强调与人合作共赢。充满善意、体谅他人、心地善良、为人正直、做事认真、努力勤奋、毫不利己、抑制贪欲、心怀感恩。这些品质都属于良性的思维方式。只要保持积极向上、乐观开朗的心态，就能战胜人生中的逆境。</p>
+<p>即便命运多舛，即便能力平平，也不能悲观，要坚信自己的未来必将精彩。总之，乐观的信念是成功的关键。人生必有沉浮起落。既有走运的时候，也有遭难的时候。遭遇苦难时，忍耐是必需的。即使遭遇严重灾难，也不要怨恨，要一味忍耐。通过这种“忍耐”，人才能成长。</p>
+<p>遭遇苦难时，有能够忍耐的人，也有不能忍耐的人，我认为，他们的未来将完全不同。是直面苦难，还是被苦难击垮；是放弃初衷，妥协了事，还是千方百计，努力克服苦难。人能否成长，这里就是分水岭。 重要的是，以怎样的态度面对考验。</p>
+<p>年轻时受了些挫折，就自暴自弃、糟蹋人生、毁坏人生，那怎么行呢？不管现在处境如何，在漫长的人生中，只要保持良好的心态，就能把人生变得美好。 人生中不管好事还是坏事，一切都是考验，都是上天为了让人成长而赐予的考验。</p>
+<p>在我们的人生中，有时候可能会陷入悲观，觉得自己的人生已经没有希望。但是，一切失败挫折都是上天的有意安排，为的是让我们加速飞跃。 人生中发生的事情，仅用我们人浅薄的头脑，仅用眼前的幸与不幸去判断，那是不行的。应该站在天道的高度观察。那样的话，我们就能观察到完全不同的景象。</p>
+<p>即使现在正遭遇看似无情的灾难，也要认定，这灾难对当事者的将来必有好处，此乃上天赐予自己的“奖品”，必须这么去想。有时候，人思善了、行善了，但上天仍然会给予严酷无情的考验。能否坚持从正面面对这种苦难，用什么心态来应对这种苦难，将决定自己人生的航向。</p>
+<p>当我们在人生中遇到挫折，甚至健康受到影响时，也要告诉自己：“这种逆境是上天赏赐的，目的是让我变得更出色更强大。”对待困难和考验，就要用这种积极的态度，这是绝对必需的。</p>
+<p>成功人士和非成功人士只有毫厘之差。关键在于，当遭遇前所未见、如同绝壁一般的巨大障碍时，在那一瞬间，能不能对自己说“一定能跨越”，并走出第一步；敢不敢想“是我的话，一定能攀登”。</p>
+<p>“可能跨不过去吧”，这时候，只要有这么一点点踌躇和犹豫，腿脚就会瘫软，导致无法攀登。即使过后拼命给自己打气：“不，应该能跨过去！”也只能是马后炮了。就这一步之差，命运就迥然不同。所以，首先要坚定地相信自己“能行”，相信光明的未来必定到来。同时，迎头碰击困难这一壁障，不气馁，不放弃，正面对抗。</p>
+<p>带着这样的强大心灵不断前进时，我们逐渐就能看到以前完全无法看到的前进道路，理清走向成功所需的种种线索，曾经看起来远在天边的成功，不知不觉间就变得唾手可得。</p>
+<p>坚持做一件事，便可成就精彩的人生。人生最终只不过是每一个瞬间的积累。当下一秒的累积变成一日、一周、一个月、一年，最终成一生。那些使人惊叹的伟大成果，以及让人不禁感慨到底是什么样的天才才能成就的伟业，实际上其大部分都是普通人踏踏实实，不断累积的工作的结果。</p>
+<p>“每日不懈的精进和创意创新，是打破当下困境，走向成功的毋庸置疑的一条途径”。成功没有捷径。对自己的工作持续怀揣热情，认真地、踏踏实实地不断努力。这种乍看起来过于愚笨、一根筋似的工作方式，实则才是实现成功的王道。</p>
+<p>认真确立基于原理原则的哲学，按这种哲学办，就能促使事业成功，给人生带来硕果。但这过程绝非轻松愉快。依哲学行事需要律己，需要约束和规范自己的行为，这中间伴随着许多痛苦，有时会给自己带来损失，要经历一段苦难的路程。当你彷徨时，我劝你摆脱一己的私利，选择那条“本来该走的路”，即使是一条布满荆棘的路——勇敢地选择“不圆滑”、“不得要领”的生存方式。</p>
+<p>不过用长远的目光看，正确的哲学指导下的行为，绝不会带来损失，即使有一时的损失，后面必有回报，而且可以避免大错。只要你懂得原理原则，只要你持有正确的哲学，不管出现什么潮流，你都能做出正确判断。“只有额头流汗，靠自己努力赚来的钱才是真正的利润”——我的信念就这么单纯。这来自做人的正确的原理原则。</p>
+<p>即使蒙受损失也必须遵循的哲学，明知吃苦也甘愿承受的觉悟——自己心中有没有这种哲学和觉悟，这就是事业成功与否、人生幸福与否的分水岭。“我们接着要做的事，又是人们认为我们肯定做不成的事。”昨天走过的路，今天再走一趟，或者去重复别人已经走过的路，这与我的天性不合。我总是选择别人没走过的新路，一直走到今天。 </p>
+<p>当然，这样的道路绝非平坦，因为谁也没有走过。我常做如下比喻：我行走在田间泥泞的小道，那不能称为路。脚底一滑就会跌入水田，蛇或青蛙突然出现吓我一跳，但我仍然一步一步向前走。</p>
+<p>无意间向旁边一瞥，那里铺装平整的大道上车水马龙。如果踏上那条路自然既舒服又方便，但我却凭着自己的意志，反而仍走那无人通行的泥泞小路，而且坚韧不拔地走到今天。</p>
+<p>“铺装平整的大道”是大家都想走的、大家正在走的路。在那样的大路上跟着别人亦步亦趋没有趣味。若只知步别人的后尘，则绝不能开拓新的事业。 同别人干一样的事，很难期待获得出色的成果，因为那么多人走过的路上不会剩下什么有价值的东西。而无人涉足的新路，尽管寸步难行，却可以有许多新的发现和巨大的成果。</p>
+<p>那些没人敢走的泥泞之路，行走虽然艰苦，却通向难以想象的光明灿烂的未来。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2019/06/28/ADTA_17_matching/" data-id="ckqhdruq5000cgos32b55ag27" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2021/07/19/%E6%9D%82%E6%96%87_%E9%81%AD%E9%81%87%E8%8B%A6%E9%9A%BE%E6%97%B6%E5%BF%8D%E8%80%90%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84/" data-id="ckratumm800000os3e024b7nh" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag">算法设计技巧与分析</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9D%82%E6%96%87/" rel="tag">杂文</a></li></ul>
 
     </footer>
   </div>
@@ -194,19 +165,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/06/28/ADTA_16_NetworkFlow/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          网络流问题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/06/28/ADTA_18_GeometricSweeping/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/07/19/frontend_cssPosition/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">几何扫描</div>
+      <div class="article-nav-title">CSS 定位 (Position)</div>
     </a>
   
 </nav>
