@@ -7,15 +7,15 @@
   
   <title>Redux-React | 野生芦苇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基础action描述对state要发生什么？（为state的改变提供数据，数据的唯一来源） 1234&amp;#123;    type: &quot;ADD_TODO&quot;,    text: &#39;build my family&#39;,  &amp;#125;   Action Creater 动作创建函数 123456function addTodo(text) &amp;#123;    return &amp;#123;        ty">
+  <meta name="description" content="action -&gt; reducer -&gt; store">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redux-React">
 <meta property="og:url" content="http://github.com/jinlongli2016/2021/07/20/frontend-redux/index.html">
 <meta property="og:site_name" content="野生芦苇">
-<meta property="og:description" content="基础action描述对state要发生什么？（为state的改变提供数据，数据的唯一来源） 1234&amp;#123;    type: &quot;ADD_TODO&quot;,    text: &#39;build my family&#39;,  &amp;#125;   Action Creater 动作创建函数 123456function addTodo(text) &amp;#123;    return &amp;#123;        ty">
+<meta property="og:description" content="action -&gt; reducer -&gt; store">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-20T00:23:37.000Z">
-<meta property="article:modified_time" content="2021-07-20T00:24:28.134Z">
+<meta property="article:modified_time" content="2021-07-20T06:47:05.416Z">
 <meta property="article:author" content="李金龙">
 <meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
@@ -115,7 +115,12 @@
 
 
 
-        <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><p>描述对<code>state</code>要<u>发生什么</u>？（为<code>state</code>的改变提供数据，数据的唯一来源）</p>
+        <ul>
+<li>action -&gt; reducer -&gt; store</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><p>描述对<code>state</code>要<u>发生什么</u>？（为<code>state</code>的改变提供数据，数据的唯一来源）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">"ADD_TODO"</span>,</span><br><span class="line">    text: <span class="string">'build my family'</span>,  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -143,7 +148,6 @@
 
 
 <ul>
-<li>action -&gt; reducer -&gt; store</li>
 <li>目标、方案、执行者</li>
 </ul>
 
