@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://res-static.hc-cdn.cn/fms/img/62dc5d1701be39c169c52efb51c831961603764276224.png">
 <meta property="article:published_time" content="2021-06-28T13:14:25.000Z">
-<meta property="article:modified_time" content="2021-07-18T14:25:11.579Z">
+<meta property="article:modified_time" content="2021-07-28T03:31:34.108Z">
 <meta property="article:author" content="李金龙">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="激活函数">
@@ -48,7 +48,7 @@
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">李金龙的随记</a>
+          <a href="/" id="subtitle">价值、合作、方法</a>
         </h2>
       
     </div>
@@ -110,6 +110,11 @@
       
       
 <!-- Table of Contents -->
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络层的归一化方式"><span class="toc-number">1.</span> <span class="toc-text">网络层的归一化方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何理解Batch？"><span class="toc-number">2.</span> <span class="toc-text">如何理解Batch？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#评估指标"><span class="toc-number">3.</span> <span class="toc-text">评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#指标基础"><span class="toc-number">3.1.</span> <span class="toc-text">指标基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC"><span class="toc-number">3.2.</span> <span class="toc-text">ROC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUC"><span class="toc-number">3.3.</span> <span class="toc-text">AUC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PR曲线-precision-recall"><span class="toc-number">3.4.</span> <span class="toc-text">PR曲线 (precision-recall)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NMS"><span class="toc-number">4.</span> <span class="toc-text">NMS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#手写IoU"><span class="toc-number">4.1.</span> <span class="toc-text">手写IoU</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#loss"><span class="toc-number">5.</span> <span class="toc-text">loss</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BN"><span class="toc-number">6.</span> <span class="toc-text">BN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#normalization的类别"><span class="toc-number">6.1.</span> <span class="toc-text">normalization的类别</span></a></li></ol></li></ol>
+  </div>
 
 
 
@@ -187,6 +192,39 @@
 <ul>
 <li>dist</li>
 </ul>
+<h1 id="NMS"><a href="#NMS" class="headerlink" title="NMS"></a>NMS</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">把概率太低的box剔除掉</span><br><span class="line">对boxes，依概率从高到低进行选择box，直到boxes为空：</span><br><span class="line">    每选择一个box，就把boxes中和它重叠度超过阈值的box给剔除</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>soft-NMS:用于可以部分用于解决两个物体重叠度较高的问题。不像NMS对重叠度超过阈值的直接删除，而是降低其概率</li>
+</ul>
+<h2 id="手写IoU"><a href="#手写IoU" class="headerlink" title="手写IoU"></a>手写IoU</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">iou</span><span class="params">(box1, box2)</span>:</span></span><br><span class="line">    x1, y1 = max(b1.x1, b2.x1), min(b1.y1, b2.y1)</span><br><span class="line">    x2, y2 = min(b1.x2, b2.x2), max(b1.y2, b2.y2)</span><br><span class="line">    intersection = x1 &gt; x2 or y1 &lt; y2 ? 0 :(x2 - x1) * (y1 - y2);</span><br><span class="line">    area1, area2 = </span><br><span class="line">    <span class="keyword">return</span> intersection / (area1 + area2 - intersection)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="loss"><a href="#loss" class="headerlink" title="loss"></a>loss</h1><p>手写交叉熵</p>
+<p>二值交叉熵</p>
+<p>​    sigmoid函数<br>$$<br>σ(x) = h_ \theta (x) =  \frac{\mathrm{1} }{\mathrm{1} + e^- \theta^Tx }<br>$$<br>​    函数导数为 σ(1-σ)</p>
+<p>binary cross entropy loss 对 inputs x的<a href="https://peterroelants.github.io/posts/cross-entropy-logistic/#Derivative-of-the-cross-entropy-loss-function-for-the-logistic-function" target="_blank" rel="noopener">导数</a>为 预测值 与 实际值的 差<br>$$<br>\frac{\partial \xi}{\partial o} = \frac{\partial p}{\partial o} \frac{\partial \xi}{\partial p} = p (1-p) \frac{p-t}{p(1-p)} = p-t<br>$$<br><code>softmax</code><a href="https://math.stackexchange.com/questions/945871/derivative-of-softmax-loss-function" target="_blank" rel="noopener">公式</a></p>
+<p>softmax用于把logits转为probs，最终再采用cross_entropy计算损失L.</p>
+<p>结论： L对logits_i 的梯度 : （预测值与实际值的差）pi - yi, pi是计算出的i类概率， yi是第i类的真实标签。</p>
+<p>$$<br>\frac{\partial L}{\partial o_i}=-\sum_ky_k\frac{\partial \log p_k}{\partial o_i}=-\sum_ky_k\frac{1}{p_k}\frac{\partial p_k}{\partial o_i}\=-y_i(1-p_i)-\sum_{k\neq i}y_k\frac{1}{p_k}({\color{red}{-p_kp_i}})\=-y_i(1-p_i)+\sum_{k\neq i}y_k({\color{red}{p_i}})\=-y_i+\color{blue}{y_ip_i+\sum_{k\neq i}y_k({p_i})}\=\color{blue}{p_i\left(\sum_ky_k\right)}-y_i=p_i-y_i<br>$$</p>
+<p>softmax函数对输入的梯度：输出j对输入$i$的梯度。<br>$$<br>\begin{equation}<br>\frac{\partial p_j}{\partial o_i} = p_i(1 - p_i),\quad i = j</p>
+<p>\frac{\partial p_j}{\partial o_i} = -p_i p_j,\quad i \neq j.</p>
+<p>\end{equation}<br>$$</p>
+<p>卷积参数量计算</p>
+<h1 id="BN"><a href="#BN" class="headerlink" title="BN"></a>BN</h1><ol>
+<li>以（相对）大学习率学习，加速收敛速度</li>
+<li>能提高精度</li>
+<li>相当于正则化（类似于Dropout)：使用BN时，每个样本都会和其他样本一起输入（彼此互相影响），网络对一个样本的输出也就不是确定的</li>
+</ol>
+<h2 id="normalization的类别"><a href="#normalization的类别" class="headerlink" title="normalization的类别"></a>normalization的类别</h2><ol>
+<li>BN</li>
+<li>layer normalization</li>
+<li>instance normalization</li>
+<li>group normalization</li>
+</ol>
+<p>有点意思：</p>
+<p>A校的文科　和理科的升学率都高于ｂ校；但是ｂ校整体的升学率却高于A校？</p>
 
       
     </div>

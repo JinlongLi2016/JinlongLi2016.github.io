@@ -5,19 +5,20 @@
   
 
   
-  <title>Redux-React | 野生芦苇</title>
+  <title>CSS 定位 (Position) | 野生芦苇</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="action -&gt; reducer -&gt; store">
+  <meta name="description" content="Why Position? 覆盖基本的文档流行为。 定位允许您从正常的文档流布局中取出元素，并使它们具有不同的行为，例如放在另一个元素的上面，或者始终保持在浏览器视窗内的同一位置。 本文解释的是定位(position)的各种不同值，以及如何使用它们。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redux-React">
-<meta property="og:url" content="http://github.com/jinlongli2016/2021/07/20/frontend-redux/index.html">
+<meta property="og:title" content="CSS 定位 (Position)">
+<meta property="og:url" content="http://github.com/jinlongli2016/2021/04/19/frontend_cssPosition/index.html">
 <meta property="og:site_name" content="野生芦苇">
-<meta property="og:description" content="action -&gt; reducer -&gt; store">
+<meta property="og:description" content="Why Position? 覆盖基本的文档流行为。 定位允许您从正常的文档流布局中取出元素，并使它们具有不同的行为，例如放在另一个元素的上面，或者始终保持在浏览器视窗内的同一位置。 本文解释的是定位(position)的各种不同值，以及如何使用它们。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-20T00:23:37.000Z">
-<meta property="article:modified_time" content="2021-07-20T06:47:05.416Z">
+<meta property="article:published_time" content="2021-04-19T10:53:26.000Z">
+<meta property="article:modified_time" content="2021-07-29T13:31:49.097Z">
 <meta property="article:author" content="李金龙">
 <meta property="article:tag" content="前端">
+<meta property="article:tag" content="CSS">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="https://shang.qq.com/wpa/qunwpa?idkey=b1f60f79b3ca3529de11e4d2eb36924a35f57ad3419b3a7563bbaad8043ba008" title="野生芦苇" type="application/atom+xml">
@@ -45,7 +46,7 @@
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">李金龙的随记</a>
+          <a href="/" id="subtitle">价值、合作、方法</a>
         </h2>
       
     </div>
@@ -79,10 +80,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-frontend-redux" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-frontend_cssPosition" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2021/07/20/frontend-redux/" class="article-date">
-  <time datetime="2021-07-20T00:23:37.000Z" itemprop="datePublished">2021-07-20</time>
+    <a href="/2021/04/19/frontend_cssPosition/" class="article-date">
+  <time datetime="2021-04-19T10:53:26.000Z" itemprop="datePublished">2021-04-19</time>
 </a>
     
   <div class="article-category">
@@ -97,7 +98,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Redux-React
+      CSS 定位 (Position)
     </h1>
   
 
@@ -110,54 +111,48 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#action"><span class="toc-number">1.1.</span> <span class="toc-text">action</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reducer-规约器"><span class="toc-number">1.2.</span> <span class="toc-text">reducer 规约器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#store"><span class="toc-number">1.3.</span> <span class="toc-text">store</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文档流"><span class="toc-number">1.</span> <span class="toc-text">文档流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态定位-static"><span class="toc-number">2.</span> <span class="toc-text">静态定位 static</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对定位-relative"><span class="toc-number">3.</span> <span class="toc-text">相对定位 relative</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绝对定位"><span class="toc-number">4.</span> <span class="toc-text">绝对定位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绝对定位元素的“包含元素”是什么？"><span class="toc-number">4.1.</span> <span class="toc-text">绝对定位元素的“包含元素”是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z-index"><span class="toc-number">4.2.</span> <span class="toc-text">z-index</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#固定定位-fixed"><span class="toc-number">5.</span> <span class="toc-text">固定定位 fixed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#粘连定位-sticky"><span class="toc-number">6.</span> <span class="toc-text">粘连定位 sticky</span></a></li></ol>
   </div>
 
 
 
-        <ul>
-<li>action -&gt; reducer -&gt; store</li>
-</ul>
+        <p>Why <code>Position</code>? <strong>覆盖</strong>基本的<strong>文档流行</strong>为。</p>
+<p>定位允许您从正常的文档流布局中取出元素，并使它们具有不同的行为，例如放在另一个元素的上面，或者始终保持在浏览器视窗内的同一位置。 <a href="https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/%E5%AE%9A%E4%BD%8D" target="_blank" rel="noopener">本文</a>解释的是定位(<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/position" target="_blank" rel="noopener"><code>position</code></a>)的各种不同值，以及如何使用它们。</p>
 <a id="more"></a>
 
-<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><p>描述对<code>state</code>要<u>发生什么</u>？（为<code>state</code>的改变提供数据，数据的唯一来源）</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">"ADD_TODO"</span>,</span><br><span class="line">    text: <span class="string">'build my family'</span>,  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="文档流"><a href="#文档流" class="headerlink" title="文档流"></a>文档流</h2><p>定位是一个相当复杂的话题，所以我们深入了解代码之前，让我们审视一下布局理论，并让我们了解它的工作原理。</p>
+<p>首先，围绕元素内容添加任何内边距、边界和外边距来布置单个元素盒子——这就是 <a href="https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Introduction_to_CSS/Box_model" target="_blank" rel="noopener">盒模型</a> ，我们前面看过。 默认情况下，块级元素的内容宽度是其父元素的宽度的100％，并且与其内容一样高。内联元素高宽与他们的内容高宽一样。您不能对内联元素设置宽度或高度——它们只是位于块级元素的内容中。 如果要以这种方式控制内联元素的大小，则需要将其设置为类似块级元素 <code>display: block;</code>。</p>
+<p>这只是解释了单个元素，但是元素相互之间如何交互呢？ <strong>正常的布局流</strong>（在布局介绍文章中提到）是将元素放置在浏览器视口内的系统。默认情况下，块级元素在视口中垂直布局——每个都将显示在上一个元素下面的新行上，并且它们的外边距将分隔开它们。</p>
+<p>内联元素表现不一样——它们不会出现在新行上；相反，它们互相之间以及任何相邻（或被包裹）的文本内容位于同一行上，只要在父块级元素的宽度内有空间可以这样做。如果没有空间，那么溢流的文本或元素将向下移动到新行。</p>
+<p>如果两个相邻元素都在其上设置外边距，并且两个外边距接触，则两个外边距中的较大者保留，较小的一个消失——这叫<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing" target="_blank" rel="noopener">外边距折叠</a>, 我们之前也遇到过。</p>
+<p>有许多不同类型的定位，您可以对HTML元素生效。要使某个元素上的特定类型的定位，我们使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/position" target="_blank" rel="noopener"><code>position</code></a>属性。</p>
+<h2 id="静态定位-static"><a href="#静态定位-static" class="headerlink" title="静态定位 static"></a>静态定位 static</h2><p>静态定位是每个元素获取的默认值——它只是意味着“将元素放入它在文档布局流中的正常位置 ——这里没有什么特别的。</p>
+<h2 id="相对定位-relative"><a href="#相对定位-relative" class="headerlink" title="相对定位 relative"></a>相对定位 relative</h2><p>与静态定位非常相似，占据在正常的文档流中，除了你仍然可以修改它的最终位置，包括让它与页面上的其他元素重叠。</p>
+<p> 如何修改元素的位置呢？ 您需要使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/top" target="_blank" rel="noopener"><code>top</code></a>，<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/bottom" target="_blank" rel="noopener"><code>bottom</code></a>，<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/left" target="_blank" rel="noopener"><code>left</code></a>和<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/right" target="_blank" rel="noopener"><code>right</code></a>属性.<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/top" target="_blank" rel="noopener"><code>top</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/bottom" target="_blank" rel="noopener"><code>bottom</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/left" target="_blank" rel="noopener"><code>left</code></a>, 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/right" target="_blank" rel="noopener"><code>right</code></a> 来精确指定要将定位元素移动到的位置。</p>
+<h2 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h2><p>绝对定位的元素不再存在于正常文档布局流中。相反，它坐在它自己的层独立于一切。</p>
+<h3 id="绝对定位元素的“包含元素”是什么？"><a href="#绝对定位元素的“包含元素”是什么？" class="headerlink" title="绝对定位元素的“包含元素”是什么？"></a>绝对定位元素的“包含元素”是什么？</h3><p>绝对定位虽然不存在于正常的文档布局流中，但其最终必然会在一个块中。那是哪一个块呢？这取决于绝对定位元素的父元素的position属性。(参见 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#Identifying_the_containing_block" target="_blank" rel="noopener">Identifying the containing block</a>).</p>
+<p>如果所有的父元素都没有显式地定义position属性，那么所有的父元素默认情况下position属性都是static。结果，绝对定位元素会被包含在<strong>初始块容器</strong>中。这个初始块容器有着和浏览器视口一样的尺寸，并且<html>元素也被包含在这个容器里面。简单来说，绝对定位元素会被放在<html>元素的外面，并且根据浏览器视口来定位。</p>
+<p>可以通过设置其中一个父元素的定位属性 —— 也就是包含绝对定位元素的那个元素（如果要设置绝对定位元素的相对元素，那么这个元素一定要包含绝对定位元素）。</p>
+<h3 id="z-index"><a href="#z-index" class="headerlink" title="z-index"></a>z-index</h3><p>当元素开始重叠，什么决定哪些元素出现在其他元素的顶部？</p>
 <ul>
-<li><p><code>Action Creater</code> 动作创建函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addTodo</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type: <span class="string">"ADD_TODO"</span>,</span><br><span class="line">        text,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
+<li><p>定位的元素胜过未定位的元素。</p>
+</li>
+<li><p>源顺序中后定位的元素将赢得先定位的元素</p>
+</li>
+<li><p>可以使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/z-index" target="_blank" rel="noopener"><code>z-index</code></a>属性改变堆叠顺序</p>
 </li>
 </ul>
-<h2 id="reducer-规约器"><a href="#reducer-规约器" class="headerlink" title="reducer 规约器"></a>reducer 规约器</h2><p>将actions描述的发生事情更新为state</p>
-<p><code>(prevState, actions) =&gt; newState</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">todoApp</span>(<span class="params">state, action</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(actions.type === <span class="string">"SOME_FLAG"</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            action.newData,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>combineReducer()</code></li>
-</ul>
-<h2 id="store"><a href="#store" class="headerlink" title="store"></a>store</h2><p>维持应用状态，提供<code>dispatch(action)</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> store = createStore(todoApp);</span><br><span class="line">store = createStore(todoApp);</span><br><span class="line">store.dispatch(addTodo(<span class="string">"store"</span>));</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;..&#x2F;captainweekly&#x2F;Weekly&#x2F;resources&#x2F;20200918&#x2F;redux-in-chinese.pdf</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<ul>
-<li>目标、方案、执行者</li>
-</ul>
+<h2 id="固定定位-fixed"><a href="#固定定位-fixed" class="headerlink" title="固定定位 fixed"></a>固定定位 fixed</h2><p>与绝对定位的工作方式完全相同，只有一个主要区别：绝对定位固定元素是相对于 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/html" target="_blank" rel="noopener">``</a> 元素或其最近的定位祖先，而固定定位固定元素则是相对于浏览器视口本身。 </p>
+<h2 id="粘连定位-sticky"><a href="#粘连定位-sticky" class="headerlink" title="粘连定位 sticky"></a>粘连定位 sticky</h2><p>基本上是相对位置和固定位置的混合体，它允许被定位的元素表现得像相对定位一样，直到它滚动到某个阈值点（例如，从视口顶部起10像素）为止，此后它就变得固定了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.positioned &#123;</span><br><span class="line">  position: sticky;</span><br><span class="line">  top: <span class="number">30</span>px;</span><br><span class="line">  left: <span class="number">30</span>px;</span><br><span class="line">&#125;</span><br><span class="line">当向上移动到<span class="number">30</span>px处时，表现和fixed相似。</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/07/20/frontend-redux/" data-id="ckrbkvlfh0000u4s36jepfya7" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2021/04/19/frontend_cssPosition/" data-id="ckraigmtc0001kgs3835d2u1e" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li></ul>
 
     </footer>
   </div>
@@ -165,10 +160,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2021/04/20/frontend-redux/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Redux-React
+        
+      </div>
+    </a>
   
-    <a href="/2021/07/19/%E6%9D%82%E6%96%87_%E9%81%AD%E9%81%87%E8%8B%A6%E9%9A%BE%E6%97%B6%E5%BF%8D%E8%80%90%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2021/04/19/frontend_antd%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">遭遇苦难时忍耐是必需的</div>
+      <div class="article-nav-title">Antd组件运用</div>
     </a>
   
 </nav>
