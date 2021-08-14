@@ -112,15 +112,11 @@
 
         <p>tf证书主要考察四个方面的内容</p>
 <a id="more"></a>
-
-
-
 <h1 id="1-Build-and-train-neural-network-models-using-TensorFlow-2-x"><a href="#1-Build-and-train-neural-network-models-using-TensorFlow-2-x" class="headerlink" title="(1) Build and train neural network models using TensorFlow 2.x"></a>(1) Build and train neural network models using TensorFlow 2.x</h1><p>You need to understand the foundational principles of machine learning (ML) and deep learning (DL) using TensorFlow 2.x. You need to know how to:<br>Use TensorFlow 2.x. </p>
 <ul>
 <li>Build, compile and train machine learning (ML)  models using TensorFlow. </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for demonstration</span></span><br><span class="line">modl = tf.keras.models.Sequential([</span><br><span class="line">    tf.keras.layers.Conv2D(filters=<span class="number">128</span>, kernel_size=(<span class="number">3</span>,<span class="number">3</span>),strides=(<span class="number">1</span>,<span class="number">1</span>),</span><br><span class="line">                          padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>)</span><br><span class="line">    tf.keras.layers.GlobalAveragePooling(),</span><br><span class="line">    </span><br><span class="line">    tf.keras.layers.Dense(nb_classes, activation=<span class="string">'sigmod(if binary)/softmax(multiclass)'</span>)</span><br><span class="line">])</span><br><span class="line">model.compile(loss=<span class="string">'binary_corssentropy/categorical_crossentropy'</span>,</span><br><span class="line">             optimizer=<span class="string">'rmpsprop'</span>,</span><br><span class="line">             metrics=[<span class="string">'acc'</span>])</span><br><span class="line">model.fit(data)</span><br><span class="line">model.fit(xs, ys)</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li>除序列模型以外，有其他较典型的模型吗？</li>
 </ol>
@@ -139,9 +135,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1: add all layers at a time</span></span><br><span class="line">model = tf.keras.models.Sequential([</span><br><span class="line">    tf.keras.layers.Conv2D(filters=<span class="number">128</span>, kernel_size=(<span class="number">3</span>,<span class="number">3</span>),strides=(<span class="number">1</span>,<span class="number">1</span>),</span><br><span class="line">                          padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>)</span><br><span class="line">    tf.keras.layers.GlobalAveragePooling(),</span><br><span class="line">    </span><br><span class="line">    tf.keras.layers.Dense(nb_classes, activation=<span class="string">'sigmod(if binary)/softmax(multiclass)'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2: 逐个增加序列模型的每一层</span></span><br><span class="line">model = tf.keras.models.Sequential()</span><br><span class="line">model.add(tf.keras.layers.GlobalAveragePooling())</span><br></pre></td></tr></table></figure>
-
-
-
 <ul>
 <li><p>Build and train models for binary classification. </p>
 </li>
@@ -149,28 +142,20 @@
 </li>
 <li><p>Plot loss and accuracy of a trained model. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hist = history.history <span class="comment"># dict</span></span><br><span class="line">loss, acc = hist[<span class="string">'loss'</span>], hist[<span class="string">'accuracy'</span>]</span><br><span class="line"></span><br><span class="line">epochs = list(range(len(loss)))</span><br><span class="line"></span><br><span class="line">plt.plot(epochs, loss, color=<span class="string">'b'</span>)</span><br><span class="line">plt.plot(epochs, acc, color=<span class="string">'r'</span>)</span><br><span class="line">plt.legend([<span class="string">'loss'</span>, <span class="string">'accuracy'</span>])</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <ul>
 <li><p>Identify strategies to prevent overfitting, including augmentation and dropout. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 防止过拟合策略：1. dropout 2. augmentation 3. batch normalization</span></span><br><span class="line"><span class="comment"># 1. dropout</span></span><br><span class="line">tf.layers.Dropout(rate)</span><br><span class="line"><span class="comment"># 2. augmentation</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.image <span class="keyword">import</span> ImageDataGenerator</span><br><span class="line">train_datagen = ImageGenerator.rescale(</span><br><span class="line">    rescale = <span class="number">1.</span>/<span class="number">255</span>,</span><br><span class="line">    rotation_range=<span class="number">20</span>,</span><br><span class="line">    width_shift_range=<span class="number">0.2</span>,</span><br><span class="line">    height_shift_range=<span class="number">0.2</span>,</span><br><span class="line">    horizontal_flip=<span class="literal">True</span>)</span><br><span class="line">train_datagen.flow_from_directory(</span><br><span class="line">	dir,</span><br><span class="line">	target_size=(<span class="number">150</span>,<span class="number">150</span>),</span><br><span class="line">	batch_size=<span class="number">10</span>,</span><br><span class="line">	class_mode=<span class="string">'binary'</span>)</span><br><span class="line"><span class="comment"># 3 BN</span></span><br><span class="line">tf.keras.layers.BatchNormalization()</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li><p><code>Dropout</code>: set inputs to zero at a rate of <code>rate</code>, then outputs are scaled 1/(1 - rate)，输入的和不变</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tf.random.set_seed(<span class="number">0</span>)</span><br><span class="line">dropout_layer = tf.keras.layers.Dropout(<span class="number">.2</span>, input_shape=(<span class="number">2</span>,))</span><br><span class="line">data = np.arange(<span class="number">10</span>).reshape(<span class="number">5</span>, <span class="number">2</span>).astype(np.float32)</span><br><span class="line">print(data)</span><br><span class="line"></span><br><span class="line">outputs = dropout_layer(data, training=<span class="literal">True</span>)</span><br><span class="line">print(outputs)</span><br></pre></td></tr></table></figure>
-
 <p>只在训练时生效. <code>layer(training=True)</code> </p>
 </li>
 <li><p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/BatchNormalization" target="_blank" rel="noopener">BatchNormalization</a> </p>
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># layter.trainable &#x3D; False vs inference mode?</span><br><span class="line"># 前者的意思是内部的状态不改变；后者的意思是网络运行在推理阶段。</span><br><span class="line"># BN层在训练时，trainable&#x3D;False 的表示mean和var采用当前batch的mean和var</span><br><span class="line"># inference则表明采用BN层自己的 滑动平均和滑动方差</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <ul>
@@ -190,9 +175,6 @@
 </li>
 <li><p>Use callbacks to trigger the end of training cycles. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyCallbak</span><span class="params">(tf.keras.callbacks.Callback)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_epoch_end</span><span class="params">(self, epoch, logs=&#123;&#125;)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> logs.get(<span class="string">'acc'</span>) &gt; DESIRED_ACCURACY:</span><br><span class="line">            print(<span class="string">"\n Reached desired accuracy"</span>)</span><br><span class="line">            self.model.stop_training = <span class="literal">True</span></span><br><span class="line">model.fit(callbacks = [MyCallback()])</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <ul>
@@ -204,9 +186,6 @@
 </li>
 <li><p>Use datasets from tf.data.datasets. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.fit(dataset)</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <h1 id="2-Image-classification"><a href="#2-Image-classification" class="headerlink" title="(2)  Image classification"></a>(2)  Image classification</h1><p>You need to understand how to build image recognition and object detection models  with deep neural networks and convolutional neural networks using TensorFlow 2.x. You need to know how to: </p>
@@ -226,11 +205,6 @@
 <ul>
 <li><p>Use real-world images in different shapes and sizes.. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tf.keras.preprocess.image_dataset_from_directory(</span><br><span class="line">    data_dir, validation_slit=<span class="number">0.2</span>, subset=<span class="string">"validation"</span>, seed=<span class="number">1123</span>, image_size=(h, w), batch_size=batch_size</span><br><span class="line">)</span><br><span class="line"><span class="comment"># 从一个包含图片的文件夹创建一个dataset</span></span><br><span class="line"><span class="comment">#main_directory/</span></span><br><span class="line"><span class="comment">#...class_a/</span></span><br><span class="line"><span class="comment">#......a_image_1.jpg</span></span><br><span class="line"><span class="comment">#......a_image_2.jpg</span></span><br><span class="line"><span class="comment">#...class_b/</span></span><br><span class="line"><span class="comment">#......b_image_1.jpg</span></span><br><span class="line"><span class="comment">#......b_image_2.jpg</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
 </li>
 </ul>
 <ul>
@@ -246,9 +220,6 @@
 <li><p><code>ImageDataGenerator .flow_from_directory</code></p>
 <p><code>data/train/dogs/xxx.jpg and data/validation/dogs/xxx.jpg</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tf.keras.preprocessing.image.ImageGenerator(). \</span><br><span class="line">	flow_from_directory(dir, target_size=(<span class="number">32</span>, <span class="number">32</span>), color_mode=<span class="string">'rgb'</span>,class_mode=<span class="string">'binary'</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 </li>
@@ -272,17 +243,11 @@
 </li>
 <li><p>Build models that  identify the category of a piece of text using binary categorization </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">model = tf.kears.models.Sequential([</span><br><span class="line">    tf.keras.layers.word_embedding(</span><br><span class="line">    	voc_size, embed_size),</span><br><span class="line">    tf.keras.layers.LSTM(<span class="number">64</span>),</span><br><span class="line">    tf.keras.layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">model.compile(loss=<span class="string">'binary_crossentropy'</span>,</span><br><span class="line">             optimizer=<span class="string">'rmsprop'</span>,</span><br><span class="line">             metrics=[<span class="string">'acc'</span>])</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <ul>
 <li><p>Build models that identify the category of a piece of text using multi-class categorization </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = tf.kears.models.Sequential([</span><br><span class="line">    tf.keras.layers.word_embedding(</span><br><span class="line">    	voc_size, embed_size),</span><br><span class="line">    tf.keras.layers.LSTM(<span class="number">64</span>),</span><br><span class="line">    tf.keras.layers.Dense(nb_classes, activation=<span class="string">'softmax'</span>)</span><br><span class="line">])</span><br><span class="line">model.compile(loss=<span class="string">'multiclass_crossentropy'</span>,</span><br><span class="line">             optimizer=<span class="string">'rmsprop'</span>,</span><br><span class="line">             metrics=[<span class="string">'acc'</span>])</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <ul>
@@ -297,18 +262,12 @@
 </li>
 <li><p>Train LSTMs on existing text to generate text (such as songs and poetry) </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># given a sequences of text, generate following 100 word</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将过去的所有文字输入模型预测下一个word # tokenizer: 分词器</span></span><br><span class="line">seqs = []</span><br><span class="line">tokenizer.texts_to_sequences(texts)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_words</span><span class="params">(text, nb_words)</span>:</span></span><br><span class="line">    seq = tokenizer.texts_to_sequences(text)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(nb_words):</span><br><span class="line">        word_idx = model.predict_class(seq)</span><br><span class="line">        seq += word_idx,</span><br><span class="line">    <span class="comment"># convert seq to word</span></span><br><span class="line">   	words = []</span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> seq:</span><br><span class="line">    	word = <span class="string">''</span></span><br><span class="line">        <span class="keyword">for</span> i,w <span class="keyword">in</span> tokenizer.word_index.items():</span><br><span class="line">            <span class="keyword">if</span> i == s:</span><br><span class="line">                word = w</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">         words += word,</span><br><span class="line">    <span class="keyword">return</span> words</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <h1 id="4-Time-series-sequences-and-predictions"><a href="#4-Time-series-sequences-and-predictions" class="headerlink" title="(4) Time series, sequences and predictions"></a>(4) Time series, sequences and predictions</h1><p>You need to understand how to solve time series and forecasting problems in TensorFlow. You need to know how to: </p>
 <ul>
 <li><p>Train, tune and use time series, sequence and prediction models. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 时序数据一维度卷积时候padding要注意，使用'casual'的方式在seq的前部进行padding；以免对last part的信号产生干扰!</span></span><br><span class="line">model = tf.keras.models.Sequential([</span><br><span class="line">  tf.keras.layers.Conv1D(filters=<span class="number">64</span>, kernel_size=<span class="number">3</span>, strides=<span class="number">1</span>,  </span><br><span class="line">                         padding=<span class="string">'causal'</span>,</span><br><span class="line">                         activation=<span class="string">'relu'</span>,</span><br><span class="line">                         input_shape=(<span class="literal">None</span>,<span class="number">1</span>)),</span><br><span class="line">  tf.keras.layers.LSTM(<span class="number">64</span>, return_sequences=<span class="literal">True</span>),</span><br><span class="line">  tf.keras.layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>),</span><br><span class="line">  tf.keras.layers.Lambda(<span class="keyword">lambda</span> x: x * <span class="number">100</span>)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <ul>
@@ -336,9 +295,6 @@
 <p>subsequent bias? (bidirectional_layer?)</p>
 <p><a href="https://towardsdatascience.com/prediction-and-analysis-of-time-series-data-using-tensorflow-2136ef633018" target="_blank" rel="noopener">Sequence bias</a> is when <strong>the order of things can impact the selection of things</strong>. For example, if I were to ask you your favorite TV show, and listed “Game of Thrones”, “Killing Eve”, “Travelers” and “Doctor Who” in that order, you’re probably more likely to select ‘Game of Thrones’ as you are familiar with it, and it’s the first thing you see. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dataset.shuffle(buffer_size=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 <ul>
@@ -346,13 +302,6 @@
 <p>如何动态调整learning rate? <code>callbacks</code></p>
 <p>callback如何动态修正 learning rate?</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">tf.keras.callbacks.LearningRateScheduler(</span><br><span class="line">    schedule, verbose=<span class="number">0</span></span><br><span class="line">) <span class="comment"># schedule: 可接收(epoch, lr)两个参数的函数</span></span><br><span class="line"></span><br><span class="line">lr_schedule = tf.keras.callbacks.LearningRateScheduler(</span><br><span class="line">    <span class="keyword">lambda</span> epoch: <span class="number">1e-8</span> * <span class="number">10</span>**(epoch / <span class="number">20</span>)) <span class="comment"># callbacks</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义回调，当损失低于阈值时结束训练</span></span><br><span class="line"><span class="comment"># https://www.tensorflow.org/guide/keras/custom_callback</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CusCallback</span><span class="params">(tf.keras.callbacks.Callback)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, patience=<span class="number">0</span>)</span>:</span></span><br><span class="line">        self.patience, self.best_weights = patience, <span class="literal">None</span></span><br><span class="line">   	<span class="function"><span class="keyword">def</span> <span class="title">on_train_begin</span><span class="params">(self, logs=None)</span>:</span></span><br><span class="line">        <span class="comment"># the number of epoch it has watied when loss is no longer minimum</span></span><br><span class="line">        self.wait, self.stopped_epoch, self.best = <span class="number">0</span>, <span class="number">0</span>, np.Inf</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_epoch_end</span><span class="params">(self, epoch, logs=None)</span>:</span></span><br><span class="line">        current = logs.get(<span class="string">"loss"</span>)</span><br><span class="line">        <span class="comment"># 如果当前loss低于最好loss，则update最好loss</span></span><br><span class="line">        <span class="comment"># 如果当前loss高于最好loss且等待时间(wait)超限，则结束训练</span></span><br><span class="line">        <span class="keyword">if</span> np.less(current, self.best):</span><br><span class="line">            self.best = current</span><br><span class="line">            self.wait = <span class="number">0</span></span><br><span class="line">            self.best_weights = self.model.get_weights()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.wait += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> self.wait &gt;= self.patience:</span><br><span class="line">                self.stopped_epoch = epoch</span><br><span class="line">                self.model.stop_training = <span class="literal">True</span></span><br><span class="line">                print(<span class="string">"Restoring model weights from the end of the best epoch"</span>)</span><br><span class="line">                self.model.set_weights(self.best_weights)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
 </li>
 </ul>
 <h1 id="notes"><a href="#notes" class="headerlink" title="notes"></a>notes</h1><ul>
@@ -384,18 +333,13 @@
 </li>
 <li><p><code>pad_sequences</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This function transforms a list (of length num_samples) of sequences (lists of integers) into a 2D Numpy array of shape (num_samples, num_timesteps). num_timesteps is either the maxlen argument if provided, or the length of the longest sequence in the list.</span></span><br><span class="line"></span><br><span class="line">pad_sequences(</span><br><span class="line">    sequences, maxlen=<span class="literal">None</span>, dtype=<span class="string">'int32'</span>, padding=<span class="string">'pre'</span>,</span><br><span class="line">    truncating=<span class="string">'pre'</span>, value=<span class="number">0.0</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
 </li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/07/08/TF_certificate_guide/" data-id="ckqwiervp0000fks37ji1dxpw" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2021/07/08/TF_certificate_guide/" data-id="ckrvsf5yl002sl4s3ai1t62r0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a></li></ul>
@@ -434,7 +378,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/numpy/">numpy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -444,7 +388,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">35</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

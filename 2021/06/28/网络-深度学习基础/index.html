@@ -15,8 +15,11 @@
 <meta property="og:description" content="深度学习基础：点击查看内容">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://res-static.hc-cdn.cn/fms/img/62dc5d1701be39c169c52efb51c831961603764276224.png">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-464376ab6d4047cbb3a6d23872109377_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-8144af697ac992785c9ad8dd7e4b8d9e_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-06159441ed33b1bfae11bc63736d3d01_720w.jpg">
 <meta property="article:published_time" content="2021-06-28T13:14:25.000Z">
-<meta property="article:modified_time" content="2021-07-28T03:31:34.108Z">
+<meta property="article:modified_time" content="2021-08-14T01:12:57.887Z">
 <meta property="article:author" content="李金龙">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="激活函数">
@@ -113,7 +116,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络层的归一化方式"><span class="toc-number">1.</span> <span class="toc-text">网络层的归一化方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何理解Batch？"><span class="toc-number">2.</span> <span class="toc-text">如何理解Batch？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#评估指标"><span class="toc-number">3.</span> <span class="toc-text">评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#指标基础"><span class="toc-number">3.1.</span> <span class="toc-text">指标基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC"><span class="toc-number">3.2.</span> <span class="toc-text">ROC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUC"><span class="toc-number">3.3.</span> <span class="toc-text">AUC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PR曲线-precision-recall"><span class="toc-number">3.4.</span> <span class="toc-text">PR曲线 (precision-recall)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NMS"><span class="toc-number">4.</span> <span class="toc-text">NMS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#手写IoU"><span class="toc-number">4.1.</span> <span class="toc-text">手写IoU</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#loss"><span class="toc-number">5.</span> <span class="toc-text">loss</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BN"><span class="toc-number">6.</span> <span class="toc-text">BN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#normalization的类别"><span class="toc-number">6.1.</span> <span class="toc-text">normalization的类别</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络层的归一化方式"><span class="toc-number">1.</span> <span class="toc-text">网络层的归一化方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何理解Batch？"><span class="toc-number">2.</span> <span class="toc-text">如何理解Batch？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#评估指标"><span class="toc-number">3.</span> <span class="toc-text">评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#指标基础"><span class="toc-number">3.1.</span> <span class="toc-text">指标基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC"><span class="toc-number">3.2.</span> <span class="toc-text">ROC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUC"><span class="toc-number">3.3.</span> <span class="toc-text">AUC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PR曲线-precision-recall"><span class="toc-number">3.4.</span> <span class="toc-text">PR曲线 (precision-recall)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NMS"><span class="toc-number">4.</span> <span class="toc-text">NMS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#手写IoU"><span class="toc-number">4.1.</span> <span class="toc-text">手写IoU</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Loss"><span class="toc-number">5.</span> <span class="toc-text">Loss</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二值交叉熵"><span class="toc-number">5.1.</span> <span class="toc-text">二值交叉熵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Softmax公式"><span class="toc-number">5.2.</span> <span class="toc-text">Softmax公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Focal-Loss"><span class="toc-number">5.3.</span> <span class="toc-text">Focal Loss</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BN"><span class="toc-number">6.</span> <span class="toc-text">BN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ROI-pooling-vs-ROI-Align"><span class="toc-number">7.</span> <span class="toc-text">ROI pooling vs ROI Align</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型压缩与加速"><span class="toc-number">8.</span> <span class="toc-text">模型压缩与加速</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#算法层"><span class="toc-number">8.1.</span> <span class="toc-text">算法层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#框架层"><span class="toc-number">8.2.</span> <span class="toc-text">框架层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#硬件层"><span class="toc-number">8.3.</span> <span class="toc-text">硬件层</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#跟踪算法"><span class="toc-number">9.</span> <span class="toc-text">跟踪算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#质心追踪算法"><span class="toc-number">9.1.</span> <span class="toc-text">质心追踪算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关滤波算法"><span class="toc-number">9.2.</span> <span class="toc-text">相关滤波算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KCF"><span class="toc-number">9.3.</span> <span class="toc-text">KCF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#编程"><span class="toc-number">9.3.0.1.</span> <span class="toc-text">编程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#光流算法"><span class="toc-number">9.4.</span> <span class="toc-text">光流算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MeanShift"><span class="toc-number">9.5.</span> <span class="toc-text">MeanShift</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kalman"><span class="toc-number">9.6.</span> <span class="toc-text">Kalman</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#傅里叶变换"><span class="toc-number">10.</span> <span class="toc-text">傅里叶变换</span></a></li></ol>
   </div>
 
 
@@ -122,7 +125,6 @@
 <li>深度学习基础：<a href="https://docs.qq.com/pdf/DRWtQRHFmdUJjdmNx" target="_blank" rel="noopener">点击查看内容</a></li>
 </ul>
 <a id="more"></a>
-
 <h1 id="网络层的归一化方式"><a href="#网络层的归一化方式" class="headerlink" title="网络层的归一化方式"></a>网络层的归一化方式</h1><p>setup： 特征图谱的维度是 (B, C, H, W)</p>
 <ul>
 <li><p>BN（批归一化）</p>
@@ -140,7 +142,9 @@
 <p>介于<strong>层归一化</strong>和<strong>实例归一化</strong>之间：每一个样本单独计算(μ,σ)，但是却是将C个通道分成S个组，每个组单独计算(μ,σ)。一共得到S个(μ,σ)。</p>
 </li>
 </ul>
-<h1 id="如何理解Batch？"><a href="#如何理解Batch？" class="headerlink" title="如何理解Batch？"></a>如何理解Batch？</h1><pre><code>为什么不一个样本一个样本的方式输入，而要一次输入say 64个样本？硬件更加强大，1个样本与64个样本所用时间相差不大；遍历一次数据集的速度也更快；每一次更新的梯度综合多个样本，抑制某些样本带来的波动，收敛速度更快。</code></pre><h1 id="评估指标"><a href="#评估指标" class="headerlink" title="评估指标"></a>评估指标</h1><h2 id="指标基础"><a href="#指标基础" class="headerlink" title="指标基础"></a>指标基础</h2><table>
+<h1 id="如何理解Batch？"><a href="#如何理解Batch？" class="headerlink" title="如何理解Batch？"></a>如何理解Batch？</h1><pre><code>为什么不一个样本一个样本的方式输入，而要一次输入say 64个样本？硬件更加强大，1个样本与64个样本所用时间相差不大；遍历一次数据集的速度也更快；每一次更新的梯度综合多个样本，抑制某些样本带来的波动，收敛速度更快。
+</code></pre><h1 id="评估指标"><a href="#评估指标" class="headerlink" title="评估指标"></a>评估指标</h1><h2 id="指标基础"><a href="#指标基础" class="headerlink" title="指标基础"></a>指标基础</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>预测 \ 实际</th>
@@ -148,7 +152,8 @@
 <th>0[实际，阴性样本]</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1[预测]</td>
 <td>TP</td>
 <td>FP</td>
@@ -158,7 +163,9 @@
 <td>FN</td>
 <td>TN</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <ul>
 <li><p>基础：TP、FP、FN、TN</p>
 <p>第二个字母表示预测结果：P，阳性；N，阴性</p>
@@ -193,43 +200,235 @@
 <li>dist</li>
 </ul>
 <h1 id="NMS"><a href="#NMS" class="headerlink" title="NMS"></a>NMS</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">把概率太低的box剔除掉</span><br><span class="line">对boxes，依概率从高到低进行选择box，直到boxes为空：</span><br><span class="line">    每选择一个box，就把boxes中和它重叠度超过阈值的box给剔除</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># code implementation</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nms</span><span class="params">(boxes: list, confidence_threshold, iou_threshold)</span>:</span></span><br><span class="line">    <span class="comment"># box: [x1, y1, x2, y2, confidence]</span></span><br><span class="line">    boxes = filter(labmda x: x.confidence &gt; confidence_threshold, boxes)</span><br><span class="line">    boxes.sort(key=<span class="keyword">lambda</span> x: x.confidence) <span class="comment"># 概率从低到高对boxes进行sort</span></span><br><span class="line">    </span><br><span class="line">    selected_boxes = []</span><br><span class="line">    <span class="keyword">while</span> boxes:</span><br><span class="line">        t = boxes.pop()</span><br><span class="line">        selected_boxes.append(t)</span><br><span class="line">        boxes = filter(<span class="keyword">lambda</span> x: iou(x, t) &lt; iou_threshold, boxes)</span><br><span class="line">    <span class="keyword">return</span> selected_boxes</span><br></pre></td></tr></table></figure>
 <ul>
-<li>soft-NMS:用于可以部分用于解决两个物体重叠度较高的问题。不像NMS对重叠度超过阈值的直接删除，而是降低其概率</li>
+<li><p>soft-NMS:用于可以部分用于<strong>解决两个物体重叠度较高</strong>的问题。不像NMS对重叠度超过阈值的直接删除，而是降低其概率</p>
+<p>两种方式降低概率</p>
+<ol>
+<li>高斯加权</li>
+<li>线性加权</li>
+</ol>
+</li>
 </ul>
 <h2 id="手写IoU"><a href="#手写IoU" class="headerlink" title="手写IoU"></a>手写IoU</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">iou</span><span class="params">(box1, box2)</span>:</span></span><br><span class="line">    x1, y1 = max(b1.x1, b2.x1), min(b1.y1, b2.y1)</span><br><span class="line">    x2, y2 = min(b1.x2, b2.x2), max(b1.y2, b2.y2)</span><br><span class="line">    intersection = x1 &gt; x2 or y1 &lt; y2 ? 0 :(x2 - x1) * (y1 - y2);</span><br><span class="line">    area1, area2 = </span><br><span class="line">    <span class="keyword">return</span> intersection / (area1 + area2 - intersection)</span><br></pre></td></tr></table></figure>
+<h1 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h1><ul>
+<li>手写交叉熵</li>
+</ul>
+<h2 id="二值交叉熵"><a href="#二值交叉熵" class="headerlink" title="二值交叉熵"></a>二值交叉熵</h2><p><strong>bce</strong>形式</p>
+<script type="math/tex; mode=display">
+\begin{equation}L = - (y_i \log p_i + (1-y_i)*log(1-p_i))\end{equation}</script><p>sigmoid函数</p>
+<script type="math/tex; mode=display">
+σ(x) = h_ \theta (x) =  \frac{\mathrm{1} }{\mathrm{1} + e^- \theta^Tx }</script><p>函数导数为 σ(1-σ)</p>
+<p>binary cross entropy loss 对 inputs x的<a href="https://peterroelants.github.io/posts/cross-entropy-logistic/#Derivative-of-the-cross-entropy-loss-function-for-the-logistic-function" target="_blank" rel="noopener">导数</a>为 预测值 与 实际值的 差</p>
+<script type="math/tex; mode=display">
+\frac{\partial \xi}{\partial o} = \frac{\partial p}{\partial o} \frac{\partial \xi}{\partial p} = p (1-p) \frac{p-t}{p(1-p)} = p-t</script><h2 id="Softmax公式"><a href="#Softmax公式" class="headerlink" title="Softmax公式"></a><code>Softmax</code><a href="https://math.stackexchange.com/questions/945871/derivative-of-softmax-loss-function" target="_blank" rel="noopener">公式</a></h2><script type="math/tex; mode=display">
+\begin{equation}L = -\sum_j y_j \log p_j,\end{equation}</script><p>softmax用于把logits转为probs，最终再采用cross_entropy计算损失L.</p>
+<p>结论： L对logits_i 的梯度 : （预测值与实际值的差）pi - yi, pi是计算出的i类概率， yi是第i个输出的真实标签。</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial o_i}=-\sum_ky_k\frac{\partial \log p_k}{\partial o_i}=-\sum_ky_k\frac{1}{p_k}\frac{\partial p_k}{\partial o_i}\\=-y_i(1-p_i)-\sum_{k\neq i}y_k\frac{1}{p_k}({\color{red}{-p_kp_i}})\\=-y_i(1-p_i)+\sum_{k\neq i}y_k({\color{red}{p_i}})\\=-y_i+\color{blue}{y_ip_i+\sum_{k\neq i}y_k({p_i})}\\=\color{blue}{p_i\left(\sum_ky_k\right)}-y_i=p_i-y_i</script><p>softmax函数对输入的梯度：输出j对输入$i$的梯度。</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\frac{\partial p_j}{\partial o_i} = p_i(1 - p_i),\quad i = j;
 
+\frac{\partial p_j}{\partial o_i} = -p_i p_j,\quad i \neq j.
 
-
-<h1 id="loss"><a href="#loss" class="headerlink" title="loss"></a>loss</h1><p>手写交叉熵</p>
-<p>二值交叉熵</p>
-<p>​    sigmoid函数<br>$$<br>σ(x) = h_ \theta (x) =  \frac{\mathrm{1} }{\mathrm{1} + e^- \theta^Tx }<br>$$<br>​    函数导数为 σ(1-σ)</p>
-<p>binary cross entropy loss 对 inputs x的<a href="https://peterroelants.github.io/posts/cross-entropy-logistic/#Derivative-of-the-cross-entropy-loss-function-for-the-logistic-function" target="_blank" rel="noopener">导数</a>为 预测值 与 实际值的 差<br>$$<br>\frac{\partial \xi}{\partial o} = \frac{\partial p}{\partial o} \frac{\partial \xi}{\partial p} = p (1-p) \frac{p-t}{p(1-p)} = p-t<br>$$<br><code>softmax</code><a href="https://math.stackexchange.com/questions/945871/derivative-of-softmax-loss-function" target="_blank" rel="noopener">公式</a></p>
-<p>softmax用于把logits转为probs，最终再采用cross_entropy计算损失L.</p>
-<p>结论： L对logits_i 的梯度 : （预测值与实际值的差）pi - yi, pi是计算出的i类概率， yi是第i类的真实标签。</p>
-<p>$$<br>\frac{\partial L}{\partial o_i}=-\sum_ky_k\frac{\partial \log p_k}{\partial o_i}=-\sum_ky_k\frac{1}{p_k}\frac{\partial p_k}{\partial o_i}\=-y_i(1-p_i)-\sum_{k\neq i}y_k\frac{1}{p_k}({\color{red}{-p_kp_i}})\=-y_i(1-p_i)+\sum_{k\neq i}y_k({\color{red}{p_i}})\=-y_i+\color{blue}{y_ip_i+\sum_{k\neq i}y_k({p_i})}\=\color{blue}{p_i\left(\sum_ky_k\right)}-y_i=p_i-y_i<br>$$</p>
-<p>softmax函数对输入的梯度：输出j对输入$i$的梯度。<br>$$<br>\begin{equation}<br>\frac{\partial p_j}{\partial o_i} = p_i(1 - p_i),\quad i = j</p>
-<p>\frac{\partial p_j}{\partial o_i} = -p_i p_j,\quad i \neq j.</p>
-<p>\end{equation}<br>$$</p>
+\end{equation}</script><h2 id="Focal-Loss"><a href="#Focal-Loss" class="headerlink" title="Focal Loss"></a><a href="https://hardlab.github.io/notes/OHEMandFocalLoss.html" target="_blank" rel="noopener">Focal</a> Loss</h2><p><img src="https://pic4.zhimg.com/80/v2-464376ab6d4047cbb3a6d23872109377_720w.jpg" alt="img"></p>
+<ul>
+<li><p>focal <a href="https://cloud.tencent.com/developer/article/1579762" target="_blank" rel="noopener">loss</a>的公式</p>
+<p>回顾softmax cross-entropy的公式，我们可以看到只有真实类别的一项有损失贡献。focal loss降低了置信度较高的输出的loss</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+{\text{FL}(p_{t}) = - (1 - p_{t})^\gamma \log\left(p_{t}\right)}</script><script type="math/tex; mode=display">
+{\text{FL}(p_{t}) = - \alpha (1 - p_{t})^\gamma \log\left(p_{t}\right)}</script><p>​        同时为了调整不同类别的权重予不同类别以不同的权重</p>
+<ol>
+<li><p>调节正负样本<strong>均衡</strong>的传统手段α</p>
+<p>α是权重系数， α是针对类别y=+1， 1−α是针对类别y=−1的。</p>
+</li>
+<li><p>调节<strong>难易</strong>样本(1−pt)γ</p>
+<p>其中γ大于0， 常取值为2。样本简单时，1−pt小；样本难时，<code>1−pt</code>大。</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cross_entropy</span><span class="params">(p, y)</span>:</span></span><br><span class="line">    <span class="comment"># p: ndarray, 预测的概率</span></span><br><span class="line">    <span class="comment"># y: ndarray, one-hot 标签</span></span><br><span class="line">    <span class="comment"># y只有一个维度值为1，其他维度值为0</span></span><br><span class="line">    i = np.argmax(y)</span><br><span class="line">    <span class="keyword">return</span> - (y[i] * np.log(p[i])).sum()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">focal_loss</span><span class="params">(α, p, y, γ)</span>:</span></span><br><span class="line">    <span class="comment"># p: 1-d ndarray, 预测的概率</span></span><br><span class="line">    <span class="comment"># y: 1-d ndarray, one-hot 标签</span></span><br><span class="line">    <span class="comment"># α: 1-d ndarray vector,表示不同类别的权重</span></span><br><span class="line">    <span class="comment"># γ: int</span></span><br><span class="line">    i = np.argmax(y)</span><br><span class="line">    cls_weight = α[i]</span><br><span class="line">    <span class="keyword">return</span> - cls_weight * \</span><br><span class="line">                (<span class="number">1</span> - p[i])**γ  * \</span><br><span class="line">                y[i] * np.log(p[i])</span><br></pre></td></tr></table></figure>
 <p>卷积参数量计算</p>
 <h1 id="BN"><a href="#BN" class="headerlink" title="BN"></a>BN</h1><ol>
 <li>以（相对）大学习率学习，加速收敛速度</li>
 <li>能提高精度</li>
 <li>相当于正则化（类似于Dropout)：使用BN时，每个样本都会和其他样本一起输入（彼此互相影响），网络对一个样本的输出也就不是确定的</li>
 </ol>
-<h2 id="normalization的类别"><a href="#normalization的类别" class="headerlink" title="normalization的类别"></a>normalization的类别</h2><ol>
-<li>BN</li>
-<li>layer normalization</li>
-<li>instance normalization</li>
-<li>group normalization</li>
+<h1 id="ROI-pooling-vs-ROI-Align"><a href="#ROI-pooling-vs-ROI-Align" class="headerlink" title="ROI pooling vs ROI Align"></a>ROI pooling vs ROI Align</h1><p>roi pooling: 预测的框是离散，需要取整一次(从原图上面的框到feature map上面的框)；接下来pooling的时候又会4<em>5  -&gt; 2 </em> 2又会取整一次(<u>5/2 向上、向下取整</u>)   misalignment的问题,语义分割 像素问题</p>
+<p>roi align: 直接将feature map划分为 输出大小 H*w， 每个框里再选择4个点(作者发现4个点效果要好一些)，插值取得这每个hw里面的四个点的值，再做pooling. 解决roi pooling中的量化不匹配问题。</p>
+<h1 id="模型压缩与加速"><a href="#模型压缩与加速" class="headerlink" title="模型压缩与加速"></a>模型压缩与加速</h1><p>模型压损（尺寸变现）与加速（运算速度变快）</p>
+<p>某些算法用内存换时间，winograd conv2d(卷积操作变矩阵相乘，再将矩阵相乘变为)</p>
+<p><a href="https://zhuanlan.zhihu.com/p/138059904" target="_blank" rel="noopener">ref</a></p>
+<h2 id="算法层"><a href="#算法层" class="headerlink" title="算法层"></a>算法层</h2><p>量化与剪枝、网络结构优化、模型蒸馏</p>
+<ol>
+<li><p>网络结构优化（矩阵分解、分组卷积、小卷积核等）</p>
+<ol>
+<li>矩阵分解</li>
+<li>分组卷积<ol>
+<li>使用类似于深度可分卷积，紧接一个1x1的卷积</li>
 </ol>
-<p>有点意思：</p>
+</li>
+<li>分解卷积<ol>
+<li>用两个3x3卷积串联替换5x5卷积</li>
+<li>用1xn和nx1的卷积并联替换<code>nxn卷</code>积</li>
+</ol>
+</li>
+<li>其他<ol>
+<li>全局池化替换全连接</li>
+<li>1x1卷积的使用</li>
+<li>小卷积替代大卷积</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>量化(quantization)与定点化(<strong>Fixed-Point</strong>)</p>
+<p>模型量化是指权重或激活输出可以被聚类到一些离散、低精度（Reduced precision）的数值点上，通常依赖于特定算法库或硬件平台的支持</p>
+<p>训练后量化</p>
+<p>训练时量化，forward采用低精度，但是bp-gradient的时候是高精度</p>
+<ol>
+<li><p>伪量化</p>
+<p>常见的做法是保存模型每一层时，利用低精度来保存每一个网络参数，同时保存拉伸比例scale和零值对应的浮点数zero_point。推理阶段，利用如下公式来网络参数还原为32bit浮点</p>
+<p>伪量化之所以得名，是因为存储时使用了<strong>低精度进行量化，但推理时会还原为正常高精度</strong>。为什么推理时不仍然使用低精度呢？这是因为一方面框架层有些算子只支持浮点运算，需要专门实现算子定点化才行。另一方面，高精度推理准确率相对高一些。伪量化可以实现模型压缩，但对模型加速没有多大效果。</p>
+</li>
+<li><p>聚类与伪量化</p>
+<p>一种实现伪量化的方案是，利用k-means等聚类算法，步骤如下：</p>
+<p>将大小相近的参数聚在一起，分为一类。<br>每一类计算参数的平均值，作为它们量化后对应的值。<br>每一类参数存储时，只存储它们的聚类索引。索引和真实值（也就是类内平均值）保存在另外一张表(<strong>codetable,代码表</strong>)中<br>推理时，利用索引和映射表，恢复为真实值。</p>
+</li>
+<li><p>定点化 Fixed-Point</p>
+<p>定点化在推理时，不需要还原为浮点数。这需要框架实现算子的定点化运算支持。目前<u>MNN、XNN</u>等移动端AI框架中，均加入了定点化支持。</p>
+</li>
+</ol>
+</li>
+<li><p>模型剪枝</p>
+<ol>
+<li>剪枝流程</li>
+</ol>
+<p><img src="https://pic3.zhimg.com/80/v2-8144af697ac992785c9ad8dd7e4b8d9e_720w.jpg" alt="img"></p>
+<ol>
+<li>训练一个performance较好的大模型。</li>
+<li>评估模型中<strong>参数的重要性</strong>。常用的评估方法是，越接近0的参数越不重要（或者用gradient大小）。当然还有其他一些评估方法，这一块也是目前剪枝研究的热点。</li>
+<li>将不重要的参数去掉，或者说是设置为0。之后可以通过稀疏矩阵进行存储。比如只存储非零元素的index和value。</li>
+<li>训练集上微调，从而使得由于去掉了部分参数导致的performance下降能够尽量调整回来。</li>
+<li>验证模型大小和performance是否达到了预期，如果没有，则继续迭代进行。</li>
+</ol>
+<p><strong>突触简枝</strong> 突触剪枝剪掉神经元之间的不重要的连接。对应到权重矩阵中，相当于将某个参数设置为0。常见的做法是，按照数值大小对参数进行排序，将大小排名最后的k%置零即可，k%为压缩率。</p>
+<p><strong>神经元剪枝</strong> 神经元剪枝则直接将某个节点直接去掉。对应到权重矩阵中，相当于某一行和某一列置零。常见做法是，计算神经元对应的一行和一列参数的平方和的根，对神经元进行重要性排序，将大小排名最后的k%置零。</p>
+<p><strong>权重矩阵剪枝</strong> 除了将权重矩阵中某些零散的参数，或者整行整列去掉外，我们能否将整个权重矩阵去掉呢？答案是肯定的</p>
+</li>
+</ol>
+<p>   有很多paper围绕“<strong>怎么判断权重是否重要</strong>”以及“<strong>如何剪枝</strong>”等问题进行讨论。困扰模型剪枝落地的一个问题就是剪枝比例的确定。传统的剪枝方法常常需要人工layer by layer地去确定每层的剪枝比例，然后进行fine tune，用起来很耗时，而且很不方便。</p>
+<p>   不过最近的<a href="https://arxiv.org/abs/1810.05270" target="_blank" rel="noopener">Rethinking the Value of Network Pruning</a>指出，剪枝后的权重并不重要，对于channel pruning来说，更重要的是找到剪枝后的网络结构，具体来说就是每层留下的channel数量。受这个发现启发，文章提出可以用一个PruningNet，对于给定的剪枝网络，自动生成weight，无需进行retrain，然后评测剪枝网络在验证集上的性能，从而选出最优的网络结构。</p>
+<ol>
+<li><p>模型蒸馏</p>
+<ol>
+<li><p><strong>蒸馏流程</strong></p>
+<p>蒸馏本质是student对teacher的拟合，从teacher中汲取养分，学到知识，不仅仅可以用到模型压缩和加速中。</p>
+<p>训练学生网络去模仿老师网络的输出，以老师网络的输出作为label进行网络优化（老师输出：softlabel；真实标签 hard-label）。soft-loss可以采用KL散度或者均方误差。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-06159441ed33b1bfae11bc63736d3d01_720w.jpg" alt="img"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="框架层"><a href="#框架层" class="headerlink" title="框架层"></a>框架层</h2><p>目前移动端AI框架也比较多，包括谷歌的tf-lite，腾讯的NCNN，阿里的MNN，百度的PaddleLite, 小米的MACE等。他们都不同程度的进行了模型压缩和加速的支持。特别是端上推理的加速。</p>
+<ul>
+<li><p>端侧AI框架加速优化方法</p>
+<ol>
+<li><p><strong>缓存优化</strong></p>
+<ol>
+<li>小块内存反复使用，提升cache命中率，尽量减少内存申请。比如上一层计算完后，接着用作下一层计算。</li>
+<li>连续访问，内存连续访问有利于一次同时取数，相近位置cache命中概率更高。比如纵向访问数组时，可以考虑转置后变为横向访问。</li>
+</ol>
+</li>
+<li><p><strong>多线程。</strong></p>
+</li>
+<li><ol>
+<li>为循环分配线程。</li>
+<li>动态调度，某个子循环过慢的时候，调度一部分循环到其他线程中。</li>
+</ol>
+</li>
+<li><p><strong>稀疏化</strong></p>
+</li>
+<li><ol>
+<li>稀疏索引和存储方案，采用eigen的sparseMatrix方案。</li>
+</ol>
+</li>
+<li><p><strong>内存复用和提前申请</strong></p>
+</li>
+<li><ol>
+<li>扫描整个网络，计算每层网络内存复用的情况下，最低的内存消耗。推理刚开始的时候就提前申请好。避免推理过程中反复申请和释放内存，避免推理过程中因为内存不足而失败，复用提升内存访问效率和cache命中率。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="硬件层"><a href="#硬件层" class="headerlink" title="硬件层"></a>硬件层</h2><p>有点意思：</p>
 <p>A校的文科　和理科的升学率都高于ｂ校；但是ｂ校整体的升学率却高于A校？</p>
+<p>参考： <a href="https://cloud.tencent.com/developer/article/1842150" target="_blank" rel="noopener">一位算法工程师从30+场秋招面试中总结出的超强面经——目标检测篇（含答案</a>）</p>
+<p><a href="http://fancyerii.github.io/books/rcnn-summary/#faster-r-cnn" target="_blank" rel="noopener">rcnn总结</a></p>
+<h1 id="跟踪算法"><a href="#跟踪算法" class="headerlink" title="跟踪算法"></a>跟踪算法</h1><h2 id="质心追踪算法"><a href="#质心追踪算法" class="headerlink" title="质心追踪算法"></a>质心追踪算法</h2><ul>
+<li>检测，计算质心</li>
+<li>将质心分配给last帧，欧拉距离最近的id</li>
+<li>如果某个last object找不到对象，则消失，并disappear count += 1</li>
+<li>如果有一个新的object匹配不到上一帧，则register 该物体</li>
+<li><code>registor</code> <code>deregister</code></li>
+</ul>
+<h2 id="相关滤波算法"><a href="#相关滤波算法" class="headerlink" title="相关滤波算法"></a>相关滤波算法</h2><h2 id="KCF"><a href="#KCF" class="headerlink" title="KCF"></a>KCF</h2><ul>
+<li><p>（<a href="https://cw.fel.cvut.cz/b172/courses/mpv/labs/4_tracking/4b_tracking_kcf" target="_blank" rel="noopener">怎么做</a>？）</p>
+<ul>
+<li><p>总结一下，KCF中用到的加速方法：<br>1）检测：使用循环矩阵+傅里叶变化计算响应图，原本O(n^3)的算法只需要O(nlg(n))<br>2）训练：利用循环矩阵性质，在频域进行训练<br>3）核回归提速：对于核函数，也可以转化到频域进行训练和检测，大大提高速度<br>4）特殊核函数进一步加速：对于高斯核，多项式核可以进一步利用循环矩阵计算核函数的循环矩阵<br>真是一步一步引人入胜的算法。</p>
+</li>
+<li><p>KCF特点</p>
+<p>1、通过循环移位产生了大量的虚拟样本；<br>2、利用循环矩阵可以在傅里叶域对角化的性质，大大减少了运算量，提高了运算速度；<br>3、核函数的运用，提高了分类器的性能；<br>4、采用HOG特征，相对于灰度特征和颜色特征，准确度更高；</p>
+</li>
+<li><p>KCF steps</p>
+<ul>
+<li>在当前对象 x 上面拟合一个filter  α</li>
+<li>去下一帧图像对应区域去寻找response，能匹配上的区域响应最大</li>
+<li>根据下一帧寻找到的区域 x，重新训练一个filter α, 重复前两步</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"></span><br><span class="line">arr = np.arange</span><br></pre></td></tr></table></figure>
+<p><a href="https://zhuanlan.zhihu.com/p/48249974" target="_blank" rel="noopener">ref1</a></p>
+<p><a href="https://www.p-chao.com/2017-01-19/%E5%9B%BE%E5%83%8F%E8%B7%9F%E8%B8%AA%EF%BC%88%E5%9B%9B%EF%BC%89kcf%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">ref2</a>: principle </p>
+<h2 id="光流算法"><a href="#光流算法" class="headerlink" title="光流算法"></a>光流算法</h2><p>两个基本假设条件</p>
+<ul>
+<li><strong>亮度恒定</strong>不变：同一目标在不同帧间运动时，其亮度不会发生改变。</li>
+<li><strong>时间连续或运动是“小运动”</strong>：即时间的变化不会引起目标位置的剧烈变化，相邻帧之间位移要比较小。同样也是光流法不可或缺的假定。</li>
+</ul>
+<p><a href="https://blog.csdn.net/qq_41368247/article/details/82562165" target="_blank" rel="noopener">ref1 csdn</a> blog</p>
+<h2 id="MeanShift"><a href="#MeanShift" class="headerlink" title="MeanShift"></a>MeanShift</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">有一系列点，表示的数据分布</span><br><span class="line">随机初始化一些种子点(一般初始化为分布中的点)</span><br><span class="line">对每个点，根据数据分布计算shift方向</span><br><span class="line">更新每个点，直到某次更新中，更新幅度最大的一个点幅度小于指定值 MIN_DISTANCE</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>mean shift向量</p>
+<p>对于给定的d维空间Rd中的n个样本点xi,i=1,⋯,n，则对于x点，其Mean Shift向量的基本形式为：</p>
+<script type="math/tex; mode=display">
+M_h(x)=\frac{1}{k}\sum_{x_i\in S_h}(x_i-x)</script><p>其中，Sh指的是一个半径为h的高维球区域。里面所有点与圆心为起点形成的向量相加的结果就是Mean shift向量。</p>
+</li>
+<li><p>引入核函数的mean shift向量</p>
+</li>
+</ul>
+<p><a href="https://www.geeksforgeeks.org/ml-mean-shift-clustering/" target="_blank" rel="noopener">ref1</a></p>
+<p><a href="https://www.biaodianfu.com/mean-shift.html#Mean_Shift%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" target="_blank" rel="noopener">ref2</a> 机器学习聚类算法之Mean Shift</p>
+<p><a href="https://nicehuster.github.io/2019/08/05/shift/" target="_blank" rel="noopener">ref3</a></p>
+<h2 id="Kalman"><a href="#Kalman" class="headerlink" title="Kalman"></a>Kalman</h2><p>卡尔曼滤波有两个作用</p>
+<ol>
+<li>计算不能直接测量的量</li>
+<li>融合多传感器的测量值</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卡尔曼滤波线性形式</span></span><br><span class="line"><span class="comment"># 案例：水平方向上加速度为2m/s的观测情况</span></span><br><span class="line"><span class="comment"># 参考：https://www.youtube.com/watch?v=JaFrOn0zf50&amp;ab_channel=MichelvanBiezen</span></span><br><span class="line"><span class="comment"># https://www.bilibili.com/video/BV1V5411V72J?p=4</span></span><br><span class="line"><span class="comment"># http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	observations = [[<span class="number">4260</span>, <span class="number">282</span>],</span><br><span class="line">                    [<span class="number">4550</span>, <span class="number">285</span>],</span><br><span class="line">                    [<span class="number">4860</span>, <span class="number">286</span>],</span><br><span class="line">                    [<span class="number">5110</span>, <span class="number">290</span>],]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># init state</span></span><br><span class="line">	X = np.array([[<span class="number">4000</span>], [<span class="number">280</span>]])  <span class="comment"># [position, velocity]</span></span><br><span class="line"></span><br><span class="line">	P = np.array([[<span class="number">400</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">25</span>]])      <span class="comment"># 状态误差矩阵 状态可能有的误差</span></span><br><span class="line">	R = np.array([[<span class="number">625</span>, <span class="number">125</span>], [<span class="number">125</span>, <span class="number">36</span>]])  <span class="comment"># 观测误差矩阵 reading error matrix</span></span><br><span class="line"></span><br><span class="line">	deltaT = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 模型参数</span></span><br><span class="line">	<span class="comment"># x = x0 + δt * vt + 0.5*at*δt**2 当δt很小时成立</span></span><br><span class="line">	A, B = np.array([[<span class="number">1</span>, deltaT], [<span class="number">0</span>, <span class="number">1</span>]]), np.array([[<span class="number">0.5</span> * deltaT**<span class="number">2</span>], [deltaT]])</span><br><span class="line">	miuK = np.array([<span class="number">2</span>]).reshape(<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">	C = np.array([[<span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i, ob <span class="keyword">in</span> enumerate(observations):</span><br><span class="line">		y = np.array(ob).reshape(<span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">		<span class="comment"># 1. predict</span></span><br><span class="line">		X_pred = np.dot(A, X) + np.dot(B, miuK)</span><br><span class="line">		P_pred = np.linalg.multi_dot((A, P, A.T))</span><br><span class="line">		P_pred[<span class="number">0</span>, <span class="number">1</span>], P_pred[<span class="number">1</span>, <span class="number">0</span>] = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">		<span class="comment"># 2. update</span></span><br><span class="line">		K = np.dot(P_pred, C.T) / (np.linalg.multi_dot((C, P_pred, C.T)) + R)</span><br><span class="line">		yk = np.dot(C, y)</span><br><span class="line">		X = X_pred + np.dot(K, yk - np.dot(C, X_pred))</span><br><span class="line">		P = np.dot((np.array([[<span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>]]) - np.dot(K, C)), P_pred)</span><br><span class="line"></span><br><span class="line">		print(<span class="string">f'=====iteration <span class="subst">&#123;i&#125;</span> ====='</span>)</span><br><span class="line">		print(<span class="string">f"观测值:<span class="subst">&#123;y.ravel()&#125;</span>"</span>)</span><br><span class="line">		print(<span class="string">f"估计值:<span class="subst">&#123;X_pred.ravel()&#125;</span>"</span>)</span><br><span class="line">		print(<span class="string">f"卡尔曼:<span class="subst">&#123;X.ravel()&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+<p>object detection bench mark <a href="https://github.com/foolwood/benchmark_results">https://github.com/foolwood/benchmark_results</a></p>
+<p>t<a href="https://www.zhihu.com/question/26493945" target="_blank" rel="noopener">racking zhihu talk</a></p>
+<h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><p>空间域与频率域之间的互换</p>
+<p>参考：数字图像处理-傅里叶变换章节</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/06/28/%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/" data-id="ckqgna7no0000cws3hqyhhfdh" class="article-share-link">Share</a>
+      <a data-url="http://github.com/jinlongli2016/2021/06/28/%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/" data-id="ckrvsf6030054l4s3fui6e5je" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="tag">激活函数</a></li></ul>
@@ -268,7 +467,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/numpy/">numpy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -278,7 +477,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">35</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
