@@ -104,64 +104,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-      
-<!-- Table of Contents -->
-
-
-
         <blockquote>
 <p>dataclasses会简化数据类的编码，period。在Python3.7中引入。</p>
 </blockquote>
-<h2 id="导入库"><a href="#导入库" class="headerlink" title="导入库"></a>导入库</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://www.youtube.com/watch?v=vBH6GRJ1REM</span></span><br><span class="line"><span class="keyword">import</span> dataclasses</span><br><span class="line"><span class="keyword">import</span> inspect</span><br><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass, field</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"><span class="keyword">import</span> attr</span><br></pre></td></tr></table></figure>
-<h2 id="原始实现"><a href="#原始实现" class="headerlink" title="原始实现"></a>原始实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ManualComment</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, id: int, text: str)</span>:</span></span><br><span class="line">        self.id: int = id</span><br><span class="line">        self.text: str = text</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&#123;&#125;(id=&#123;&#125;, text=&#123;&#125;)"</span>.format(self.__class__.__name__, self.id, self.text)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__eq__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> other.__class__ <span class="keyword">is</span> self.__class__:</span><br><span class="line">            <span class="keyword">return</span> (self.id, self.text) == (other.id, other.text)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">NotImplemented</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__ne__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        result = self.__eq__(other)</span><br><span class="line">        <span class="keyword">if</span> result <span class="keyword">is</span> <span class="built_in">NotImplemented</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">NotImplemented</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">not</span> result</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__hash__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> hash((self.__class__, self.id, self.text))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__lt__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> other.__class__ <span class="keyword">is</span> self.__class__: <span class="comment">#类型安全，没有比较不同的类</span></span><br><span class="line">            <span class="keyword">return</span> (self.id, self.text) &lt; (other.id, other.text)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">NotImplemented</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__le__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> other.__class__ <span class="keyword">is</span> self.__class__:</span><br><span class="line">            <span class="keyword">return</span> (self.id, self.text) &lt;= (other.id, other.text)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">NotImplemented</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__gt__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> other.__class__ <span class="keyword">is</span> self.__class__:</span><br><span class="line">            <span class="keyword">return</span> (self.id, self.text) &gt; (other.id, other.text)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">NotImplemented</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__ge__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> other.__class__ <span class="keyword">is</span> self.__class__:</span><br><span class="line">            <span class="keyword">return</span> (self.id, self.text) &gt;= (other.id, other.text)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">NotImplemented</span></span><br></pre></td></tr></table></figure>
-<p>可能会将上面这个类放在字典中，因此要实现<code>__hash__</code>方法；同时既然可哈了，它的内容最好不可变：通过将数据成员前面添加两个下划线<code>self.__id</code></p>
-<p>同时为了支持比较，也有必要实现<code>__le__</code>&amp;　<code>__gt__</code>等方法；functools 提供total_ordering 装饰器，可以只实现<code>__lt__</code>,其会自动补全剩下的方法。但是会比较慢，因此自己实现会比较好。</p>
-<ul>
-<li>ManualComment如果再增加一个数据成员 <code>author</code>，需要改动哪些地方？ 太复杂了。</li>
-</ul>
-<h2 id="dataclasses"><a href="#dataclasses" class="headerlink" title="dataclasses"></a>dataclasses</h2><ol>
-<li>直接指明有哪些数据成员.通过field函数可以指定成员如何初始化、参与哪些行为, etc   </li>
-<li>可为<code>dataclasses.dataclass</code> decorator传参的方式指定类有哪些行为。是否可改变(frozen=True)，是否支持排序(order=True)</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># frozen = True, immutable</span></span><br><span class="line"><span class="comment"># order = True, </span></span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass(frozen=True, order=True)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span>:</span></span><br><span class="line">    id: int</span><br><span class="line">    text: str = <span class="string">""</span> <span class="comment"># feild(default='')</span></span><br><span class="line">    replies: List[int] = field(default_factory=list, repr=<span class="literal">False</span>, compare=<span class="literal">False</span>) <span class="comment"># mutable default value?</span></span><br><span class="line">        <span class="comment">#compare=False, 不参与比较</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">comment = Comment(<span class="number">1</span>, <span class="string">"I just subscribed!"</span>)</span><br><span class="line">print(comment)</span><br></pre></td></tr></table></figure>
-<pre><code>Comment(id=1, text=&#39;I just subscribed!&#39;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># frozen=True</span></span><br><span class="line">comment.id = <span class="number">3</span>  <span class="comment"># can't immutable</span></span><br></pre></td></tr></table></figure>
-<pre><code>---------------------------------------------------------------------------
-
-FrozenInstanceError                       Traceback (most recent call last)
-
-&lt;ipython-input-12-429f24a37a2f&gt; in &lt;module&gt;
-----&gt; 1 comment.id = 3
-
-
-&lt;string&gt; in __setattr__(self, name, value)
-
-
-FrozenInstanceError: cannot assign to field &#39;id&#39;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c1 = Comment(<span class="number">20</span>, <span class="string">'hello'</span>)</span><br><span class="line">c2 = Comment(<span class="number">30</span>, <span class="string">'jack'</span>)</span><br><span class="line">c1 &lt; c2</span><br></pre></td></tr></table></figure>
-<pre><code>True
-</code></pre><ul>
-<li>default_factory=list #参数的默认值不能是可变类型，否则会因为多个instance共享一个实例产生难以追踪的错误。因此采用构造工厂的方式，每次初始化都新建一个list</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataclasses.astuple(comment), dataclasses.asdict(comment)</span><br></pre></td></tr></table></figure>
-<pre><code>((1, &#39;I just subscribed!&#39;, []),
- {&#39;id&#39;: 1, &#39;text&#39;: &#39;I just subscribed!&#39;, &#39;replies&#39;: []})
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inspect.getmembers(Comment, inspect.isfunction)</span><br></pre></td></tr></table></figure>
-<pre><code>[(&#39;__delattr__&#39;,
-  &lt;function __main__.__create_fn__.&lt;locals&gt;.__delattr__(self, name)&gt;),
- (&#39;__eq__&#39;, &lt;function __main__.__create_fn__.&lt;locals&gt;.__eq__(self, other)&gt;),
- (&#39;__ge__&#39;, &lt;function __main__.__create_fn__.&lt;locals&gt;.__ge__(self, other)&gt;),
- (&#39;__gt__&#39;, &lt;function __main__.__create_fn__.&lt;locals&gt;.__gt__(self, other)&gt;),
- (&#39;__hash__&#39;, &lt;function __main__.__create_fn__.&lt;locals&gt;.__hash__(self)&gt;),
- (&#39;__init__&#39;,
-  &lt;function __main__.__create_fn__.&lt;locals&gt;.__init__(self, id: int, text: str = &#39;&#39;, replies: List[int] = &lt;factory&gt;) -&gt; None&gt;),
- (&#39;__le__&#39;, &lt;function __main__.__create_fn__.&lt;locals&gt;.__le__(self, other)&gt;),
- (&#39;__lt__&#39;, &lt;function __main__.__create_fn__.&lt;locals&gt;.__lt__(self, other)&gt;),
- (&#39;__repr__&#39;, &lt;function __main__.__create_fn__.&lt;locals&gt;.__repr__(self)&gt;),
- (&#39;__setattr__&#39;,
-  &lt;function __main__.__create_fn__.&lt;locals&gt;.__setattr__(self, name, value)&gt;)]
-</code></pre>
+        
+          <p class="article-more-link">
+            <a href="/2021/08/23/python-dataclasses/#more">阅读更多</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
@@ -468,5 +418,22 @@ FrozenInstanceError: cannot assign to field &#39;id&#39;
 
 
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>
