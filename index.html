@@ -78,6 +78,116 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-jupyternotebook-动态加载so-dll文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/11/02/jupyternotebook-%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDso-dll%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2021-11-02T01:55:03.000Z" itemprop="datePublished">2021-11-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/02/jupyternotebook-%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDso-dll%E6%96%87%E4%BB%B6/">Jupyternotebook 动态加载So/dll文件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <blockquote>
+<p>如何动态加载？启动一个单独的进程导入so文件。</p>
+</blockquote>
+<p>最近在进行python和C++的混合开发，功能由C++实现，再将C++编译为so文件在jupyter noteboook中进行展示。在jupyter notebookz中涉及到”加载数据”和“加载so文件”。由于so文件改动较频繁，因此整个nb（notebook）经常重跑（终止python进程再重新跑）。但是在nb重跑的时候，数据也会重新加载，这部分耗时较久，成为了开发速度的瓶颈。</p>
+<p>为了缩短程序重跑的时间，一个直观的想法是缩短程序数据加载时间。经过分析之后，发现数据加载耗时几乎无法减少。</p>
+<p>因此决定采取的方案是重新导入so文件。但是经过查找发现</p>
+<blockquote>
+<p>Python’s import mechanism will never dlclose() a shared library. Once loaded, the library will stay until the process terminates.</p>
+</blockquote>
+<p><a href="Python&#39;s import mechanism will never dlclose(">链接</a> a shared library. Once loaded, the library will stay until the process terminates.)</p>
+<p>因此在nb的进程中重新导入so文件，几乎无可能。</p>
+<p>所以决定绕过在nb中导入so文件，转而该为在nb中启动一个子进程，负责导入so文件、进行有关运算和返回结果。由于每次调用时都会启动一个全新的进程，它能够去导入磁盘最新的so文件，这样就可以在so文件改动之后，在不中断nb的情况下体现so文件的改动。</p>
+<hr>
+<p>More Options</p>
+<ol>
+<li>code不单独拎出去，全部卸载nb中<ol>
+<li>这是可行的，process以spawn启动就行</li>
+</ol>
+</li>
+<li>自定义python中Import机制<ol>
+<li>参考<code>importlib</code></li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2021/11/02/jupyternotebook-%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDso-dll%E6%96%87%E4%BB%B6/" data-id="ckvhgqku70000zos333cadrjd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-metaclass" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/09/11/python-metaclass/" class="article-date">
+  <time datetime="2021-09-11T14:18:53.000Z" itemprop="datePublished">2021-09-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>►<a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/11/python-metaclass/">Metaclass</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>实现一个将类的属性全部转为大写的metaclass</p>
+        
+          <p class="article-more-link">
+            <a href="/2021/09/11/python-metaclass/#more">阅读更多</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2021/09/11/python-metaclass/" data-id="ckvhfs5bx0000f4s3db5g01qh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-python-dataclasses" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/08/23/python-dataclasses/" class="article-date">
@@ -222,118 +332,11 @@
 
 
   
-    <article id="post-NP_ndarray-views" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/08/14/NP_ndarray-views/" class="article-date">
-  <time datetime="2021-08-14T01:14:11.000Z" itemprop="datePublished">2021-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>►<a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a>►<a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/Numpy/">Numpy</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/14/NP_ndarray-views/">Numpy数组视图</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-<!-- Table of Contents -->
-
-
-
-        <p>视图(<code>view</code>)是<code>Numpy</code>为了在操作大规模数组时减少内存上的操作而做的一层抽象。它不存在元素拷贝，无须分配新的内存。</p>
-<p>一般情况下，它可以很好地减少内存的使用。但是如果处理不当，</p>
-<ol>
-<li>会阻止GC回收不使用的大数组的内存空间<ul>
-<li>如果想从内存中回收大数组，需要确保该数组没有直接引用和<strong>视图引用</strong></li>
-</ul>
-</li>
-<li>不经意间修改原数组<ul>
-<li>修改数组时，确保不会间接地修改另一个数组</li>
-</ul>
-</li>
-</ol>
-<p>因此开发的时候如果必要可以显示地使用<code>copy</code>来对数组进行拷贝（不使用视图<code>view</code>）。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/08/14/NP_ndarray-views/" data-id="ckscy4kub0000c4s348qbewrk" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-杂文_遭遇苦难时忍耐是必需的" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/07/19/%E6%9D%82%E6%96%87_%E9%81%AD%E9%81%87%E8%8B%A6%E9%9A%BE%E6%97%B6%E5%BF%8D%E8%80%90%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84/" class="article-date">
-  <time datetime="2021-07-19T15:40:46.000Z" itemprop="datePublished">2021-07-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/19/%E6%9D%82%E6%96%87_%E9%81%AD%E9%81%87%E8%8B%A6%E9%9A%BE%E6%97%B6%E5%BF%8D%E8%80%90%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84/">遭遇苦难时忍耐是必需的</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>@author:稻盛和夫</p>
-<p>在我看来，人生及工作的结果，是由这样的方程式决定的。</p>
-<p>人生·工作的结果＝思维方式×热情×能力</p>
-        
-          <p class="article-more-link">
-            <a href="/2021/07/19/%E6%9D%82%E6%96%87_%E9%81%AD%E9%81%87%E8%8B%A6%E9%9A%BE%E6%97%B6%E5%BF%8D%E8%80%90%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2021/07/19/%E6%9D%82%E6%96%87_%E9%81%AD%E9%81%87%E8%8B%A6%E9%9A%BE%E6%97%B6%E5%BF%8D%E8%80%90%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84/" data-id="ckrvsf6050057l4s32gno2yvk" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9D%82%E6%96%87/" rel="tag">杂文</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/">下一页 &amp;raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/">下一页 &amp;raquo;</a>
   </nav>
 
 </section>
@@ -344,7 +347,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/Numpy/">Numpy</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/Numpy/">Numpy</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -354,7 +357,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">39</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -418,22 +421,5 @@
 
 
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
 </body>
 </html>

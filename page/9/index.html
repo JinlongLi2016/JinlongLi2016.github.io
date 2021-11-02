@@ -78,6 +78,160 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-frontend-react-refactor" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/18/frontend-react-refactor/" class="article-date">
+  <time datetime="2021-04-18T12:47:00.000Z" itemprop="datePublished">2021-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/18/frontend-react-refactor/">React重构案例</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+<!-- Table of Contents -->
+
+
+
+        <p><a href="https://www.cnblogs.com/vvjiang/p/9283006.html" target="_blank" rel="noopener">React组件重构：嵌套+继承 与 高阶组件</a></p>
+<p>2018-07-09 11:336047029</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在最近做的一个react项目中，遇到了一个比较典型的需要重构的场景：提取两个组件中共同的部分。</p>
+<p>最开始通过使用嵌套组件和继承的方式完成了这次重构。</p>
+<p>但是后来又用高阶组件重新写了一遍，发现更好一点。</p>
+<p>在这里记录下这两种方式以便之后参考和演进。</p>
+<h2 id="本次重构的场景"><a href="#本次重构的场景" class="headerlink" title="本次重构的场景"></a>本次重构的场景</h2><p>因为场景涉及到具体的业务，所以我现在将它简化为一个简单的场景。</p>
+<p>现在有两个黑色箱子，箱子上都有一个红色按钮，A箱子充满气体，按了按钮之后箱子里面气体变红，B箱子充满泥土，按了之后箱子里面泥土变红。</p>
+<p>那么现在上一个简单的重构前代码：</p>
+<p>BoxA.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxA</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  state=&#123;</span><br><span class="line">    color:<span class="string">'black'</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleClick=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      color:<span class="string">'red'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleShake=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* 摇动后气体没声音  */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="comment">/* 这里面当然没有onShake这种事件，理解意思就行了 */</span></span><br><span class="line">      &lt;div style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'black'</span>&#125;&#125; onShake=&#123;<span class="keyword">this</span>.handleShake&#125;&gt;</span><br><span class="line">          &lt;button onClick=&#123;<span class="keyword">this</span>.handleClick&#125; style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'red'</span>&#125;&#125;&gt;		           <span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">          &lt;div&gt;</span><br><span class="line">            <span class="comment">/* 气体组件，没毛病 */</span></span><br><span class="line">            &lt;气体 color=&#123;<span class="keyword">this</span>.state.color&#125;  /&gt;</span><br><span class="line">          &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>BoxB.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxB</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  state=&#123;</span><br><span class="line">    color:<span class="string">'black'</span></span><br><span class="line">  &#125;</span><br><span class="line">  handleClick=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      color:<span class="string">'red'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleShake=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* 摇动后泥土有声音  */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'black'</span>&#125;&#125; onShake=&#123;<span class="keyword">this</span>.handleShake&#125;&gt;</span><br><span class="line">          &lt;button onClick=&#123;<span class="keyword">this</span>.handleClick&#125; style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'red'</span>&#125;&#125;&gt;<span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">          &lt;div&gt;</span><br><span class="line">            &lt;泥土 color=&#123;<span class="keyword">this</span>.state.color&#125;  /&gt;</span><br><span class="line">          &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用嵌套组件进行重构"><a href="#使用嵌套组件进行重构" class="headerlink" title="使用嵌套组件进行重构"></a>使用嵌套组件进行重构</h2><p>看看上面的代码，即使在业务简化的情况下都有很多重复的，所以得重构。</p>
+<p>对于这种很明显的箱子类问题，一般都会采用嵌套组件的方式重构。</p>
+<p>Box.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Box</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">    children: PropTypes.node,</span><br><span class="line">    onClick: PropTypes.func,</span><br><span class="line">    onShake: PropTypes.func</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'black'</span>&#125;&#125; onShake=&#123;<span class="keyword">this</span>.props.onShake&#125;&gt;</span><br><span class="line">          &lt;button onClick=&#123;<span class="keyword">this</span>.props.onClick&#125; style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'red'</span>&#125;&#125;&gt;<span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">          &lt;div&gt;</span><br><span class="line">            &#123;<span class="keyword">this</span>.children&#125;</span><br><span class="line">          &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>BoxA.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> Box <span class="keyword">from</span> <span class="string">'./Box.jsx'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxA</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  state=&#123;</span><br><span class="line">    color:<span class="string">'black'</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleClick=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      color:<span class="string">'red'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleShake=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* 摇动后气体没声音  */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Box onClick=&#123;<span class="keyword">this</span>.handleClick&#125; onShake=&#123;<span class="keyword">this</span>.props.handleShake&#125;&gt;</span><br><span class="line">        &lt;气体 color=&#123;<span class="keyword">this</span>.state.color&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/Box&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>BoxB.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxB</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  state=&#123;</span><br><span class="line">    color:<span class="string">'black'</span></span><br><span class="line">  &#125;</span><br><span class="line">  handleClick=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      color:<span class="string">'red'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleShake=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* 摇动后泥土有声音  */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">     &lt;Box onClick=&#123;<span class="keyword">this</span>.handleClick&#125; onShake=&#123;<span class="keyword">this</span>.props.handleShake&#125;&gt;</span><br><span class="line">        &lt;泥土 color=&#123;<span class="keyword">this</span>.state.color&#125;  /&gt;</span><br><span class="line">     &lt;<span class="regexp">/Box&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用继承组件的方式进行重构"><a href="#使用继承组件的方式进行重构" class="headerlink" title="使用继承组件的方式进行重构"></a>使用继承组件的方式进行重构</h2><p>对于很多场景而言，使用了嵌套组件后，可能就不需要或者没法进一步进行组件提炼了。</p>
+<p>然而完成这波操作后，我们发现嵌套组件BoxA和BoxB依然存在重复代码，即按下按钮变红这部分代码。</p>
+<p>这部分代码可以使用嵌套组件与被嵌套组件的通信机制来处理，技术上而言依然可以将这部分代码用嵌套组件的方式来解决。</p>
+<p>但是为了保证组件的单一职责，即箱子就是个带红色按钮可以摇动的箱子，我们不知道里面以后会放什么进去，就不能说不管以后里面放什么，只要我一按红色按钮，里面的物质都会变红。</p>
+<p>这部分代码肯定是不能放在嵌套组件Box里，因为它直接操作着被嵌套的内容。</p>
+<p>那么在这里我们可以使用继承组件的方式。</p>
+<p>Box.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Box</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">    children: PropTypes.node,</span><br><span class="line">    onClick: PropTypes.func,</span><br><span class="line">    onShake: PropTypes.func</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'black'</span>&#125;&#125; onShake=&#123;<span class="keyword">this</span>.props.onShake&#125;&gt;</span><br><span class="line">          &lt;button onClick=&#123;<span class="keyword">this</span>.props.onClick&#125; style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'red'</span>&#125;&#125;&gt;<span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">          &lt;div&gt;</span><br><span class="line">            &#123;<span class="keyword">this</span>.children&#125;</span><br><span class="line">          &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>BasicBox.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BasicBox</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  state=&#123;</span><br><span class="line">    color:<span class="string">'black'</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleClick=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      color:<span class="string">'red'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>BoxA.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> Box <span class="keyword">from</span> <span class="string">'./Box.jsx'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxA</span> <span class="keyword">extends</span> <span class="title">BasicBox</span> </span>&#123;</span><br><span class="line">  handleShake=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* 摇动后气体没声音  */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Box onClick=&#123;<span class="keyword">this</span>.handleClick&#125; onShake=&#123;<span class="keyword">this</span>.props.handleShake&#125;&gt;</span><br><span class="line">        &lt;气体 color=&#123;<span class="keyword">this</span>.state.color&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/Box&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>BoxB.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxB</span> <span class="keyword">extends</span> <span class="title">BasicBox</span> </span>&#123;</span><br><span class="line">  handleShake=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* 摇动后泥土有声音  */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">     &lt;Box onClick=&#123;<span class="keyword">this</span>.handleClick&#125; onShake=&#123;<span class="keyword">this</span>.props.handleShake&#125;&gt;</span><br><span class="line">        &lt;泥土 color=&#123;<span class="keyword">this</span>.state.color&#125;  /&gt;</span><br><span class="line">     &lt;<span class="regexp">/Box&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>通过修改后的代码，就可以将BoxA和BoxB中相同的部分提取到BasicBox中。</p>
+<p>这样我们相当于将一个功能块提取了出来，你可以继承BasicBox（这个命名可能不好，容易引起混淆），如果不使用state的值也完全没有任何问题。</p>
+<p>但是这样做也许会带了一些别的问题。</p>
+<p>我们自己去看这段代码的时候其实不难理解，不过之后让其他人对这块代码做修改时，后来的人就会感到奇怪，<code>BoxA</code>中突然间使用了一个不知道从哪里来的<code>handleClick</code>。</p>
+<h2 id="使用高阶组件进行重构"><a href="#使用高阶组件进行重构" class="headerlink" title="使用高阶组件进行重构"></a>使用高阶组件进行重构</h2><p>为了解决上面的问题，后来又使用高阶组件的方式玩了一遍:</p>
+<p>hocBox.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line">hocBox=<span class="function">(<span class="params">WrappedComponent</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">Box</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">      <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">        onShake: PropTypes.func</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      state=&#123;</span><br><span class="line">        color:<span class="string">'black'</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      handleClick=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          color:<span class="string">'red'</span></span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          &lt;div style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'black'</span>&#125;&#125; onShake=&#123;<span class="keyword">this</span>.props.handleShake&#125;&gt;</span><br><span class="line">              &lt;button onClick=&#123;<span class="keyword">this</span>.handleClick&#125; style=&#123;&#123;<span class="attr">backgroundColor</span>:<span class="string">'red'</span>&#125;&#125;&gt;<span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">              &lt;div&gt;</span><br><span class="line">                &lt;WrappedComponent color=&#123;<span class="keyword">this</span>.state.color&#125;  /&gt;</span><br><span class="line">              &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">          &lt;/</span>div&gt;</span><br><span class="line">        )</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>BoxA.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> Box <span class="keyword">from</span> <span class="string">'./hocBox.jsx'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> 气体WithBtnBox=hocBox(气体)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxA</span> <span class="keyword">extends</span> <span class="title">BasicBox</span> </span>&#123;</span><br><span class="line">  handleShake=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* 摇动后气体没声音  */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;气体WithBtnBox onShake=&#123;<span class="keyword">this</span>.handleShake&#125; /&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>BoxB.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> Box <span class="keyword">from</span> <span class="string">'./hocBox.jsx'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> 泥土WithBtnBox=hocBox(泥土)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxA</span> <span class="keyword">extends</span> <span class="title">BasicBox</span> </span>&#123;</span><br><span class="line">  handleShake=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* 摇动后泥土有声音  */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;泥土WithBtnBox onShake=&#123;<span class="keyword">this</span>.handleShake&#125; /&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>高阶组件的使用就像设计模式中的装饰者模式（Decorator Pattern）。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上的两种方式中，高阶组件的方式对于后来者在修改上更友好一点。</p>
+<p>但是用嵌套+继承的方式理解起来其实更容易一点，特别是去重构一个复杂的组件时，通过这种方式往往更快，拆分起来更容易。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2021/04/18/frontend-react-refactor/" data-id="ckrvsf5yt0039l4s34w4y3ask" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Cooperation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/06/Cooperation/" class="article-date">
+  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/06/Cooperation/">如何倾听不赞同的观点</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>nonverbal attending</p>
+<p><strong>giving someone your full attention without speaking</strong></p>
+<ul>
+<li>Keep your body open to the other person</li>
+<li><strong>Maintain moderate levels of eye contact.</strong></li>
+<li><strong>Use simple gestures to communicate to the other person that you’re listening and encouraging them to continue.</strong> Head nods are one way — just don’t do it continuously. Occasionally say “Mm-hmm” to communicate encouragement.</li>
+<li><strong>staying silent.</strong></li>
+</ul>
+<p>理解对方/朝着Goal努力</p>
+</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2020/09/06/Cooperation/#more">阅读更多</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://github.com/jinlongli2016/2020/09/06/Cooperation/" data-id="ckrvsf5wy000il4s322amgoni" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B2%9F%E9%80%9A/" rel="tag">沟通</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-DISC高效沟通" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/09/06/DISC%E9%AB%98%E6%95%88%E6%B2%9F%E9%80%9A/" class="article-date">
@@ -300,111 +454,11 @@
 
 
   
-    <article id="post-MDNonLearning" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/MDNonLearning/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/MDNonLearning/">高效学习(Effective Learning)-MDN</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>It is great that you are putting some time into learning a new set of skills, but there are good practices to employ that will make your learning more effective. There also are times when you’ll get stuck and feel frustrated — even professional web developers feel like this regularly — and it pays to know about the most effective ways to try and get help so you can progress in your work. This article provides some hints and tips in both of these areas that will help you get more out of learning web development, as well as further reading so you can find out more information about each sub-topic should you wish..</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/09/06/MDNonLearning/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/MDNonLearning/" data-id="ckrvsf5xi001cl4s32okpe9s9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-PyramidPrinciple" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/06/PyramidPrinciple/" class="article-date">
-  <time datetime="2020-09-06T01:54:34.000Z" itemprop="datePublished">2020-09-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/06/PyramidPrinciple/">金子塔原理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本书中心是在工作行文中要讲究<strong>逻辑</strong>：</p>
-<ol>
-<li><strong>表达</strong>的逻辑</li>
-<li><strong>思考</strong>的逻辑</li>
-<li><strong>解决问题</strong>的逻辑</li>
-<li><strong>展示</strong>的逻辑</li>
-</ol>
-        
-          <p class="article-more-link">
-            <a href="/2020/09/06/PyramidPrinciple/#more">阅读更多</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://github.com/jinlongli2016/2020/09/06/PyramidPrinciple/" data-id="ckrvsf5y50027l4s367n1h5r7" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B9%E6%B3%95/" rel="tag">方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86/" rel="tag">金字塔原理</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/8/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/10/">下一页 &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/8/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/10/">下一页 &amp;raquo;</a>
   </nav>
 
 </section>
@@ -415,7 +469,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/Numpy/">Numpy</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E4%BD%9C/">合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C/">团队合作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%9D%E8%80%83/">思考</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%B9%E6%B3%95/">方法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E6%96%87/">杂文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B2%9F%E9%80%9A/">沟通</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">电脑技巧</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/opencv/">opencv</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensorflow/">tensorflow</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%88%86%E6%9E%90/">算法设计技巧与分析</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/Numpy/">Numpy</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90/">资源</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -425,7 +479,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">39</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1900/">1900</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -489,22 +543,5 @@
 
 
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
 </body>
 </html>
