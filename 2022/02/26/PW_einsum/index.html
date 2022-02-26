@@ -15,7 +15,7 @@
 <meta property="og:description" content="爱因斯坦求和约定矩阵运算中，Einstein summation convention 可以让表达式非常简洁，并且对于我们理解矩阵运算非常有用。一个例子如下 1234567A &#x3D; np.arange(3)B &#x3D; np.arange(12).reshape(3, 4)# Goal: multiply A &amp; B element wise, then sum along axis 1.# 【">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-26T01:41:04.000Z">
-<meta property="article:modified_time" content="2022-02-26T11:39:29.891Z">
+<meta property="article:modified_time" content="2022-02-26T11:49:00.825Z">
 <meta property="article:author" content="李金龙">
 <meta property="article:tag" content="爱因斯坦求和约定">
 <meta property="article:tag" content="PythonWeekly">
@@ -118,6 +118,7 @@
 
         <h1 id="爱因斯坦求和约定"><a href="#爱因斯坦求和约定" class="headerlink" title="爱因斯坦求和约定"></a><strong>爱因斯坦求和约定</strong></h1><p>矩阵运算中，<a href="https://en.wikipedia.org/wiki/Einstein_notation" target="_blank" rel="noopener"><strong>Ein</strong>stein <strong>sum</strong>mation convention</a> 可以让表达式非常简洁，并且对于我们理解矩阵运算非常有用。一个例子如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A = np.arange(<span class="number">3</span>)</span><br><span class="line">B = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="comment"># Goal: multiply A &amp; B element wise, then sum along axis 1.</span></span><br><span class="line"><span class="comment"># 【 一般矩阵运算如下 】</span></span><br><span class="line">(A[:, <span class="literal">None</span>] * B).sum(axis=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 【 Or using Einstein Summation convention 】</span></span><br><span class="line">np.einsum(<span class="string">'i,ij-&gt;i'</span>, A, B)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h1 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h1><p><strong>爱因斯坦求和约定</strong>如下</p>
 <ol>
 <li>输入数组间重复的字母对应的轴，我们会沿着这个轴进行逐元素(element wise)的相乘</li>
